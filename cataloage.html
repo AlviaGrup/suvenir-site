@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ALVIA · Cataloage</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0;background:#111111}
+a{color:inherit}
+.btn{transition:transform .18s ease, background-color .18s ease, color .18s ease}
+.btn:hover{transform:translateY(-2px)}
+.btn-ghost:hover{background:#FFFFFF !important;color:#111111 !important}
+.chip-link{transition:background-color .18s ease, color .18s ease, border-color .18s ease}
+.chip-link:hover{background:#FFFFFF !important;color:#111111 !important;border-color:#FFFFFF !important}
+.lift{transition:transform .25s ease, border-color .25s ease}
+.lift:hover{transform:translateY(-4px);border-color:#4A474B !important}
+.cover{transition:transform .35s ease}
+.lift:hover .cover{transform:translateY(-6px) rotate(-2deg)}
+.navlink:hover{color:#FFFFFF !important}
+.more:hover{color:#FFFFFF !important}
+:focus-visible{outline:2px solid #FFCA01;outline-offset:3px}
+@media (prefers-reduced-motion: reduce){.btn,.lift,.cover,.chip-link{transition:none}}
+</style>
+<style>/* client logo slider */
+.logo-slider{width:100%;overflow:hidden;padding:6px 0;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent)}
+.logo-track{display:flex;width:max-content;animation:logo-scroll 110s linear infinite}
+.logo-dup{display:contents}
+.logo-chip{position:relative;flex:0 0 auto;margin-right:22px;height:96px;min-width:150px;padding:14px 24px;box-sizing:border-box;border-radius:18px;background:transparent;display:flex;align-items:center;justify-content:center;transition:background-color .3s}
+.logo-chip img{max-height:58px;max-width:170px;width:auto;height:auto;display:block;transition:opacity .3s}
+.logo-chip .lw{opacity:.55}
+.logo-chip .lc{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0}
+.logo-chip:hover{background:#FFFFFF}
+.logo-chip:hover .lw{opacity:0}
+.logo-chip:hover .lc{opacity:1}
+@keyframes logo-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media (max-width:640px){.logo-chip{height:72px;min-width:110px;padding:10px 16px;margin-right:10px;border-radius:14px}.logo-chip img{max-height:42px;max-width:120px}.logo-track{animation-duration:80s}}
+@media (prefers-reduced-motion: reduce){.logo-track{animation-duration:400s}}
+/* form status message */
+form{flex-wrap:wrap}
+.form-msg{flex-basis:100%;margin:4px 0 0;font-size:15px;line-height:1.4;font-weight:600}
+button[disabled]{opacity:.6;cursor:wait}
+/* header fits 7 menu items on laptops */
+.site-header > a{flex-shrink:0}
+.site-header > div{flex-shrink:0;flex-wrap:nowrap!important}
+@media (max-width:1360px){.site-header > div > span{display:none}}
+@media (max-width:1200px){.site-header .main-nav{gap:18px!important;font-size:14px!important}}
+/* back to top */
+.to-top{position:fixed;right:24px;bottom:24px;z-index:60;width:52px;height:52px;border:0;border-radius:999px;background:#FFCA01;color:#111111;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 10px 26px -8px rgba(0,0,0,.6);opacity:0;visibility:hidden;transform:translateY(12px);transition:opacity .25s,transform .25s,visibility .25s}
+.to-top.show{opacity:1;visibility:visible;transform:none}
+.to-top:hover{transform:translateY(-3px)}
+@media (max-width:640px){.to-top{right:16px;bottom:16px;width:46px;height:46px}}
+/* image viewer */
+[data-zoom]{cursor:zoom-in}
+.zbox{position:fixed;inset:0;z-index:100;background:rgba(10,10,11,.92);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s}
+.zbox.on{opacity:1}
+.zbox figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:12px;max-width:min(92vw,1300px)}
+.zbox img{max-width:100%;max-height:82vh;width:auto;height:auto;border-radius:14px;box-shadow:0 30px 80px -20px rgba(0,0,0,.8);background:#1C1B1D}
+.zbox figcaption{color:#D9D6DA;font:600 15px/1.4 'Manrope',system-ui,sans-serif;text-align:center}
+.zbox button{position:absolute;border:0;cursor:pointer;color:#111;background:#FFCA01;border-radius:999px;display:flex;align-items:center;justify-content:center;font:700 30px/1 system-ui,sans-serif}
+.zb-close{top:20px;right:20px;width:48px;height:48px}
+.zb-prev,.zb-next{top:50%;width:52px;height:52px;margin-top:-26px;padding-bottom:4px}
+.zb-prev{left:20px}.zb-next{right:20px}
+.zbox.single .zb-prev,.zbox.single .zb-next{display:none}
+@media (max-width:640px){.zb-prev,.zb-next{top:auto;bottom:20px;margin:0}.zb-prev{left:calc(50% - 64px)}.zb-next{right:calc(50% - 64px)}.zbox img{max-height:72vh}}
+/* gallery thumbs */
+[data-thumb]{cursor:pointer;opacity:.7;transition:opacity .2s,outline-color .2s;outline:2px solid transparent;outline-offset:2px}
+[data-thumb]:hover,[data-thumb].on{opacity:1;outline-color:#FFCA01}
+/* technology photos fill the box */
+.tech-label{position:absolute;left:18px;bottom:18px;padding:7px 14px;border-radius:999px;background:rgba(17,17,17,.78);color:#fff;font:700 14px/1.3 'Manrope',system-ui,sans-serif;backdrop-filter:blur(6px)}
+@media (max-width:1000px){.tech-media{aspect-ratio:4/3}}
+/* catalogs: cover without a box */
+.cat-media .cover{transition:transform .35s ease}
+.lift:hover .cat-media .cover{transform:translateY(-4px) rotate(-1deg)}
+/* technology details accordion */
+.tech-card{height:auto!important;grid-template-rows:340px auto;cursor:pointer}
+.tech-card .tech-more{grid-column:1/-1;display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s ease;cursor:default}
+.tech-card.open .tech-more{grid-template-rows:1fr}
+.tm-in{overflow:hidden;min-height:0}
+.tm-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:36px;padding:36px 40px 8px;border-top:1px solid #2C2A2D;margin-top:0}
+.tech-more h4{margin:0 0 14px;font:800 15px/1.3 'Manrope',system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#FFCA01}
+.tech-more ol,.tech-more ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px;font:500 16px/1.5 'Manrope',system-ui,sans-serif;color:#D9D6DA}
+.tm-steps{counter-reset:s}
+.tm-steps li{counter-increment:s;display:flex;gap:12px}
+.tm-steps li::before{content:counter(s);flex:0 0 26px;height:26px;border-radius:999px;background:#2A282B;color:#FFCA01;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;margin-top:-1px}
+.tm-pro li{display:flex;gap:10px;align-items:flex-start}
+.tm-pro svg{flex:0 0 16px;margin-top:4px}
+.tm-know li{padding-left:16px;position:relative}
+.tm-know li::before{content:"";position:absolute;left:0;top:10px;width:6px;height:6px;border-radius:999px;background:#A23D97}
+.tm-price{margin:16px 0 0;padding:12px 14px;border-radius:12px;background:#2A282B;font:500 15px/1.45 'Manrope',system-ui,sans-serif;color:#D9D6DA}
+.tm-price b{color:#FFFFFF}
+.tm-foot{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:24px 40px 32px}
+.tm-cta{display:inline-flex;align-items:center;height:48px;padding:0 24px;border-radius:999px;background:#FFCA01;color:#111;text-decoration:none;font:700 15px 'Manrope',system-ui,sans-serif}
+.tm-close{border:1px solid #3A383B;background:transparent;color:#D9D6DA;height:44px;padding:0 20px;border-radius:999px;font:700 14px 'Manrope',system-ui,sans-serif;cursor:pointer}
+.tm-close:hover{border-color:#FFCA01;color:#fff}
+.tm-hint{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;margin-top:6px;font:700 15px 'Manrope',system-ui,sans-serif;color:#FFCA01}
+.tm-hint svg{transition:transform .3s}
+.tech-card.open .tm-hint svg{transform:rotate(180deg)}
+.tech-card.open{border-color:#FFCA01!important}
+.tech-card.open:hover{transform:none}
+@media (max-width:1000px){
+  .tech-card{grid-template-rows:auto}
+  .tm-grid{grid-template-columns:1fr;gap:26px;padding:26px 20px 4px}
+  .tm-foot{flex-direction:column;align-items:stretch;padding:20px 20px 24px}
+  .tm-cta{justify-content:center}
+}
+</style>
+<style>img{max-width:100%}
+.burger{display:none}
+@media (max-width: 1000px){
+  [style*="display: flex"]{flex-wrap:wrap}
+  /* two-column feature layouts stack */
+  [style*="grid-template-columns: 2"],[style*="grid-template-columns: 5"],[style*="grid-template-columns: 6"],[style*="grid-template-columns: 7"],[style*="grid-template-columns: minmax(0, 1fr) 300px"]{grid-template-columns:minmax(0,1fr)!important}
+  [style*="repeat(3, minmax(0, 1fr))"],[style*="repeat(4, minmax(0, 1fr))"]{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  [style*="repeat(5, minmax(0, 1fr))"],[style*="repeat(6, minmax(0, 1fr))"]{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+}
+@media (max-width: 640px){
+  [style*="repeat(2, minmax(0, 1fr))"],[style*="repeat(3, minmax(0, 1fr))"]{grid-template-columns:minmax(0,1fr)!important}
+  [style*="repeat(5, minmax(0, 1fr))"],[style*="repeat(6, minmax(0, 1fr))"]{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  input[type="tel"],input[type="text"],input[type="email"]{width:100%!important;max-width:100%!important}
+  form .btn{width:100%}
+  .site-header .btn{padding:0 16px!important;height:40px!important;font-size:14px!important}
+}
+@media (max-width: 1000px){
+  /* cards with fixed height grow with their text */
+  [style*="; height: "]:has(> h2, > h3, > p, > div > h3, > div > p, > div > h2),[style^="height: "]:has(> h2, > h3, > p, > div > h3, > div > p, > div > h2){height:auto!important;min-height:0}
+  [data-name="Text"][style*="padding: 0"]{padding-top:24px!important;padding-bottom:28px!important}
+  /* image rows scroll sideways instead of stacking */
+  div[style*="display: flex"]:has(> .zoom + .zoom + .zoom){flex-wrap:nowrap!important;overflow-x:auto;justify-content:flex-start!important;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:4px}
+  div[style*="display: flex"]:has(> .zoom + .zoom + .zoom) > .zoom{scroll-snap-align:start;flex-shrink:0}
+  /* footer */
+  footer > div:first-child{flex-direction:column;align-items:flex-start!important;gap:24px}
+  footer nav{flex-wrap:wrap;gap:14px 22px!important}
+  /* header */
+  .site-header img{height:22px!important}
+  .site-header .btn{white-space:nowrap}
+}
+@media (max-width: 1000px){
+  [data-name="Zone logo"]{flex-wrap:nowrap!important;height:auto!important;padding:28px 12px!important;gap:12px!important;justify-content:center!important}
+  [data-name="Zone logo"] svg{width:38vw;max-width:220px;height:auto}
+}
+@media (max-width: 1000px){
+  [data-name="Intro / Mozaic"]{grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-template-rows:none!important;grid-auto-rows:auto}
+  [data-name="Intro / Mozaic"] > *{height:150px}
+  [data-name="Intro / Mozaic"] > :first-child{grid-row:auto!important;grid-column:span 2;height:230px}
+}
+@media (max-width: 640px){
+  [data-name="In cifre"]{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important}
+  [data-name="In cifre"] > div{padding:12px 10px!important}
+  [data-name="Galerie"] [style*="repeat(4, minmax(0, 1fr))"]{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:8px!important}
+  [data-name="Galerie"] [style*="repeat(4, minmax(0, 1fr))"] > div{height:72px!important}
+  [style*="repeat(4, minmax(0, 1fr))"]:has(> * > h3){grid-template-columns:minmax(0,1fr)!important}
+}
+@media (max-width: 1000px){
+  [data-name="Intro / Mozaic"] > :last-child{flex-wrap:nowrap!important;gap:8px!important;overflow:hidden}
+  [data-name="Intro / Mozaic"] > :last-child img{width:30px!important;height:118px!important}
+}
+
+@media (max-width: 1100px){
+  /* header */
+  .site-header{position:relative;padding:0 20px!important;height:68px!important;flex-wrap:nowrap!important}
+  .site-header > div{gap:10px!important;margin-left:auto}
+  .site-header > div > span{display:none}
+  .site-header .main-nav{display:none!important}
+  .burger{display:flex;flex-direction:column;justify-content:center;gap:5px;width:44px;height:44px;padding:0 11px;border:1px solid #3A383B;border-radius:999px;background:transparent;cursor:pointer;order:3;margin-left:10px}
+  .burger span{display:block;height:2px;background:#fff;border-radius:2px;transition:transform .2s,opacity .2s}
+  .site-header.open .burger span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .site-header.open .burger span:nth-child(2){opacity:0}
+  .site-header.open .burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .site-header.open .main-nav{display:flex!important;flex-direction:column;align-items:stretch!important;gap:0!important;position:absolute;top:100%;left:0;right:0;background:#111111;border-bottom:1px solid #242225;padding:8px 20px 16px;z-index:50}
+  .site-header.open .main-nav a{padding:14px 0;font-size:18px;border-bottom:1px solid #242225}
+}
+@media (max-width: 400px){ .site-header img{height:19px!important} }
+@media (max-width: 1000px){
+  [data-name="Media"]:has(> .cover){padding:28px 20px}
+  .cover{height:auto!important;max-width:100%}
+  .cover img{height:auto!important;width:auto!important;max-height:240px;max-width:100%}
+}
+</style>
+<style>html,body{margin:0;background:#111111;overflow-x:hidden}[hidden]{display:none!important}</style>
+</head>
+<body>
+<div data-name="ALVIA Cataloage · 1440" style="margin: 0 auto; width: 100%; max-width: 1440px; font-family: 'Manrope', 'Satoshi', system-ui, sans-serif; color: #FFFFFF; background: #111111; -webkit-font-smoothing: antialiased">
+
+<!-- 00 Header -->
+<header class="site-header" aria-label="00 Header" data-name="00 Header" style="width: 100%; max-width: 1440px; box-sizing: border-box; height: 84px; padding: 0px clamp(20px, 8.333vw, 120px) 0px clamp(20px, 8.333vw, 120px); background: #111111; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #242225">
+<a href="index.html" aria-label="ALVIA, pagina principală" style="display: flex"><img src="img/logo/alvia-alb.svg" alt="ALVIA" style="height: 28px; width: auto; display: block"></a>
+<button class="burger" type="button" aria-label="Meniu" aria-expanded="false"><span></span><span></span><span></span></button>
+<nav aria-label="Meniu" class="main-nav" style="display: flex; align-items: center; gap: 30px; font-size: 15px; line-height: 1.333; font-weight: 600; color: #BDB9BE">
+<a class="navlink" href="index.html" style="text-decoration: none">Acasă</a>
+<a class="navlink" href="agende.html" style="text-decoration: none">Agende</a>
+<a class="navlink" href="tricouri.html" style="text-decoration: none">Tricouri</a>
+<a class="navlink" href="portofoliu.html" style="text-decoration: none">Portofoliu</a>
+<a class="navlink" href="tehnologii.html" style="text-decoration: none">Tehnologii</a>
+<a href="cataloage.html" aria-current="page" style="text-decoration: none; color: #FFFFFF; padding: 8px 0px 6px 0px; border-bottom: 2px solid #FFCA01">Cataloage</a>
+<a class="navlink" href="contacte.html" style="text-decoration: none">Contacte</a>
+</nav>
+<div style="display: flex; align-items: center; gap: 20px">
+<span style="font-size: 15px; line-height: 1.333; font-weight: 600; color: #FFFFFF; font-variant-numeric: tabular-nums">067 101 809</span>
+<a class="btn" href="#cerere" style="display: inline-flex; align-items: center; height: 44px; padding: 0px 22px 0px 22px; border-radius: 999px; background: #FFCA01; color: #111111; text-decoration: none; font-size: 15px; font-weight: 700">Cere o ofertă</a>
+</div>
+</header>
+
+<!-- 01 Intro -->
+<section aria-label="01 Intro" data-name="01 Intro" style="width: 100%; max-width: 1440px; box-sizing: border-box; padding: clamp(53px, 6.667vw, 96px) clamp(20px, 8.333vw, 120px) clamp(48px, 6.111vw, 88px) clamp(20px, 8.333vw, 120px); background: radial-gradient(40% 50% at 0% 50%, rgba(162,61,151,0.65) 0%, rgba(162,61,151,0) 100%), radial-gradient(36% 50% at 100% 50%, rgba(255,202,1,0.4) 0%, rgba(255,202,1,0) 100%), #111111; display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center">
+<nav aria-label="Breadcrumb" style="display: flex; gap: 10px; font-size: 14px; line-height: 1.429; font-weight: 600; color: #BDB9BE"><a class="more" href="index.html" style="text-decoration: none">Acasă</a><span aria-hidden="true">/</span><span style="color: #FFFFFF">Cataloage</span></nav>
+<div aria-hidden="true" style="width: 72px; height: 72px; border-radius: 20px; border: 1px solid rgba(255,202,1,0.45); background: rgba(255,202,1,0.08); display: flex; align-items: center; justify-content: center; color: #FFCA01"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"></path><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"></path><path d="M9 8h7M9 12h5"></path></svg></div>
+<span style="font-size: 20px; line-height: 1.3; font-weight: 700; color: #FFCA01">Cataloage 2026</span>
+<h1 style="margin: 0; width: 100%; max-width: 1000px; font-size: clamp(36px, 5vw, 72px); line-height: 1.083; font-weight: 800; letter-spacing: -0.04em; text-wrap: balance">Mii de produse, din 12 cataloage europene</h1>
+<p style="margin: 0; width: 100%; max-width: 680px; font-size: 20px; line-height: 1.5; font-weight: 500; color: #D9D6DA">Alegeți produsul, trimiteți-ne codul din catalog și noi îl personalizăm cu logo-ul companiei.</p>
+<div data-name="Intro / Jump links" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; padding-top: 18px">
+<a class="chip-link" href="#c-xd" style="display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0px 18px 0px 18px; border-radius: 999px; border: 1px solid #3A383B; background: rgba(17,17,17,0.6); text-decoration: none; font-size: 14px; font-weight: 700"><span style="width: 10px; height: 10px; border-radius: 999px; background: #BAB2A9"></span>XD Collection</a>
+<a class="chip-link" href="#c-pf" style="display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0px 18px 0px 18px; border-radius: 999px; border: 1px solid #3A383B; background: rgba(17,17,17,0.6); text-decoration: none; font-size: 14px; font-weight: 700"><span style="width: 10px; height: 10px; border-radius: 999px; background: #C0E1FD"></span>PF Concept</a>
+<a class="chip-link" href="#c-roly" style="display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0px 18px 0px 18px; border-radius: 999px; border: 1px solid #3A383B; background: rgba(17,17,17,0.6); text-decoration: none; font-size: 14px; font-weight: 700"><span style="width: 10px; height: 10px; border-radius: 999px; background: #FAC5D2"></span>ROLY</a>
+<a class="chip-link" href="#c-stamina" style="display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0px 18px 0px 18px; border-radius: 999px; border: 1px solid #3A383B; background: rgba(17,17,17,0.6); text-decoration: none; font-size: 14px; font-weight: 700"><span style="width: 10px; height: 10px; border-radius: 999px; background: #97DBDD"></span>Stamina</a>
+<a class="chip-link" href="#c-workwear" style="display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0px 18px 0px 18px; border-radius: 999px; border: 1px solid #3A383B; background: rgba(17,17,17,0.6); text-decoration: none; font-size: 14px; font-weight: 700"><span style="width: 10px; height: 10px; border-radius: 999px; background: #9FB4C8"></span>Work Wear</a>
+<a class="chip-link" href="#c-macma" style="display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0px 18px 0px 18px; border-radius: 999px; border: 1px solid #3A383B; background: rgba(17,17,17,0.6); text-decoration: none; font-size: 14px; font-weight: 700"><span style="width: 10px; height: 10px; border-radius: 999px; background: #FDDDB0"></span>Macma</a>
+<a class="chip-link" href="#c-hidea" style="display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0px 18px 0px 18px; border-radius: 999px; border: 1px solid #3A383B; background: rgba(17,17,17,0.6); text-decoration: none; font-size: 14px; font-weight: 700"><span style="width: 10px; height: 10px; border-radius: 999px; background: #E6A15C"></span>Hi!dea</a>
+<a class="chip-link" href="#c-edica" style="display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0px 18px 0px 18px; border-radius: 999px; border: 1px solid #3A383B; background: rgba(17,17,17,0.6); text-decoration: none; font-size: 14px; font-weight: 700"><span style="width: 10px; height: 10px; border-radius: 999px; background: #D9C08C"></span>EDICA</a>
+<a class="chip-link" href="#c-leccepen" style="display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0px 18px 0px 18px; border-radius: 999px; border: 1px solid #3A383B; background: rgba(17,17,17,0.6); text-decoration: none; font-size: 14px; font-weight: 700"><span style="width: 10px; height: 10px; border-radius: 999px; background: #7FB7E8"></span>Leccepen &amp; B1</a>
+<a class="chip-link" href="#c-thinkme" style="display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0px 18px 0px 18px; border-radius: 999px; border: 1px solid #3A383B; background: rgba(17,17,17,0.6); text-decoration: none; font-size: 14px; font-weight: 700"><span style="width: 10px; height: 10px; border-radius: 999px; background: #B7A2E0"></span>THINKME</a>
+<a class="chip-link" href="#c-stricker" style="display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0px 18px 0px 18px; border-radius: 999px; border: 1px solid #3A383B; background: rgba(17,17,17,0.6); text-decoration: none; font-size: 14px; font-weight: 700"><span style="width: 10px; height: 10px; border-radius: 999px; background: #D8D8DA"></span>Stricker</a>
+<a class="chip-link" href="#c-aodaci" style="display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0px 18px 0px 18px; border-radius: 999px; border: 1px solid #3A383B; background: rgba(17,17,17,0.6); text-decoration: none; font-size: 14px; font-weight: 700"><span style="width: 10px; height: 10px; border-radius: 999px; background: #F3CEAC"></span>Aodaci</a>
+</div>
+</section>
+
+<!-- 02 Lista cataloage -->
+<section aria-label="02 Lista cataloage" data-name="02 Lista cataloage" style="width: 100%; max-width: 1440px; box-sizing: border-box; padding: 40px clamp(20px, 8.333vw, 120px) clamp(66px, 8.333vw, 120px) clamp(20px, 8.333vw, 120px); background: #111111; display: flex; flex-direction: column; gap: 24px">
+
+<article id="c-xd" class="lift" data-name="Catalog / XD Collection" style="height: 340px; display: grid; grid-template-columns: 600px minmax(0, 1fr); background: #1C1B1D; border: 1px solid #2C2A2D; border-radius: 24px; overflow: hidden">
+<div data-name="Media" class="cat-media" style="display: flex; align-items: center; justify-content: center; padding: 20px 20px 20px 20px">
+<div class="cover" style="height: 300px; border-radius: 6px; overflow: hidden; box-shadow: 0 22px 40px -18px rgba(0,0,0,0.85)"><img src="img/cataloage/xd.jpg" alt="Coperta catalogului XD Collection" loading="lazy" style="height: 100%; width: auto; display: block"></div>
+</div>
+<div data-name="Text" style="padding: 0px clamp(20px, 4.444vw, 64px) 0px clamp(20px, 4.444vw, 64px); display: flex; flex-direction: column; justify-content: center; gap: 14px">
+<span style="font-size: 14px; line-height: 1.429; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #BAB2A9">Cadouri sustenabile</span>
+<h2 style="margin: 0; font-size: clamp(27px, 2.5vw, 36px); line-height: 1.167; font-weight: 800; letter-spacing: -0.025em">XD Collection</h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.588; color: #BDB9BE">Sticle, termosuri, tehnologie și articole pentru casă, cu accent pe materiale reciclate.</p>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 6px">
+<div style="display: flex; flex-wrap: wrap; gap: 8px"><span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Sticle</span><span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Tehnologie</span><span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Casă</span></div>
+<a class="btn" href="https://viewer.xdcollection.com/main/en-nop/2026/" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 8px; height: 46px; padding: 0px 22px 0px 22px; border-radius: 999px; background: #FFCA01; color: #111111; text-decoration: none; font-size: 15px; font-weight: 700; flex-shrink: 0">Vezi catalogul<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+</div>
+</article>
+
+<article id="c-pf" class="lift" data-name="Catalog / PF Concept" style="height: 340px; display: grid; grid-template-columns: 600px minmax(0, 1fr); background: #1C1B1D; border: 1px solid #2C2A2D; border-radius: 24px; overflow: hidden">
+<div data-name="Media" class="cat-media" style="display: flex; align-items: center; justify-content: center; padding: 20px 20px 20px 20px">
+<div class="cover" style="height: 300px; border-radius: 6px; overflow: hidden; box-shadow: 0 22px 40px -18px rgba(0,0,0,0.85)"><img src="img/cataloage/pfconcept.jpg" alt="Coperta catalogului PF Concept" loading="lazy" style="height: 100%; width: auto; display: block"></div>
+</div>
+<div data-name="Text" style="padding: 0px clamp(20px, 4.444vw, 64px) 0px clamp(20px, 4.444vw, 64px); display: flex; flex-direction: column; justify-content: center; gap: 14px">
+<span style="font-size: 14px; line-height: 1.429; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #C0E1FD">Textile și accesorii</span>
+<h2 style="margin: 0; font-size: clamp(27px, 2.5vw, 36px); line-height: 1.167; font-weight: 800; letter-spacing: -0.025em">PF Concept</h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.588; color: #BDB9BE">Jachete, hanorace, genți și accesorii de la branduri europene, într-un singur catalog.</p>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 6px">
+<div style="display: flex; flex-wrap: wrap; gap: 8px"><span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Jachete</span><span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Hanorace</span><span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Genți</span></div>
+<a class="btn" href="https://player.flipsnack.com/?hash=OUZBNzVGNThCN0ErdGM5YWNja3Z4bg%3D%3D&amp;p=1" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 8px; height: 46px; padding: 0px 22px 0px 22px; border-radius: 999px; background: #FFCA01; color: #111111; text-decoration: none; font-size: 15px; font-weight: 700; flex-shrink: 0">Vezi catalogul<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+</div>
+</article>
+
+<article id="c-roly" class="lift" data-name="Catalog / ROLY" style="height: 340px; display: grid; grid-template-columns: 600px minmax(0, 1fr); background: #1C1B1D; border: 1px solid #2C2A2D; border-radius: 24px; overflow: hidden">
+<div data-name="Media" class="cat-media" style="display: flex; align-items: center; justify-content: center; padding: 20px 20px 20px 20px">
+<div class="cover" style="height: 300px; border-radius: 6px; overflow: hidden; box-shadow: 0 22px 40px -18px rgba(0,0,0,0.85)"><img src="img/cataloage/roly.jpg" alt="Coperta catalogului ROLY" loading="lazy" style="height: 100%; width: auto; display: block"></div>
+</div>
+<div data-name="Text" style="padding: 0px clamp(20px, 4.444vw, 64px) 0px clamp(20px, 4.444vw, 64px); display: flex; flex-direction: column; justify-content: center; gap: 14px">
+<span style="font-size: 14px; line-height: 1.429; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #FAC5D2">Textile</span>
+<h2 style="margin: 0; font-size: clamp(27px, 2.5vw, 36px); line-height: 1.167; font-weight: 800; letter-spacing: -0.025em">ROLY</h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.588; color: #BDB9BE">Tricouri, polo-uri, hanorace și îmbrăcăminte de lucru, în zeci de culori.</p>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 6px">
+<div style="display: flex; flex-wrap: wrap; gap: 8px"><span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Tricouri</span><span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Polo</span><span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Workwear</span></div>
+<a class="btn" href="https://roly.eu/ro/icatalog/urlCatRoly" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 8px; height: 46px; padding: 0px 22px 0px 22px; border-radius: 999px; background: #FFCA01; color: #111111; text-decoration: none; font-size: 15px; font-weight: 700; flex-shrink: 0">Vezi catalogul<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+</div>
+</article>
+
+<article id="c-stamina" class="lift" data-name="Catalog / Stamina" style="height: 340px; display: grid; grid-template-columns: 600px minmax(0, 1fr); background: #1C1B1D; border: 1px solid #2C2A2D; border-radius: 24px; overflow: hidden">
+<div data-name="Media" class="cat-media" style="display: flex; align-items: center; justify-content: center; padding: 20px 20px 20px 20px">
+<div class="cover" style="height: 300px; border-radius: 6px; overflow: hidden; box-shadow: 0 22px 40px -18px rgba(0,0,0,0.85)"><img src="img/cataloage/stamina.jpg" alt="Coperta catalogului Stamina" loading="lazy" style="height: 100%; width: auto; display: block"></div>
+</div>
+<div data-name="Text" style="padding: 0px clamp(20px, 4.444vw, 64px) 0px clamp(20px, 4.444vw, 64px); display: flex; flex-direction: column; justify-content: center; gap: 14px">
+<span style="font-size: 14px; line-height: 1.429; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #97DBDD">Gadgeturi și accesorii</span>
+<h2 style="margin: 0; font-size: clamp(27px, 2.5vw, 36px); line-height: 1.167; font-weight: 800; letter-spacing: -0.025em">Stamina</h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.588; color: #BDB9BE">Sticle, ochelari de soare, gadgeturi tech și accesorii pentru campanii promoționale.</p>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 6px">
+<div style="display: flex; flex-wrap: wrap; gap: 8px"><span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Sticle</span><span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Ochelari</span><span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Tech</span></div>
+<a class="btn" href="https://stamina-shop.com/en/pdfcatalog/urlCatSta" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 8px; height: 46px; padding: 0px 22px 0px 22px; border-radius: 999px; background: #FFCA01; color: #111111; text-decoration: none; font-size: 15px; font-weight: 700; flex-shrink: 0">Vezi catalogul<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+</div>
+</article>
+
+<article id="c-workwear" class="lift" data-name="Catalog / Work Wear" style="height: 340px; display: grid; grid-template-columns: 600px minmax(0, 1fr); background: #1C1B1D; border: 1px solid #2C2A2D; border-radius: 24px; overflow: hidden">
+<div data-name="Media" class="cat-media" style="display: flex; align-items: center; justify-content: center; padding: 20px 20px 20px 20px">
+<div class="cover" style="height: 300px; border-radius: 6px; overflow: hidden; box-shadow: 0 22px 40px -18px rgba(0,0,0,0.85)"><img src="img/cataloage/workwear.jpg" alt="Coperta catalogului Work Wear" loading="lazy" style="height: 100%; width: auto; display: block"></div>
+</div>
+<div data-name="Text" style="padding: 0px clamp(20px, 4.444vw, 64px) 0px clamp(20px, 4.444vw, 64px); display: flex; flex-direction: column; justify-content: center; gap: 14px">
+<span style="font-size: 14px; line-height: 1.429; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #9FB4C8">Îmbrăcăminte de lucru</span>
+<h2 style="margin: 0; font-size: clamp(27px, 2.5vw, 36px); line-height: 1.167; font-weight: 800; letter-spacing: -0.025em">Work Wear</h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.588; color: #BDB9BE">Haine de lucru și echipament pentru echipe: salopete, veste și jachete rezistente, gata de brodat sau imprimat.</p>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 6px">
+<div style="display: flex; flex-wrap: wrap; gap: 8px"><span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Salopete</span><span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Veste</span><span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Jachete</span></div>
+<a class="btn" href="https://roly.eu/en/icatalog/urlCatRolyWork" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 8px; height: 46px; padding: 0px 22px 0px 22px; border-radius: 999px; background: #FFCA01; color: #111111; text-decoration: none; font-size: 15px; font-weight: 700; flex-shrink: 0">Vezi catalogul<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+</div>
+</article>
+
+<article id="c-macma" class="lift" data-name="Catalog / Macma" style="height: 340px; display: grid; grid-template-columns: 600px minmax(0, 1fr); background: #1C1B1D; border: 1px solid #2C2A2D; border-radius: 24px; overflow: hidden">
+<div data-name="Media" class="cat-media" style="display: flex; align-items: center; justify-content: center; padding: 20px 20px 20px 20px">
+<div class="cover" style="height: 300px; border-radius: 6px; overflow: hidden; box-shadow: 0 22px 40px -18px rgba(0,0,0,0.85)"><img src="img/cataloage/macma.jpg" alt="Coperta catalogului Macma" loading="lazy" style="height: 100%; width: auto; display: block"></div>
+</div>
+<div data-name="Text" style="padding: 0px clamp(20px, 4.444vw, 64px) 0px clamp(20px, 4.444vw, 64px); display: flex; flex-direction: column; justify-content: center; gap: 14px">
+<span style="font-size: 14px; line-height: 1.429; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #FDDDB0">Birou și instrumente de scris</span>
+<h2 style="margin: 0; font-size: clamp(27px, 2.5vw, 36px); line-height: 1.167; font-weight: 800; letter-spacing: -0.025em">Macma</h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.588; color: #BDB9BE">Pixuri, accesorii de birou și obiecte din materiale naturale, precum pluta și bambusul.</p>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 6px">
+<div style="display: flex; flex-wrap: wrap; gap: 8px"><span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Pixuri</span><span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Birou</span><span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Plută</span></div>
+<a class="btn" href="https://download.macma.hu/catalogue/ro/index.html" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 8px; height: 46px; padding: 0px 22px 0px 22px; border-radius: 999px; background: #FFCA01; color: #111111; text-decoration: none; font-size: 15px; font-weight: 700; flex-shrink: 0">Vezi catalogul<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+</div>
+</article>
+
+<article id="c-hidea" class="lift" data-name="Catalog / Hi!dea" style="height: 340px; display: grid; grid-template-columns: 600px minmax(0, 1fr); background: #1C1B1D; border: 1px solid #2C2A2D; border-radius: 24px; overflow: hidden">
+<div data-name="Media" class="cat-media" style="display: flex; align-items: center; justify-content: center; padding: 20px 20px 20px 20px">
+<div class="cover" style="height: 300px; border-radius: 6px; overflow: hidden; box-shadow: 0 22px 40px -18px rgba(0,0,0,0.85)"><img src="img/cataloage/hidea.jpg" alt="Coperta catalogului Hi!dea" loading="lazy" style="height: 100%; width: auto; display: block"></div>
+</div>
+<div data-name="Text" style="padding: 0px clamp(20px, 4.444vw, 64px) 0px clamp(20px, 4.444vw, 64px); display: flex; flex-direction: column; justify-content: center; gap: 14px">
+<span style="font-size: 14px; line-height: 1.429; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #E6A15C">Cadouri promoționale</span>
+<h2 style="margin: 0; font-size: clamp(27px, 2.5vw, 36px); line-height: 1.167; font-weight: 800; letter-spacing: -0.025em">Hi!dea</h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.588; color: #BDB9BE">Idei de cadouri corporate și articole promoționale pentru campanii, evenimente și parteneri.</p>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 6px">
+<div style="display: flex; flex-wrap: wrap; gap: 8px"><span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Cadouri</span><span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Birou</span><span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Lifestyle</span></div>
+<a class="btn" href="https://catalogue.beyondthehidea.com/2026/7DAmBAZ2/" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 8px; height: 46px; padding: 0px 22px 0px 22px; border-radius: 999px; background: #FFCA01; color: #111111; text-decoration: none; font-size: 15px; font-weight: 700; flex-shrink: 0">Vezi catalogul<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+</div>
+</article>
+
+<article id="c-edica" class="lift" data-name="Catalog / EDICA" style="height: 340px; display: grid; grid-template-columns: 600px minmax(0, 1fr); background: #1C1B1D; border: 1px solid #2C2A2D; border-radius: 24px; overflow: hidden">
+<div data-name="Media" class="cat-media" style="display: flex; align-items: center; justify-content: center; padding: 20px 20px 20px 20px">
+<div class="cover" style="height: 300px; border-radius: 6px; overflow: hidden; box-shadow: 0 22px 40px -18px rgba(0,0,0,0.85)"><img src="img/cataloage/edica.jpg" alt="Coperta catalogului EDICA" loading="lazy" style="height: 100%; width: auto; display: block"></div>
+</div>
+<div data-name="Text" style="padding: 0px clamp(20px, 4.444vw, 64px) 0px clamp(20px, 4.444vw, 64px); display: flex; flex-direction: column; justify-content: center; gap: 14px">
+<span style="font-size: 14px; line-height: 1.429; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #D9C08C">Agende și calendare</span>
+<h2 style="margin: 0; font-size: clamp(27px, 2.5vw, 36px); line-height: 1.167; font-weight: 800; letter-spacing: -0.025em">EDICA</h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.588; color: #BDB9BE">Agende și calendare europene, inclusiv colecția EDICA 2027, gata de personalizat cu logo.</p>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 6px">
+<div style="display: flex; flex-wrap: wrap; gap: 8px"><span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Agende</span><span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Calendare</span><span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">2027</span></div>
+<a class="btn" href="https://www.edica.pl/wp-content/uploads/2025/05/Katalog-2026_na-strone-WWW.pdf" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 8px; height: 46px; padding: 0px 22px 0px 22px; border-radius: 999px; background: #FFCA01; color: #111111; text-decoration: none; font-size: 15px; font-weight: 700; flex-shrink: 0">Vezi catalogul<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+</div>
+</article>
+
+<article id="c-leccepen" class="lift" data-name="Catalog / Leccepen &amp; B1" style="height: 340px; display: grid; grid-template-columns: 600px minmax(0, 1fr); background: #1C1B1D; border: 1px solid #2C2A2D; border-radius: 24px; overflow: hidden">
+<div data-name="Media" class="cat-media" style="display: flex; align-items: center; justify-content: center; padding: 20px 20px 20px 20px">
+<div class="cover" style="height: 300px; border-radius: 6px; overflow: hidden; box-shadow: 0 22px 40px -18px rgba(0,0,0,0.85)"><img src="img/cataloage/leccepen.jpg" alt="Coperta catalogului Leccepen &amp; B1" loading="lazy" style="height: 100%; width: auto; display: block"></div>
+</div>
+<div data-name="Text" style="padding: 0px clamp(20px, 4.444vw, 64px) 0px clamp(20px, 4.444vw, 64px); display: flex; flex-direction: column; justify-content: center; gap: 14px">
+<span style="font-size: 14px; line-height: 1.429; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #7FB7E8">Instrumente de scris</span>
+<h2 style="margin: 0; font-size: clamp(27px, 2.5vw, 36px); line-height: 1.167; font-weight: 800; letter-spacing: -0.025em">Leccepen &amp;amp; B1</h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.588; color: #BDB9BE">Pixuri și instrumente de scris, de la modele clasice la seturi elegante pentru cadou.</p>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 6px">
+<div style="display: flex; flex-wrap: wrap; gap: 8px"><span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Pixuri</span><span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Seturi</span><span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Metal</span></div>
+<a class="btn" href="https://www.dropbox.com/scl/fi/i9rwdhxhbxg29anbku81n/HG_CAT_2020_PENS_spreads-medium_net.pdf?rlkey=g6kslj3k20f02bfq4omsi0pre&amp;e=1&amp;dl=0" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 8px; height: 46px; padding: 0px 22px 0px 22px; border-radius: 999px; background: #FFCA01; color: #111111; text-decoration: none; font-size: 15px; font-weight: 700; flex-shrink: 0">Vezi catalogul<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+</div>
+</article>
+
+<article id="c-thinkme" class="lift" data-name="Catalog / THINKME" style="height: 340px; display: grid; grid-template-columns: 600px minmax(0, 1fr); background: #1C1B1D; border: 1px solid #2C2A2D; border-radius: 24px; overflow: hidden">
+<div data-name="Media" class="cat-media" style="display: flex; align-items: center; justify-content: center; padding: 20px 20px 20px 20px">
+<div class="cover" style="height: 300px; border-radius: 6px; overflow: hidden; box-shadow: 0 22px 40px -18px rgba(0,0,0,0.85)"><img src="img/cataloage/thinkme.jpg" alt="Coperta catalogului THINKME" loading="lazy" style="height: 100%; width: auto; display: block"></div>
+</div>
+<div data-name="Text" style="padding: 0px clamp(20px, 4.444vw, 64px) 0px clamp(20px, 4.444vw, 64px); display: flex; flex-direction: column; justify-content: center; gap: 14px">
+<span style="font-size: 14px; line-height: 1.429; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #B7A2E0">Gadgeturi și accesorii</span>
+<h2 style="margin: 0; font-size: clamp(27px, 2.5vw, 36px); line-height: 1.167; font-weight: 800; letter-spacing: -0.025em">THINKME</h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.588; color: #BDB9BE">Gadgeturi, accesorii tech și articole utile pentru campanii promoționale.</p>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 6px">
+<div style="display: flex; flex-wrap: wrap; gap: 8px"><span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Tech</span><span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Accesorii</span><span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Birou</span></div>
+<a class="btn" href="https://www.dropbox.com/scl/fi/snrah4pmds05dn2zugvp9/TM_2020_catalogue__LOW_spreads.pdf?rlkey=a8oad4klv99s1lt6p5xfgt8oy&amp;e=1&amp;dl=0" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 8px; height: 46px; padding: 0px 22px 0px 22px; border-radius: 999px; background: #FFCA01; color: #111111; text-decoration: none; font-size: 15px; font-weight: 700; flex-shrink: 0">Vezi catalogul<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+</div>
+</article>
+
+<article id="c-stricker" class="lift" data-name="Catalog / Stricker" style="height: 340px; display: grid; grid-template-columns: 600px minmax(0, 1fr); background: #1C1B1D; border: 1px solid #2C2A2D; border-radius: 24px; overflow: hidden">
+<div data-name="Media" class="cat-media" style="display: flex; align-items: center; justify-content: center; padding: 20px 20px 20px 20px">
+<div class="cover" style="height: 300px; border-radius: 6px; overflow: hidden; box-shadow: 0 22px 40px -18px rgba(0,0,0,0.85)"><img src="img/cataloage/stricker.jpg" alt="Coperta catalogului Stricker" loading="lazy" style="height: 100%; width: auto; display: block"></div>
+</div>
+<div data-name="Text" style="padding: 0px clamp(20px, 4.444vw, 64px) 0px clamp(20px, 4.444vw, 64px); display: flex; flex-direction: column; justify-content: center; gap: 14px">
+<span style="font-size: 14px; line-height: 1.429; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #D8D8DA">Casă, tech și eco</span>
+<h2 style="margin: 0; font-size: clamp(27px, 2.5vw, 36px); line-height: 1.167; font-weight: 800; letter-spacing: -0.025em">Stricker</h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.588; color: #BDB9BE">Căști, genți, articole pentru casă și cadouri eco, pentru orice buget.</p>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 6px">
+<div style="display: flex; flex-wrap: wrap; gap: 8px"><span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Căști</span><span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Genți</span><span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Eco</span></div>
+<a class="btn" href="https://www.stricker-europe.com/en/catalogue/" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 8px; height: 46px; padding: 0px 22px 0px 22px; border-radius: 999px; background: #FFCA01; color: #111111; text-decoration: none; font-size: 15px; font-weight: 700; flex-shrink: 0">Vezi catalogul<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+</div>
+</article>
+
+<article id="c-aodaci" class="lift" data-name="Catalog / Aodaci" style="height: 340px; display: grid; grid-template-columns: 600px minmax(0, 1fr); background: #1C1B1D; border: 1px solid #2C2A2D; border-radius: 24px; overflow: hidden">
+<div data-name="Media" class="cat-media" style="display: flex; align-items: center; justify-content: center; padding: 20px 20px 20px 20px">
+<div class="cover" style="height: 300px; border-radius: 6px; overflow: hidden; box-shadow: 0 22px 40px -18px rgba(0,0,0,0.85)"><img src="img/cataloage/aodaci.jpg" alt="Coperta catalogului Aodaci" loading="lazy" style="height: 100%; width: auto; display: block"></div>
+</div>
+<div data-name="Text" style="padding: 0px clamp(20px, 4.444vw, 64px) 0px clamp(20px, 4.444vw, 64px); display: flex; flex-direction: column; justify-content: center; gap: 14px">
+<span style="font-size: 14px; line-height: 1.429; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #F3CEAC">Genți și accesorii premium</span>
+<h2 style="margin: 0; font-size: clamp(27px, 2.5vw, 36px); line-height: 1.167; font-weight: 800; letter-spacing: -0.025em">Aodaci</h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.588; color: #BDB9BE">Rucsacuri, genți și accesorii din piele, pentru cadouri corporative premium.</p>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 6px">
+<div style="display: flex; flex-wrap: wrap; gap: 8px"><span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Rucsacuri</span><span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Genți</span><span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Piele</span></div>
+<a class="btn" href="https://catalog.aodaci.com/view/168636095/" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 8px; height: 46px; padding: 0px 22px 0px 22px; border-radius: 999px; background: #FFCA01; color: #111111; text-decoration: none; font-size: 15px; font-weight: 700; flex-shrink: 0">Vezi catalogul<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+</div>
+</article>
+
+</section>
+
+<!-- 03 CTA -->
+<section id="cerere" aria-label="03 Cerere ofertă" data-name="03 Cerere ofertă" style="width: 100%; max-width: 1440px; box-sizing: border-box; padding: 0px clamp(20px, 8.333vw, 120px) clamp(66px, 8.333vw, 120px) clamp(20px, 8.333vw, 120px); background: #111111">
+<div style="width: 100%; max-width: 1200px; box-sizing: border-box; padding: 64px clamp(20px, 5.556vw, 80px) 64px clamp(20px, 5.556vw, 80px); border-radius: 32px; background: radial-gradient(60% 120% at 0% 0%, rgba(162,61,151,0.75) 0%, rgba(162,61,151,0) 100%), radial-gradient(60% 120% at 100% 100%, rgba(255,202,1,0.55) 0%, rgba(255,202,1,0) 100%), #1C1B1D; display: flex; flex-direction: column; gap: clamp(16px, 2.778vw, 40px)">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: clamp(16px, 3.333vw, 48px)">
+<div style="display: flex; flex-direction: column; gap: 14px; width: 100%; max-width: 640px">
+<h2 style="margin: 0; font-size: clamp(24px, 3.333vw, 48px); line-height: 1.125; font-weight: 800; letter-spacing: -0.03em">Ați găsit produsul potrivit?</h2>
+<p style="margin: 0; font-size: 19px; line-height: 1.526; font-weight: 500; color: #D9D6DA">Trimiteți-ne codul din catalog și cantitatea. Vă răspundem cu prețul și macheta cu logo-ul vostru.</p>
+</div>
+<div style="display: flex; flex-direction: column; align-items: flex-end; gap: 14px">
+<a class="btn" href="index.html" style="display: inline-flex; align-items: center; height: 60px; padding: 0px clamp(16px, 2.361vw, 34px) 0px clamp(16px, 2.361vw, 34px); border-radius: 999px; background: #FFCA01; color: #111111; text-decoration: none; font-size: 18px; font-weight: 700">Cere o ofertă</a>
+<span style="font-size: 16px; line-height: 1.375; font-weight: 600; color: #D9D6DA; font-variant-numeric: tabular-nums">sau sunați: +373 67 101 809</span>
+</div>
+</div>
+<div data-name="Pasi" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.14)">
+<div style="display: flex; align-items: center; gap: 14px"><span style="width: 40px; height: 40px; border-radius: 999px; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; flex-shrink: 0">1</span><span style="font-size: 17px; line-height: 1.412; font-weight: 700">Răsfoiți catalogul</span></div>
+<div style="display: flex; align-items: center; gap: 14px"><span style="width: 40px; height: 40px; border-radius: 999px; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; flex-shrink: 0">2</span><span style="font-size: 17px; line-height: 1.412; font-weight: 700">Notați codul produsului</span></div>
+<div style="display: flex; align-items: center; gap: 14px"><span style="width: 40px; height: 40px; border-radius: 999px; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; flex-shrink: 0">3</span><span style="font-size: 17px; line-height: 1.412; font-weight: 700">Primiți oferta și macheta</span></div>
+</div>
+</div>
+</section>
+
+<!-- 04 Footer -->
+<footer aria-label="04 Footer" data-name="04 Footer" style="width: 100%; max-width: 1440px; box-sizing: border-box; padding: 56px clamp(20px, 8.333vw, 120px) 40px clamp(20px, 8.333vw, 120px); background: #111111; border-top: 1px solid #242225; display: flex; flex-direction: column; gap: clamp(16px, 2.778vw, 40px)">
+<div style="display: flex; justify-content: space-between; align-items: center">
+<img src="img/logo/alvia-alb.svg" alt="ALVIA" style="height: 28px; width: auto; display: block">
+<nav aria-label="Meniu subsol" style="display: flex; gap: 28px; font-size: 15px; line-height: 1.333; font-weight: 600; color: #BDB9BE">
+<a class="navlink" href="index.html" style="text-decoration: none">Acasă</a>
+<a class="navlink" href="agende.html" style="text-decoration: none">Agende</a>
+<a class="navlink" href="tricouri.html" style="text-decoration: none">Tricouri</a>
+<a class="navlink" href="portofoliu.html" style="text-decoration: none">Portofoliu</a>
+<a class="navlink" href="tehnologii.html" style="text-decoration: none">Tehnologii</a>
+<a class="navlink" href="cataloage.html" style="text-decoration: none">Cataloage</a>
+<a class="navlink" href="contacte.html" style="text-decoration: none">Contacte</a>
+</nav>
+<div style="display: flex; gap: 12px">
+<a href="https://www.instagram.com/" aria-label="Instagram" style="display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 1px solid #2C2A2D; border-radius: 999px; color: #FFFFFF"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"></circle></svg></a>
+<a href="https://www.facebook.com/" aria-label="Facebook" style="display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 1px solid #2C2A2D; border-radius: 999px; color: #FFFFFF"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8z"></path></svg></a>
+<a href="https://www.tiktok.com/" aria-label="TikTok" style="display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 1px solid #2C2A2D; border-radius: 999px; color: #FFFFFF"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5"></path><path d="M14 3c.5 2.8 2.4 4.6 5 5"></path></svg></a>
+</div>
+</div>
+<div style="height: 1px; background: linear-gradient(90deg, #A23D97, #FFCA01)"></div>
+<div style="display: flex; justify-content: space-between; font-size: 14px; line-height: 1.429; color: #BDB9BE">
+<span>© 2026 Alvia Grup SRL</span>
+<span>www.suvenir.md</span>
+</div>
+</footer>
+
+</div>
+
+</body>
+<script>(function(){var b=document.querySelector('.burger'),h=document.querySelector('.site-header');if(!b)return;
+b.addEventListener('click',function(){var o=h.classList.toggle('open');b.setAttribute('aria-expanded',o)});
+document.querySelectorAll('.main-nav a').forEach(function(a){a.addEventListener('click',function(){h.classList.remove('open');b.setAttribute('aria-expanded',false)})});})();
+(function(){var t=document.createElement('button');t.className='to-top';t.type='button';t.setAttribute('aria-label','Înapoi sus');
+t.innerHTML='<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>';
+document.body.appendChild(t);
+function f(){t.classList.toggle('show',window.scrollY>700)}window.addEventListener('scroll',f,{passive:true});f();
+t.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});})();
+</script>
+</html>

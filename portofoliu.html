@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ALVIA · Portofoliu</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0;background:#111111}
+a{color:inherit}
+.btn{transition:transform .18s ease, background-color .18s ease, color .18s ease}
+.btn:hover{transform:translateY(-2px)}
+.btn-ghost:hover{background:#FFFFFF !important;color:#111111 !important}
+.lift{transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease}
+.lift:hover{transform:translateY(-6px)}
+.zoom img{transition:transform .5s ease}
+.zoom:hover img{transform:scale(1.04)}
+.navlink:hover{color:#FFFFFF !important}
+.more:hover{color:#FFFFFF !important}
+.similar:hover{color:#FFFFFF !important}
+.chip{display:inline-flex;align-items:center;height:38px;padding:0 16px;border-radius:999px;border:1px solid #3A383B;background:transparent;color:#FFFFFF;font:700 14px 'Manrope',system-ui,sans-serif;cursor:pointer;transition:background-color .18s ease,border-color .18s ease,color .18s ease}
+.chip:hover{border-color:#FFFFFF}
+.chip.on{background:#FFCA01;border-color:#FFCA01;color:#111111}
+:focus-visible{outline:2px solid #FFCA01;outline-offset:3px}
+input::placeholder,textarea::placeholder{color:#6E6A70}
+@media (prefers-reduced-motion: reduce){.btn,.lift,.zoom img,.chip{transition:none}}
+</style>
+<style>/* client logo slider */
+.logo-slider{width:100%;overflow:hidden;padding:6px 0;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent)}
+.logo-track{display:flex;width:max-content;animation:logo-scroll 110s linear infinite}
+.logo-dup{display:contents}
+.logo-chip{position:relative;flex:0 0 auto;margin-right:22px;height:96px;min-width:150px;padding:14px 24px;box-sizing:border-box;border-radius:18px;background:transparent;display:flex;align-items:center;justify-content:center;transition:background-color .3s}
+.logo-chip img{max-height:58px;max-width:170px;width:auto;height:auto;display:block;transition:opacity .3s}
+.logo-chip .lw{opacity:.55}
+.logo-chip .lc{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0}
+.logo-chip:hover{background:#FFFFFF}
+.logo-chip:hover .lw{opacity:0}
+.logo-chip:hover .lc{opacity:1}
+@keyframes logo-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media (max-width:640px){.logo-chip{height:72px;min-width:110px;padding:10px 16px;margin-right:10px;border-radius:14px}.logo-chip img{max-height:42px;max-width:120px}.logo-track{animation-duration:80s}}
+@media (prefers-reduced-motion: reduce){.logo-track{animation-duration:400s}}
+/* form status message */
+form{flex-wrap:wrap}
+.form-msg{flex-basis:100%;margin:4px 0 0;font-size:15px;line-height:1.4;font-weight:600}
+button[disabled]{opacity:.6;cursor:wait}
+/* header fits 7 menu items on laptops */
+.site-header > a{flex-shrink:0}
+.site-header > div{flex-shrink:0;flex-wrap:nowrap!important}
+@media (max-width:1360px){.site-header > div > span{display:none}}
+@media (max-width:1200px){.site-header .main-nav{gap:18px!important;font-size:14px!important}}
+/* back to top */
+.to-top{position:fixed;right:24px;bottom:24px;z-index:60;width:52px;height:52px;border:0;border-radius:999px;background:#FFCA01;color:#111111;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 10px 26px -8px rgba(0,0,0,.6);opacity:0;visibility:hidden;transform:translateY(12px);transition:opacity .25s,transform .25s,visibility .25s}
+.to-top.show{opacity:1;visibility:visible;transform:none}
+.to-top:hover{transform:translateY(-3px)}
+@media (max-width:640px){.to-top{right:16px;bottom:16px;width:46px;height:46px}}
+/* image viewer */
+[data-zoom]{cursor:zoom-in}
+.zbox{position:fixed;inset:0;z-index:100;background:rgba(10,10,11,.92);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s}
+.zbox.on{opacity:1}
+.zbox figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:12px;max-width:min(92vw,1300px)}
+.zbox img{max-width:100%;max-height:82vh;width:auto;height:auto;border-radius:14px;box-shadow:0 30px 80px -20px rgba(0,0,0,.8);background:#1C1B1D}
+.zbox figcaption{color:#D9D6DA;font:600 15px/1.4 'Manrope',system-ui,sans-serif;text-align:center}
+.zbox button{position:absolute;border:0;cursor:pointer;color:#111;background:#FFCA01;border-radius:999px;display:flex;align-items:center;justify-content:center;font:700 30px/1 system-ui,sans-serif}
+.zb-close{top:20px;right:20px;width:48px;height:48px}
+.zb-prev,.zb-next{top:50%;width:52px;height:52px;margin-top:-26px;padding-bottom:4px}
+.zb-prev{left:20px}.zb-next{right:20px}
+.zbox.single .zb-prev,.zbox.single .zb-next{display:none}
+@media (max-width:640px){.zb-prev,.zb-next{top:auto;bottom:20px;margin:0}.zb-prev{left:calc(50% - 64px)}.zb-next{right:calc(50% - 64px)}.zbox img{max-height:72vh}}
+/* gallery thumbs */
+[data-thumb]{cursor:pointer;opacity:.7;transition:opacity .2s,outline-color .2s;outline:2px solid transparent;outline-offset:2px}
+[data-thumb]:hover,[data-thumb].on{opacity:1;outline-color:#FFCA01}
+/* technology photos fill the box */
+.tech-label{position:absolute;left:18px;bottom:18px;padding:7px 14px;border-radius:999px;background:rgba(17,17,17,.78);color:#fff;font:700 14px/1.3 'Manrope',system-ui,sans-serif;backdrop-filter:blur(6px)}
+@media (max-width:1000px){.tech-media{aspect-ratio:4/3}}
+/* catalogs: cover without a box */
+.cat-media .cover{transition:transform .35s ease}
+.lift:hover .cat-media .cover{transform:translateY(-4px) rotate(-1deg)}
+/* technology details accordion */
+.tech-card{height:auto!important;grid-template-rows:340px auto;cursor:pointer}
+.tech-card .tech-more{grid-column:1/-1;display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s ease;cursor:default}
+.tech-card.open .tech-more{grid-template-rows:1fr}
+.tm-in{overflow:hidden;min-height:0}
+.tm-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:36px;padding:36px 40px 8px;border-top:1px solid #2C2A2D;margin-top:0}
+.tech-more h4{margin:0 0 14px;font:800 15px/1.3 'Manrope',system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#FFCA01}
+.tech-more ol,.tech-more ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px;font:500 16px/1.5 'Manrope',system-ui,sans-serif;color:#D9D6DA}
+.tm-steps{counter-reset:s}
+.tm-steps li{counter-increment:s;display:flex;gap:12px}
+.tm-steps li::before{content:counter(s);flex:0 0 26px;height:26px;border-radius:999px;background:#2A282B;color:#FFCA01;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;margin-top:-1px}
+.tm-pro li{display:flex;gap:10px;align-items:flex-start}
+.tm-pro svg{flex:0 0 16px;margin-top:4px}
+.tm-know li{padding-left:16px;position:relative}
+.tm-know li::before{content:"";position:absolute;left:0;top:10px;width:6px;height:6px;border-radius:999px;background:#A23D97}
+.tm-price{margin:16px 0 0;padding:12px 14px;border-radius:12px;background:#2A282B;font:500 15px/1.45 'Manrope',system-ui,sans-serif;color:#D9D6DA}
+.tm-price b{color:#FFFFFF}
+.tm-foot{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:24px 40px 32px}
+.tm-cta{display:inline-flex;align-items:center;height:48px;padding:0 24px;border-radius:999px;background:#FFCA01;color:#111;text-decoration:none;font:700 15px 'Manrope',system-ui,sans-serif}
+.tm-close{border:1px solid #3A383B;background:transparent;color:#D9D6DA;height:44px;padding:0 20px;border-radius:999px;font:700 14px 'Manrope',system-ui,sans-serif;cursor:pointer}
+.tm-close:hover{border-color:#FFCA01;color:#fff}
+.tm-hint{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;margin-top:6px;font:700 15px 'Manrope',system-ui,sans-serif;color:#FFCA01}
+.tm-hint svg{transition:transform .3s}
+.tech-card.open .tm-hint svg{transform:rotate(180deg)}
+.tech-card.open{border-color:#FFCA01!important}
+.tech-card.open:hover{transform:none}
+@media (max-width:1000px){
+  .tech-card{grid-template-rows:auto}
+  .tm-grid{grid-template-columns:1fr;gap:26px;padding:26px 20px 4px}
+  .tm-foot{flex-direction:column;align-items:stretch;padding:20px 20px 24px}
+  .tm-cta{justify-content:center}
+}
+</style>
+<style>img{max-width:100%}
+.burger{display:none}
+@media (max-width: 1000px){
+  [style*="display: flex"]{flex-wrap:wrap}
+  /* two-column feature layouts stack */
+  [style*="grid-template-columns: 2"],[style*="grid-template-columns: 5"],[style*="grid-template-columns: 6"],[style*="grid-template-columns: 7"],[style*="grid-template-columns: minmax(0, 1fr) 300px"]{grid-template-columns:minmax(0,1fr)!important}
+  [style*="repeat(3, minmax(0, 1fr))"],[style*="repeat(4, minmax(0, 1fr))"]{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  [style*="repeat(5, minmax(0, 1fr))"],[style*="repeat(6, minmax(0, 1fr))"]{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+}
+@media (max-width: 640px){
+  [style*="repeat(2, minmax(0, 1fr))"],[style*="repeat(3, minmax(0, 1fr))"]{grid-template-columns:minmax(0,1fr)!important}
+  [style*="repeat(5, minmax(0, 1fr))"],[style*="repeat(6, minmax(0, 1fr))"]{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  input[type="tel"],input[type="text"],input[type="email"]{width:100%!important;max-width:100%!important}
+  form .btn{width:100%}
+  .site-header .btn{padding:0 16px!important;height:40px!important;font-size:14px!important}
+}
+@media (max-width: 1000px){
+  /* cards with fixed height grow with their text */
+  [style*="; height: "]:has(> h2, > h3, > p, > div > h3, > div > p, > div > h2),[style^="height: "]:has(> h2, > h3, > p, > div > h3, > div > p, > div > h2){height:auto!important;min-height:0}
+  [data-name="Text"][style*="padding: 0"]{padding-top:24px!important;padding-bottom:28px!important}
+  /* image rows scroll sideways instead of stacking */
+  div[style*="display: flex"]:has(> .zoom + .zoom + .zoom){flex-wrap:nowrap!important;overflow-x:auto;justify-content:flex-start!important;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:4px}
+  div[style*="display: flex"]:has(> .zoom + .zoom + .zoom) > .zoom{scroll-snap-align:start;flex-shrink:0}
+  /* footer */
+  footer > div:first-child{flex-direction:column;align-items:flex-start!important;gap:24px}
+  footer nav{flex-wrap:wrap;gap:14px 22px!important}
+  /* header */
+  .site-header img{height:22px!important}
+  .site-header .btn{white-space:nowrap}
+}
+@media (max-width: 1000px){
+  [data-name="Zone logo"]{flex-wrap:nowrap!important;height:auto!important;padding:28px 12px!important;gap:12px!important;justify-content:center!important}
+  [data-name="Zone logo"] svg{width:38vw;max-width:220px;height:auto}
+}
+@media (max-width: 1000px){
+  [data-name="Intro / Mozaic"]{grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-template-rows:none!important;grid-auto-rows:auto}
+  [data-name="Intro / Mozaic"] > *{height:150px}
+  [data-name="Intro / Mozaic"] > :first-child{grid-row:auto!important;grid-column:span 2;height:230px}
+}
+@media (max-width: 640px){
+  [data-name="In cifre"]{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important}
+  [data-name="In cifre"] > div{padding:12px 10px!important}
+  [data-name="Galerie"] [style*="repeat(4, minmax(0, 1fr))"]{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:8px!important}
+  [data-name="Galerie"] [style*="repeat(4, minmax(0, 1fr))"] > div{height:72px!important}
+  [style*="repeat(4, minmax(0, 1fr))"]:has(> * > h3){grid-template-columns:minmax(0,1fr)!important}
+}
+@media (max-width: 1000px){
+  [data-name="Intro / Mozaic"] > :last-child{flex-wrap:nowrap!important;gap:8px!important;overflow:hidden}
+  [data-name="Intro / Mozaic"] > :last-child img{width:30px!important;height:118px!important}
+}
+
+@media (max-width: 1100px){
+  /* header */
+  .site-header{position:relative;padding:0 20px!important;height:68px!important;flex-wrap:nowrap!important}
+  .site-header > div{gap:10px!important;margin-left:auto}
+  .site-header > div > span{display:none}
+  .site-header .main-nav{display:none!important}
+  .burger{display:flex;flex-direction:column;justify-content:center;gap:5px;width:44px;height:44px;padding:0 11px;border:1px solid #3A383B;border-radius:999px;background:transparent;cursor:pointer;order:3;margin-left:10px}
+  .burger span{display:block;height:2px;background:#fff;border-radius:2px;transition:transform .2s,opacity .2s}
+  .site-header.open .burger span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .site-header.open .burger span:nth-child(2){opacity:0}
+  .site-header.open .burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .site-header.open .main-nav{display:flex!important;flex-direction:column;align-items:stretch!important;gap:0!important;position:absolute;top:100%;left:0;right:0;background:#111111;border-bottom:1px solid #242225;padding:8px 20px 16px;z-index:50}
+  .site-header.open .main-nav a{padding:14px 0;font-size:18px;border-bottom:1px solid #242225}
+}
+@media (max-width: 400px){ .site-header img{height:19px!important} }
+@media (max-width: 1000px){
+  [data-name="Media"]:has(> .cover){padding:28px 20px}
+  .cover{height:auto!important;max-width:100%}
+  .cover img{height:auto!important;width:auto!important;max-height:240px;max-width:100%}
+}
+</style>
+<style>html,body{margin:0;background:#111111;overflow-x:hidden}[hidden]{display:none!important}</style>
+</head>
+<body>
+<div data-name="ALVIA Portofoliu · 1440" style="margin: 0 auto; width: 100%; max-width: 1440px; font-family: 'Manrope', 'Satoshi', system-ui, sans-serif; color: #FFFFFF; background: #111111; -webkit-font-smoothing: antialiased">
+
+<!-- 00 Header -->
+<header class="site-header" aria-label="00 Header" data-name="00 Header" style="width: 100%; max-width: 1440px; box-sizing: border-box; height: 84px; padding: 0px clamp(20px, 8.333vw, 120px) 0px clamp(20px, 8.333vw, 120px); background: #111111; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #242225">
+<a href="index.html" aria-label="ALVIA, pagina principală" style="display: flex"><img src="img/logo/alvia-alb.svg" alt="ALVIA" style="height: 28px; width: auto; display: block"></a>
+<button class="burger" type="button" aria-label="Meniu" aria-expanded="false"><span></span><span></span><span></span></button>
+<nav aria-label="Meniu" class="main-nav" style="display: flex; align-items: center; gap: 30px; font-size: 15px; line-height: 1.333; font-weight: 600; color: #BDB9BE">
+<a class="navlink" href="index.html" style="text-decoration: none">Acasă</a>
+<a class="navlink" href="agende.html" style="text-decoration: none">Agende</a>
+<a class="navlink" href="tricouri.html" style="text-decoration: none">Tricouri</a>
+<a href="portofoliu.html" aria-current="page" style="text-decoration: none; color: #FFFFFF; padding: 8px 0px 6px 0px; border-bottom: 2px solid #FFCA01">Portofoliu</a>
+<a class="navlink" href="tehnologii.html" style="text-decoration: none">Tehnologii</a>
+<a class="navlink" href="cataloage.html" style="text-decoration: none">Cataloage</a>
+<a class="navlink" href="contacte.html" style="text-decoration: none">Contacte</a>
+</nav>
+<div style="display: flex; align-items: center; gap: 20px">
+<span style="font-size: 15px; line-height: 1.333; font-weight: 600; color: #FFFFFF; font-variant-numeric: tabular-nums">067 101 809</span>
+<a class="btn" href="#cerere" style="display: inline-flex; align-items: center; height: 44px; padding: 0px 22px 0px 22px; border-radius: 999px; background: #FFCA01; color: #111111; text-decoration: none; font-size: 15px; font-weight: 700">Cere o ofertă</a>
+</div>
+</header>
+
+<!-- 01 Intro -->
+<section aria-label="01 Intro" data-name="01 Intro" style="width: 100%; max-width: 1440px; box-sizing: border-box; padding: clamp(48px, 6.111vw, 88px) clamp(20px, 8.333vw, 120px) clamp(44px, 5.556vw, 80px) clamp(20px, 8.333vw, 120px); background: radial-gradient(40% 40% at 0% 30%, rgba(162,61,151,0.6) 0%, rgba(162,61,151,0) 100%), radial-gradient(36% 40% at 100% 30%, rgba(255,202,1,0.35) 0%, rgba(255,202,1,0) 100%), #111111; display: flex; flex-direction: column; align-items: center; gap: clamp(16px, 3.889vw, 56px)">
+<div data-name="Intro / Text" style="display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center">
+<nav aria-label="Breadcrumb" style="display: flex; gap: 10px; font-size: 14px; line-height: 1.429; font-weight: 600; color: #BDB9BE"><a class="more" href="index.html" style="text-decoration: none">Acasă</a><span aria-hidden="true">/</span><span style="color: #FFFFFF">Portofoliu</span></nav>
+<div aria-hidden="true" style="width: 72px; height: 72px; border-radius: 20px; border: 1px solid rgba(255,202,1,0.45); background: rgba(255,202,1,0.08); display: flex; align-items: center; justify-content: center; color: #FFCA01"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"></rect><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><path d="M3 13h18"></path></svg></div>
+<span style="font-size: 20px; line-height: 1.3; font-weight: 700; color: #FFCA01">Portofoliu</span>
+<h1 style="margin: 0; width: 100%; max-width: 1000px; font-size: clamp(40px, 5.556vw, 80px); line-height: 1.05; font-weight: 800; letter-spacing: -0.045em; text-wrap: balance">Proiecte reale pentru companii reale</h1>
+<p style="margin: 0; width: 100%; max-width: 700px; font-size: 20px; line-height: 1.5; font-weight: 500; color: #D9D6DA">Agende, sticle, căni și seturi cadou cu logo-ul clienților noștri. Vedeți cum arată un proiect, de la cerere la livrare.</p>
+<div style="display: flex; gap: 14px; padding-top: 8px">
+<a class="btn" href="#studii" style="display: inline-flex; align-items: center; height: 56px; padding: 0px clamp(16px, 2.083vw, 30px) 0px clamp(16px, 2.083vw, 30px); border-radius: 999px; background: #FFCA01; color: #111111; text-decoration: none; font-size: 17px; font-weight: 700">Vezi studiile de caz</a>
+<a class="btn btn-ghost" href="#cerere" style="display: inline-flex; align-items: center; height: 56px; padding: 0px clamp(16px, 2.014vw, 29px) 0px clamp(16px, 2.014vw, 29px); border-radius: 999px; border: 1px solid #FFFFFF; color: #FFFFFF; text-decoration: none; font-size: 17px; font-weight: 700">Vreau ceva similar</a>
+</div>
+</div>
+<div data-name="Intro / Mozaic" data-zoom-group style="width: 100%; max-width: 1200px; display: grid; grid-template-columns: 588px repeat(2, minmax(0, 1fr)); grid-template-rows: 220px 220px; gap: 24px">
+<div class="zoom" data-zoom="img/portofoliu/set-maib-mare.jpg" data-caption="Set corporativ maib: agendă, termos, căni și sticlă" style="grid-row: span 2; border-radius: 24px; overflow: hidden"><img src="img/portofoliu/set-maib.jpg" alt="Set corporativ maib: agendă, termos, căni și sticlă" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
+<div class="zoom" data-zoom="img/portofoliu/sticle-clienti-mare.jpg" data-caption="Sticle cu logo: OSCE, EUBAM, Felicia" style="border-radius: 24px; overflow: hidden"><img src="img/portofoliu/sticle-clienti.jpg" alt="Sticle cu logo: OSCE, EUBAM, Felicia" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
+<div class="zoom" data-zoom="img/portofoliu/cani-cafenea-mare.jpg" data-caption="Căni cu ilustrații pentru cafenele" style="border-radius: 24px; overflow: hidden"><img src="img/portofoliu/cani-cafenea.jpg" alt="Căni cu ilustrații pentru cafenele" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
+<div class="zoom" data-zoom="img/portofoliu/termosuri-mare.jpg" data-caption="Termosuri și căni cu logo" style="border-radius: 24px; overflow: hidden"><img src="img/portofoliu/termosuri.jpg" alt="Termosuri și căni cu logo" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
+<div class="zoom" data-zoom="img/portofoliu/agende-logo-color-mare.jpg" data-caption="Agende cu logo-ul clienților" style="border-radius: 24px; overflow: hidden"><img src="img/portofoliu/agende-logo-color.jpg" alt="Agende cu logo-ul clienților" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
+</div>
+<div data-name="Clienti / slider" style="width: 100%; max-width: 1200px; display: flex; flex-direction: column; align-items: center; gap: clamp(16px, 2.222vw, 32px)">
+<span style="font-size: 15px; line-height: 1.333; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #FFFFFF">Companii care ne-au ales</span>
+<div class="logo-slider" aria-label="Clienți"><div class="logo-track"><div class="logo-chip"><img class="lw" src="img/clienti/basf-alb.png" alt="BASF" loading="lazy"><img class="lc" src="img/clienti/basf.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/carlevana-alb.png" alt="Carlevana" loading="lazy"><img class="lc" src="img/clienti/carlevana.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/darwin-alb.png" alt="Darwin" loading="lazy"><img class="lc" src="img/clienti/darwin.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/efesmoldova-alb.png" alt="Efes Moldova" loading="lazy"><img class="lc" src="img/clienti/efesmoldova.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/ellation-alb.png" alt="Ellation" loading="lazy"><img class="lc" src="img/clienti/ellation.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/eubam-alb.png" alt="EUBAM" loading="lazy"><img class="lc" src="img/clienti/eubam.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/fcb-alb.png" alt="FinComBank" loading="lazy"><img class="lc" src="img/clienti/fcb.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/felicia-alb.png" alt="Felicia" loading="lazy"><img class="lc" src="img/clienti/felicia.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/kedem-jdc-alb.png" alt="Kedem JDC" loading="lazy"><img class="lc" src="img/clienti/kedem-jdc.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/lebridge-alb.png" alt="Le Bridge" loading="lazy"><img class="lc" src="img/clienti/lebridge.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/lidea-alb.png" alt="Lidea" loading="lazy"><img class="lc" src="img/clienti/lidea.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/linella-alb.png" alt="Linella" loading="lazy"><img class="lc" src="img/clienti/linella.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/maib-alb.png" alt="maib" loading="lazy"><img class="lc" src="img/clienti/maib.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/micb-alb.png" alt="MICB" loading="lazy"><img class="lc" src="img/clienti/micb.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/microinvest-alb.png" alt="Microinvest" loading="lazy"><img class="lc" src="img/clienti/microinvest.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/moldasig-alb.png" alt="Moldasig" loading="lazy"><img class="lc" src="img/clienti/moldasig.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/moldtelecom-alb.png" alt="Moldtelecom" loading="lazy"><img class="lc" src="img/clienti/moldtelecom.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/nestle-alb.png" alt="Nestlé" loading="lazy"><img class="lc" src="img/clienti/nestle.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/orange-alb.png" alt="Orange" loading="lazy"><img class="lc" src="img/clienti/orange.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/orbico-alb.png" alt="Orbico" loading="lazy"><img class="lc" src="img/clienti/orbico.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/osce-alb.png" alt="OSCE" loading="lazy"><img class="lc" src="img/clienti/osce.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/otpbank-alb.png" alt="OTP Bank" loading="lazy"><img class="lc" src="img/clienti/otpbank.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/pcb-alb.png" alt="ProCredit Bank" loading="lazy"><img class="lc" src="img/clienti/pcb.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/pe-alb.png" alt="PE" loading="lazy"><img class="lc" src="img/clienti/pe.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/promolex-alb.png" alt="Promo-LEX" loading="lazy"><img class="lc" src="img/clienti/promolex.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/purcari-alb.png" alt="Purcari" loading="lazy"><img class="lc" src="img/clienti/purcari.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/sandra-alb.png" alt="Sandra" loading="lazy"><img class="lc" src="img/clienti/sandra.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/sporter-alb.png" alt="Sporter" loading="lazy"><img class="lc" src="img/clienti/sporter.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/syngenta-alb.png" alt="Syngenta" loading="lazy"><img class="lc" src="img/clienti/syngenta.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/tucano-alb.png" alt="Tucano" loading="lazy"><img class="lc" src="img/clienti/tucano.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/undp-alb.png" alt="UNDP" loading="lazy"><img class="lc" src="img/clienti/undp.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/unwomen-alb.png" alt="UN Women" loading="lazy"><img class="lc" src="img/clienti/unwomen.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/vb-alb.png" alt="Victoriabank" loading="lazy"><img class="lc" src="img/clienti/vb.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-dup" aria-hidden="true"><div class="logo-chip"><img class="lw" src="img/clienti/basf-alb.png" alt="BASF" loading="lazy"><img class="lc" src="img/clienti/basf.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/carlevana-alb.png" alt="Carlevana" loading="lazy"><img class="lc" src="img/clienti/carlevana.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/darwin-alb.png" alt="Darwin" loading="lazy"><img class="lc" src="img/clienti/darwin.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/efesmoldova-alb.png" alt="Efes Moldova" loading="lazy"><img class="lc" src="img/clienti/efesmoldova.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/ellation-alb.png" alt="Ellation" loading="lazy"><img class="lc" src="img/clienti/ellation.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/eubam-alb.png" alt="EUBAM" loading="lazy"><img class="lc" src="img/clienti/eubam.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/fcb-alb.png" alt="FinComBank" loading="lazy"><img class="lc" src="img/clienti/fcb.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/felicia-alb.png" alt="Felicia" loading="lazy"><img class="lc" src="img/clienti/felicia.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/kedem-jdc-alb.png" alt="Kedem JDC" loading="lazy"><img class="lc" src="img/clienti/kedem-jdc.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/lebridge-alb.png" alt="Le Bridge" loading="lazy"><img class="lc" src="img/clienti/lebridge.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/lidea-alb.png" alt="Lidea" loading="lazy"><img class="lc" src="img/clienti/lidea.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/linella-alb.png" alt="Linella" loading="lazy"><img class="lc" src="img/clienti/linella.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/maib-alb.png" alt="maib" loading="lazy"><img class="lc" src="img/clienti/maib.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/micb-alb.png" alt="MICB" loading="lazy"><img class="lc" src="img/clienti/micb.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/microinvest-alb.png" alt="Microinvest" loading="lazy"><img class="lc" src="img/clienti/microinvest.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/moldasig-alb.png" alt="Moldasig" loading="lazy"><img class="lc" src="img/clienti/moldasig.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/moldtelecom-alb.png" alt="Moldtelecom" loading="lazy"><img class="lc" src="img/clienti/moldtelecom.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/nestle-alb.png" alt="Nestlé" loading="lazy"><img class="lc" src="img/clienti/nestle.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/orange-alb.png" alt="Orange" loading="lazy"><img class="lc" src="img/clienti/orange.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/orbico-alb.png" alt="Orbico" loading="lazy"><img class="lc" src="img/clienti/orbico.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/osce-alb.png" alt="OSCE" loading="lazy"><img class="lc" src="img/clienti/osce.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/otpbank-alb.png" alt="OTP Bank" loading="lazy"><img class="lc" src="img/clienti/otpbank.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/pcb-alb.png" alt="ProCredit Bank" loading="lazy"><img class="lc" src="img/clienti/pcb.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/pe-alb.png" alt="PE" loading="lazy"><img class="lc" src="img/clienti/pe.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/promolex-alb.png" alt="Promo-LEX" loading="lazy"><img class="lc" src="img/clienti/promolex.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/purcari-alb.png" alt="Purcari" loading="lazy"><img class="lc" src="img/clienti/purcari.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/sandra-alb.png" alt="Sandra" loading="lazy"><img class="lc" src="img/clienti/sandra.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/sporter-alb.png" alt="Sporter" loading="lazy"><img class="lc" src="img/clienti/sporter.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/syngenta-alb.png" alt="Syngenta" loading="lazy"><img class="lc" src="img/clienti/syngenta.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/tucano-alb.png" alt="Tucano" loading="lazy"><img class="lc" src="img/clienti/tucano.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/undp-alb.png" alt="UNDP" loading="lazy"><img class="lc" src="img/clienti/undp.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/unwomen-alb.png" alt="UN Women" loading="lazy"><img class="lc" src="img/clienti/unwomen.png" alt="" aria-hidden="true" loading="lazy"></div><div class="logo-chip"><img class="lw" src="img/clienti/vb-alb.png" alt="Victoriabank" loading="lazy"><img class="lc" src="img/clienti/vb.png" alt="" aria-hidden="true" loading="lazy"></div></div></div></div>
+</div>
+</section>
+
+<!-- 03 Studii de caz -->
+<section id="studii" aria-label="03 Studii de caz" data-name="03 Studii de caz" style="width: 100%; max-width: 1440px; box-sizing: border-box; padding: clamp(62px, 7.778vw, 112px) clamp(20px, 8.333vw, 120px) clamp(62px, 7.778vw, 112px) clamp(20px, 8.333vw, 120px); background: #F7F5F7; color: #111111; display: flex; flex-direction: column; gap: clamp(16px, 2.778vw, 40px)">
+<div style="display: flex; flex-direction: column; gap: 14px">
+<span style="font-size: 18px; line-height: 1.333; font-weight: 700; color: #A23D97">Studii de caz</span>
+<h2 style="margin: 0; width: 100%; max-width: 900px; font-size: clamp(30px, 4.167vw, 60px); line-height: 1.1; font-weight: 800; letter-spacing: -0.035em">De la cerință la cadoul livrat</h2>
+</div>
+
+<article data-name="03 Studii de caz / Set corporativ" style="display: grid; grid-template-columns: 600px minmax(0, 1fr); gap: clamp(16px, 2.778vw, 40px); padding: 24px clamp(16px, 1.667vw, 24px) 24px clamp(16px, 1.667vw, 24px); background: #FFFFFF; border-radius: 28px">
+<div data-name="Galerie" data-gallery style="display: flex; flex-direction: column; gap: 16px">
+<div class="zoom" data-main data-zoom="img/portofoliu/set-maib-mare.jpg" style="aspect-ratio: 1654 / 1181; border-radius: 18px; overflow: hidden; background: #111"><img src="img/portofoliu/set-maib.jpg" alt="Setul complet: agendă, termos, căni și sticlă" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px"><button type="button" data-thumb="img/portofoliu/set-maib.jpg" data-zoom-src="img/portofoliu/set-maib-mare.jpg" class="on" aria-label="Setul complet: agendă, termos, căni și sticlă" style="height: 104px; padding: 0px 0px 0px 0px; border: 0; border-radius: 14px; overflow: hidden; background: #111"><img src="img/portofoliu/set-maib.jpg" alt="Setul complet: agendă, termos, căni și sticlă" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block"></button><button type="button" data-thumb="img/portofoliu/sticla-maib.jpg" data-zoom-src="img/portofoliu/sticla-maib-mare.jpg" class="" aria-label="Sticlă transparentă cu logo maib" style="height: 104px; padding: 0px 0px 0px 0px; border: 0; border-radius: 14px; overflow: hidden; background: #111"><img src="img/portofoliu/sticla-maib.jpg" alt="Sticlă transparentă cu logo maib" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block"></button><button type="button" data-thumb="img/portofoliu/detaliu-maib.jpg" data-zoom-src="img/portofoliu/detaliu-maib.jpg" class="" aria-label="Logo embosat pe copertă" style="height: 104px; padding: 0px 0px 0px 0px; border: 0; border-radius: 14px; overflow: hidden; background: #111"><img src="img/portofoliu/detaliu-maib.jpg" alt="Logo embosat pe copertă" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block"></button><button type="button" data-thumb="img/portofoliu/detaliu-relief.jpg" data-zoom-src="img/portofoliu/detaliu-relief.jpg" class="" aria-label="Model în relief pe copertă" style="height: 104px; padding: 0px 0px 0px 0px; border: 0; border-radius: 14px; overflow: hidden; background: #111"><img src="img/portofoliu/detaliu-relief.jpg" alt="Model în relief pe copertă" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block"></button></div>
+</div>
+<div data-name="Info" style="padding: 12px 16px 12px 0px; display: flex; flex-direction: column; justify-content: center; gap: 18px">
+<div style="display: flex; gap: 8px; flex-wrap: wrap"><span style="font-size: 13px; line-height: 1.385; font-weight: 700; padding: 6px 12px 6px 12px; border-radius: 999px; background: #F3ECF3; color: #A23D97">Bănci</span><span style="font-size: 13px; line-height: 1.385; font-weight: 700; padding: 6px 12px 6px 12px; border-radius: 999px; background: #F3ECF3; color: #A23D97">Onboarding angajați</span></div>
+<h3 style="margin: 0; font-size: clamp(27px, 2.5vw, 36px); line-height: 1.167; font-weight: 800; letter-spacing: -0.025em">Set de bun venit pentru angajați</h3>
+<span style="font-size: 15px; line-height: 1.467; font-weight: 700; color: #5B575C">Client: maib</span>
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 12px; line-height: 1.333; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #8C6A00">Cerința</span><p style="margin: 0; font-size: 16px; line-height: 1.562; color: #4A464B">Un cadou de bun venit pentru angajații noi, pe care să-l folosească zilnic la birou.</p></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 12px; line-height: 1.333; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #8C6A00">Soluția</span><p style="margin: 0; font-size: 16px; line-height: 1.562; color: #4A464B">Agendă cu copertă în relief, termos, căni cu bază din plută și sticlă transparentă, toate cu logo-ul băncii. Tehnologie: embosare și tipar UV. Ambalaj: cutie cadou neagră.</p></div>
+<div data-name="In cifre" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px">
+<div style="padding: 16px 16px 16px 16px; border-radius: 16px; background: #F7F5F7; display: flex; flex-direction: column; gap: 2px"><span style="font-size: clamp(21px, 1.944vw, 28px); line-height: 1.214; font-weight: 800">150</span><span style="font-size: 13px; line-height: 1.385; color: #5B575C">seturi livrate</span></div>
+<div style="padding: 16px 16px 16px 16px; border-radius: 16px; background: #F7F5F7; display: flex; flex-direction: column; gap: 2px"><span style="font-size: clamp(21px, 1.944vw, 28px); line-height: 1.214; font-weight: 800">10 zile</span><span style="font-size: 13px; line-height: 1.385; color: #5B575C">de la aprobare</span></div>
+<div style="padding: 16px 16px 16px 16px; border-radius: 16px; background: #F7F5F7; display: flex; flex-direction: column; gap: 2px"><span style="font-size: clamp(21px, 1.944vw, 28px); line-height: 1.214; font-weight: 800">5</span><span style="font-size: 13px; line-height: 1.385; color: #5B575C">tipuri de produse</span></div>
+</div>
+<a class="btn" href="#cerere" data-sim="p1" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; height: 50px; padding: 0px clamp(16px, 1.806vw, 26px) 0px clamp(16px, 1.806vw, 26px); border-radius: 999px; background: #FFCA01; color: #111111; text-decoration: none; font-size: 16px; font-weight: 700">Vreau ceva similar<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+</article>
+
+<article data-name="03 Studii de caz / Agende cadou" style="display: grid; grid-template-columns: 600px minmax(0, 1fr); gap: clamp(16px, 2.778vw, 40px); padding: 24px clamp(16px, 1.667vw, 24px) 24px clamp(16px, 1.667vw, 24px); background: #FFFFFF; border-radius: 28px">
+<div data-name="Galerie" data-gallery style="display: flex; flex-direction: column; gap: 16px">
+<div class="zoom" data-main data-zoom="img/portofoliu/agende-cutie-lemn-mare.jpg" style="aspect-ratio: 1654 / 1181; border-radius: 18px; overflow: hidden; background: #111"><img src="img/portofoliu/agende-cutie-lemn.jpg" alt="Agende în cutie de lemn" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px"><button type="button" data-thumb="img/portofoliu/agende-cutie-lemn.jpg" data-zoom-src="img/portofoliu/agende-cutie-lemn-mare.jpg" class="on" aria-label="Agende în cutie de lemn" style="height: 104px; padding: 0px 0px 0px 0px; border: 0; border-radius: 14px; overflow: hidden; background: #111"><img src="img/portofoliu/agende-cutie-lemn.jpg" alt="Agende în cutie de lemn" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block"></button><button type="button" data-thumb="img/portofoliu/agende-culori.jpg" data-zoom-src="img/portofoliu/agende-culori-mare.jpg" class="" aria-label="Agende în 5 culori" style="height: 104px; padding: 0px 0px 0px 0px; border: 0; border-radius: 14px; overflow: hidden; background: #111"><img src="img/portofoliu/agende-culori.jpg" alt="Agende în 5 culori" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block"></button><button type="button" data-thumb="img/portofoliu/agenda-in-mana.jpg" data-zoom-src="img/portofoliu/agenda-in-mana-mare.jpg" class="" aria-label="Agenda în uz" style="height: 104px; padding: 0px 0px 0px 0px; border: 0; border-radius: 14px; overflow: hidden; background: #111"><img src="img/portofoliu/agenda-in-mana.jpg" alt="Agenda în uz" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block"></button><button type="button" data-thumb="img/portofoliu/detaliu-tree.jpg" data-zoom-src="img/portofoliu/detaliu-tree.jpg" class="" aria-label="Logo embosat pe copertă" style="height: 104px; padding: 0px 0px 0px 0px; border: 0; border-radius: 14px; overflow: hidden; background: #111"><img src="img/portofoliu/detaliu-tree.jpg" alt="Logo embosat pe copertă" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block"></button></div>
+</div>
+<div data-name="Info" style="padding: 12px 16px 12px 0px; display: flex; flex-direction: column; justify-content: center; gap: 18px">
+<div style="display: flex; gap: 8px; flex-wrap: wrap"><span style="font-size: 13px; line-height: 1.385; font-weight: 700; padding: 6px 12px 6px 12px; border-radius: 999px; background: #F3ECF3; color: #A23D97">Crăciun / sfârșit de an</span><span style="font-size: 13px; line-height: 1.385; font-weight: 700; padding: 6px 12px 6px 12px; border-radius: 999px; background: #F3ECF3; color: #A23D97">Agende</span></div>
+<h3 style="margin: 0; font-size: clamp(27px, 2.5vw, 36px); line-height: 1.167; font-weight: 800; letter-spacing: -0.025em">Agende cadou în cutii de lemn</h3>
+<span style="font-size: 15px; line-height: 1.467; font-weight: 700; color: #5B575C">Client: companie de distribuție din Chișinău</span>
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 12px; line-height: 1.333; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #8C6A00">Cerința</span><p style="margin: 0; font-size: 16px; line-height: 1.562; color: #4A464B">Cadouri de sfârșit de an pentru partenerii de afaceri, în culorile companiei.</p></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 12px; line-height: 1.333; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #8C6A00">Soluția</span><p style="margin: 0; font-size: 16px; line-height: 1.562; color: #4A464B">Agende Eco Standart în 5 culori, așezate în cutii de lemn cu hârtie de mătase. Personalizare: embosare pe copertă.</p></div>
+<div data-name="In cifre" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px">
+<div style="padding: 16px 16px 16px 16px; border-radius: 16px; background: #F7F5F7; display: flex; flex-direction: column; gap: 2px"><span style="font-size: clamp(21px, 1.944vw, 28px); line-height: 1.214; font-weight: 800">300</span><span style="font-size: 13px; line-height: 1.385; color: #5B575C">agende livrate</span></div>
+<div style="padding: 16px 16px 16px 16px; border-radius: 16px; background: #F7F5F7; display: flex; flex-direction: column; gap: 2px"><span style="font-size: clamp(21px, 1.944vw, 28px); line-height: 1.214; font-weight: 800">12 zile</span><span style="font-size: 13px; line-height: 1.385; color: #5B575C">de la aprobare</span></div>
+<div style="padding: 16px 16px 16px 16px; border-radius: 16px; background: #F7F5F7; display: flex; flex-direction: column; gap: 2px"><span style="font-size: clamp(21px, 1.944vw, 28px); line-height: 1.214; font-weight: 800">5</span><span style="font-size: 13px; line-height: 1.385; color: #5B575C">culori de copertă</span></div>
+</div>
+<a class="btn" href="#cerere" data-sim="p2" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; height: 50px; padding: 0px clamp(16px, 1.806vw, 26px) 0px clamp(16px, 1.806vw, 26px); border-radius: 999px; background: #FFCA01; color: #111111; text-decoration: none; font-size: 16px; font-weight: 700">Vreau ceva similar<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+</article>
+
+<article data-name="03 Studii de caz / Sticle stema" style="display: grid; grid-template-columns: 600px minmax(0, 1fr); gap: clamp(16px, 2.778vw, 40px); padding: 24px clamp(16px, 1.667vw, 24px) 24px clamp(16px, 1.667vw, 24px); background: #FFFFFF; border-radius: 28px">
+<div data-name="Galerie" data-gallery style="display: flex; flex-direction: column; gap: 16px">
+<div class="zoom" data-main data-zoom="img/portofoliu/sticla-stema-rm-mare.jpg" style="aspect-ratio: 1654 / 1181; border-radius: 18px; overflow: hidden; background: #111"><img src="img/portofoliu/sticla-stema-rm.jpg" alt="Sticlă neagră cu stema Republicii Moldova" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px"><button type="button" data-thumb="img/portofoliu/sticla-stema-rm.jpg" data-zoom-src="img/portofoliu/sticla-stema-rm-mare.jpg" class="on" aria-label="Sticlă neagră cu stema Republicii Moldova" style="height: 104px; padding: 0px 0px 0px 0px; border: 0; border-radius: 14px; overflow: hidden; background: #111"><img src="img/portofoliu/sticla-stema-rm.jpg" alt="Sticlă neagră cu stema Republicii Moldova" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block"></button><button type="button" data-thumb="img/portofoliu/sticle-clienti.jpg" data-zoom-src="img/portofoliu/sticle-clienti-mare.jpg" class="" aria-label="Sticle cu logo-ul clienților" style="height: 104px; padding: 0px 0px 0px 0px; border: 0; border-radius: 14px; overflow: hidden; background: #111"><img src="img/portofoliu/sticle-clienti.jpg" alt="Sticle cu logo-ul clienților" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block"></button><button type="button" data-thumb="img/tehnologii/tipar-uv.jpg" data-zoom-src="img/tehnologii/tipar-uv.jpg" class="" aria-label="Tipar UV" style="height: 104px; padding: 0px 0px 0px 0px; border: 0; border-radius: 14px; overflow: hidden; background: #111"><img src="img/tehnologii/tipar-uv.jpg" alt="Tipar UV" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block"></button><button type="button" data-thumb="img/tehnologii/gravura-laser.jpg" data-zoom-src="img/tehnologii/gravura-laser.jpg" class="" aria-label="Gravură laser" style="height: 104px; padding: 0px 0px 0px 0px; border: 0; border-radius: 14px; overflow: hidden; background: #111"><img src="img/tehnologii/gravura-laser.jpg" alt="Gravură laser" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block"></button></div>
+</div>
+<div data-name="Info" style="padding: 12px 16px 12px 0px; display: flex; flex-direction: column; justify-content: center; gap: 18px">
+<div style="display: flex; gap: 8px; flex-wrap: wrap"><span style="font-size: 13px; line-height: 1.385; font-weight: 700; padding: 6px 12px 6px 12px; border-radius: 999px; background: #F3ECF3; color: #A23D97">Instituții</span><span style="font-size: 13px; line-height: 1.385; font-weight: 700; padding: 6px 12px 6px 12px; border-radius: 999px; background: #F3ECF3; color: #A23D97">Conferințe și evenimente</span></div>
+<h3 style="margin: 0; font-size: clamp(27px, 2.5vw, 36px); line-height: 1.167; font-weight: 800; letter-spacing: -0.025em">Sticle cu stema Republicii Moldova</h3>
+<span style="font-size: 15px; line-height: 1.467; font-weight: 700; color: #5B575C">Client: instituție publică din Republica Moldova</span>
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 12px; line-height: 1.333; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #8C6A00">Cerința</span><p style="margin: 0; font-size: 16px; line-height: 1.562; color: #4A464B">Sticle reutilizabile cu stema de stat, oferite delegațiilor la o conferință internațională.</p></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 12px; line-height: 1.333; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #8C6A00">Soluția</span><p style="margin: 0; font-size: 16px; line-height: 1.562; color: #4A464B">Sticle din oțel inoxidabil, negre și albastre, cu stema aplicată prin tipar UV. Ambalaj: cutie individuală pentru fiecare sticlă.</p></div>
+<div data-name="In cifre" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px">
+<div style="padding: 16px 16px 16px 16px; border-radius: 16px; background: #F7F5F7; display: flex; flex-direction: column; gap: 2px"><span style="font-size: clamp(21px, 1.944vw, 28px); line-height: 1.214; font-weight: 800">500</span><span style="font-size: 13px; line-height: 1.385; color: #5B575C">sticle livrate</span></div>
+<div style="padding: 16px 16px 16px 16px; border-radius: 16px; background: #F7F5F7; display: flex; flex-direction: column; gap: 2px"><span style="font-size: clamp(21px, 1.944vw, 28px); line-height: 1.214; font-weight: 800">7 zile</span><span style="font-size: 13px; line-height: 1.385; color: #5B575C">de la aprobare</span></div>
+<div style="padding: 16px 16px 16px 16px; border-radius: 16px; background: #F7F5F7; display: flex; flex-direction: column; gap: 2px"><span style="font-size: clamp(21px, 1.944vw, 28px); line-height: 1.214; font-weight: 800">2</span><span style="font-size: 13px; line-height: 1.385; color: #5B575C">modele de sticlă</span></div>
+</div>
+<a class="btn" href="#cerere" data-sim="p3" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; height: 50px; padding: 0px clamp(16px, 1.806vw, 26px) 0px clamp(16px, 1.806vw, 26px); border-radius: 999px; background: #FFCA01; color: #111111; text-decoration: none; font-size: 16px; font-weight: 700">Vreau ceva similar<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+</article>
+
+<article data-name="03 Studii de caz / Cani cafenele" style="display: grid; grid-template-columns: 600px minmax(0, 1fr); gap: clamp(16px, 2.778vw, 40px); padding: 24px clamp(16px, 1.667vw, 24px) 24px clamp(16px, 1.667vw, 24px); background: #FFFFFF; border-radius: 28px">
+<div data-name="Galerie" data-gallery style="display: flex; flex-direction: column; gap: 16px">
+<div class="zoom" data-main data-zoom="img/portofoliu/cani-cafenea-mare.jpg" style="aspect-ratio: 1654 / 1181; border-radius: 18px; overflow: hidden; background: #111"><img src="img/portofoliu/cani-cafenea.jpg" alt="Căni cu ilustrații pentru cafenele" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px"><button type="button" data-thumb="img/portofoliu/cani-cafenea.jpg" data-zoom-src="img/portofoliu/cani-cafenea-mare.jpg" class="on" aria-label="Căni cu ilustrații pentru cafenele" style="height: 104px; padding: 0px 0px 0px 0px; border: 0; border-radius: 14px; overflow: hidden; background: #111"><img src="img/portofoliu/cani-cafenea.jpg" alt="Căni cu ilustrații pentru cafenele" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block"></button><button type="button" data-thumb="img/portofoliu/pluta-lemn.jpg" data-zoom-src="img/portofoliu/pluta-lemn-mare.jpg" class="" aria-label="Suporturi din plută gravate" style="height: 104px; padding: 0px 0px 0px 0px; border: 0; border-radius: 14px; overflow: hidden; background: #111"><img src="img/portofoliu/pluta-lemn.jpg" alt="Suporturi din plută gravate" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block"></button><button type="button" data-thumb="img/tehnologii/decalcomanie.jpg" data-zoom-src="img/tehnologii/decalcomanie.jpg" class="" aria-label="Decalcomanie" style="height: 104px; padding: 0px 0px 0px 0px; border: 0; border-radius: 14px; overflow: hidden; background: #111"><img src="img/tehnologii/decalcomanie.jpg" alt="Decalcomanie" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block"></button><button type="button" data-thumb="img/tehnologii/sublimare.jpg" data-zoom-src="img/tehnologii/sublimare.jpg" class="" aria-label="Sublimare" style="height: 104px; padding: 0px 0px 0px 0px; border: 0; border-radius: 14px; overflow: hidden; background: #111"><img src="img/tehnologii/sublimare.jpg" alt="Sublimare" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block"></button></div>
+</div>
+<div data-name="Info" style="padding: 12px 16px 12px 0px; display: flex; flex-direction: column; justify-content: center; gap: 18px">
+<div style="display: flex; gap: 8px; flex-wrap: wrap"><span style="font-size: 13px; line-height: 1.385; font-weight: 700; padding: 6px 12px 6px 12px; border-radius: 999px; background: #F3ECF3; color: #A23D97">HoReCa</span><span style="font-size: 13px; line-height: 1.385; font-weight: 700; padding: 6px 12px 6px 12px; border-radius: 999px; background: #F3ECF3; color: #A23D97">Căni</span></div>
+<h3 style="margin: 0; font-size: clamp(27px, 2.5vw, 36px); line-height: 1.167; font-weight: 800; letter-spacing: -0.025em">Căni cu ilustrație pentru cafenele</h3>
+<span style="font-size: 15px; line-height: 1.467; font-weight: 700; color: #5B575C">Client: rețea de cafenele din Chișinău</span>
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 12px; line-height: 1.333; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #8C6A00">Cerința</span><p style="margin: 0; font-size: 16px; line-height: 1.562; color: #4A464B">Căni cu ilustrația brandului, pentru servire în cafenele și pentru vânzare la tejghea.</p></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 12px; line-height: 1.333; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #8C6A00">Soluția</span><p style="margin: 0; font-size: 16px; line-height: 1.562; color: #4A464B">Căni ceramice gri cu ilustrație full-color aplicată prin decalcomanie, plus suporturi din plută gravate cu logo. Ambalaj: cutie kraft.</p></div>
+<div data-name="In cifre" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px">
+<div style="padding: 16px 16px 16px 16px; border-radius: 16px; background: #F7F5F7; display: flex; flex-direction: column; gap: 2px"><span style="font-size: clamp(21px, 1.944vw, 28px); line-height: 1.214; font-weight: 800">400</span><span style="font-size: 13px; line-height: 1.385; color: #5B575C">căni livrate</span></div>
+<div style="padding: 16px 16px 16px 16px; border-radius: 16px; background: #F7F5F7; display: flex; flex-direction: column; gap: 2px"><span style="font-size: clamp(21px, 1.944vw, 28px); line-height: 1.214; font-weight: 800">14 zile</span><span style="font-size: 13px; line-height: 1.385; color: #5B575C">de la aprobare</span></div>
+<div style="padding: 16px 16px 16px 16px; border-radius: 16px; background: #F7F5F7; display: flex; flex-direction: column; gap: 2px"><span style="font-size: clamp(21px, 1.944vw, 28px); line-height: 1.214; font-weight: 800">2</span><span style="font-size: 13px; line-height: 1.385; color: #5B575C">tipuri de produse</span></div>
+</div>
+<a class="btn" href="#cerere" data-sim="p5" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; height: 50px; padding: 0px clamp(16px, 1.806vw, 26px) 0px clamp(16px, 1.806vw, 26px); border-radius: 999px; background: #FFCA01; color: #111111; text-decoration: none; font-size: 16px; font-weight: 700">Vreau ceva similar<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+</article>
+
+<article data-name="03 Studii de caz / Termosuri campanie" style="display: grid; grid-template-columns: 600px minmax(0, 1fr); gap: clamp(16px, 2.778vw, 40px); padding: 24px clamp(16px, 1.667vw, 24px) 24px clamp(16px, 1.667vw, 24px); background: #FFFFFF; border-radius: 28px">
+<div data-name="Galerie" data-gallery style="display: flex; flex-direction: column; gap: 16px">
+<div class="zoom" data-main data-zoom="img/portofoliu/termosuri-mare.jpg" style="aspect-ratio: 1654 / 1181; border-radius: 18px; overflow: hidden; background: #111"><img src="img/portofoliu/termosuri.jpg" alt="Termosuri cu logo" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px"><button type="button" data-thumb="img/portofoliu/termosuri.jpg" data-zoom-src="img/portofoliu/termosuri-mare.jpg" class="on" aria-label="Termosuri cu logo" style="height: 104px; padding: 0px 0px 0px 0px; border: 0; border-radius: 14px; overflow: hidden; background: #111"><img src="img/portofoliu/termosuri.jpg" alt="Termosuri cu logo" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block"></button><button type="button" data-thumb="img/portofoliu/pixuri-cani.jpg" data-zoom-src="img/portofoliu/pixuri-cani-mare.jpg" class="" aria-label="Pixuri colorate și căni cu logo" style="height: 104px; padding: 0px 0px 0px 0px; border: 0; border-radius: 14px; overflow: hidden; background: #111"><img src="img/portofoliu/pixuri-cani.jpg" alt="Pixuri colorate și căni cu logo" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block"></button><button type="button" data-thumb="img/tehnologii/tipar-uv.jpg" data-zoom-src="img/tehnologii/tipar-uv.jpg" class="" aria-label="Tipar UV" style="height: 104px; padding: 0px 0px 0px 0px; border: 0; border-radius: 14px; overflow: hidden; background: #111"><img src="img/tehnologii/tipar-uv.jpg" alt="Tipar UV" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block"></button><button type="button" data-thumb="img/tehnologii/tampografie.jpg" data-zoom-src="img/tehnologii/tampografie.jpg" class="" aria-label="Tampografie" style="height: 104px; padding: 0px 0px 0px 0px; border: 0; border-radius: 14px; overflow: hidden; background: #111"><img src="img/tehnologii/tampografie.jpg" alt="Tampografie" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block"></button></div>
+</div>
+<div data-name="Info" style="padding: 12px 16px 12px 0px; display: flex; flex-direction: column; justify-content: center; gap: 18px">
+<div style="display: flex; gap: 8px; flex-wrap: wrap"><span style="font-size: 13px; line-height: 1.385; font-weight: 700; padding: 6px 12px 6px 12px; border-radius: 999px; background: #F3ECF3; color: #A23D97">Campanii promo</span><span style="font-size: 13px; line-height: 1.385; font-weight: 700; padding: 6px 12px 6px 12px; border-radius: 999px; background: #F3ECF3; color: #A23D97">Sticle și termosuri</span></div>
+<h3 style="margin: 0; font-size: clamp(27px, 2.5vw, 36px); line-height: 1.167; font-weight: 800; letter-spacing: -0.025em">Termosuri pentru o campanie de fidelizare</h3>
+<span style="font-size: 15px; line-height: 1.467; font-weight: 700; color: #5B575C">Client: companie de servicii din Chișinău</span>
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 12px; line-height: 1.333; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #8C6A00">Cerința</span><p style="margin: 0; font-size: 16px; line-height: 1.562; color: #4A464B">Un cadou util pentru clienții fideli, care să țină brandul la vedere în fiecare zi.</p></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 12px; line-height: 1.333; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #8C6A00">Soluția</span><p style="margin: 0; font-size: 16px; line-height: 1.562; color: #4A464B">Termosuri albastre cu model fațetat și logo alb prin tipar UV, plus pixuri colorate prin tampografie. Ambalaj: cutie cu fereastră.</p></div>
+<div data-name="In cifre" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px">
+<div style="padding: 16px 16px 16px 16px; border-radius: 16px; background: #F7F5F7; display: flex; flex-direction: column; gap: 2px"><span style="font-size: clamp(21px, 1.944vw, 28px); line-height: 1.214; font-weight: 800">250</span><span style="font-size: 13px; line-height: 1.385; color: #5B575C">termosuri livrate</span></div>
+<div style="padding: 16px 16px 16px 16px; border-radius: 16px; background: #F7F5F7; display: flex; flex-direction: column; gap: 2px"><span style="font-size: clamp(21px, 1.944vw, 28px); line-height: 1.214; font-weight: 800">8 zile</span><span style="font-size: 13px; line-height: 1.385; color: #5B575C">de la aprobare</span></div>
+<div style="padding: 16px 16px 16px 16px; border-radius: 16px; background: #F7F5F7; display: flex; flex-direction: column; gap: 2px"><span style="font-size: clamp(21px, 1.944vw, 28px); line-height: 1.214; font-weight: 800">1 000</span><span style="font-size: 13px; line-height: 1.385; color: #5B575C">pixuri cu logo</span></div>
+</div>
+<a class="btn" href="#cerere" data-sim="p4" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; height: 50px; padding: 0px clamp(16px, 1.806vw, 26px) 0px clamp(16px, 1.806vw, 26px); border-radius: 999px; background: #FFCA01; color: #111111; text-decoration: none; font-size: 16px; font-weight: 700">Vreau ceva similar<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+</article>
+</section>
+
+<!-- 04 Toate proiectele -->
+<section id="proiecte" aria-label="04 Toate proiectele" data-name="04 Toate proiectele" style="width: 100%; max-width: 1440px; box-sizing: border-box; padding: clamp(62px, 7.778vw, 112px) clamp(20px, 8.333vw, 120px) clamp(62px, 7.778vw, 112px) clamp(20px, 8.333vw, 120px); background: #111111; display: flex; flex-direction: column; gap: clamp(16px, 3.333vw, 48px)">
+<div style="display: flex; justify-content: space-between; align-items: flex-end">
+<div style="display: flex; flex-direction: column; gap: 14px">
+<span style="font-size: 18px; line-height: 1.333; font-weight: 700; color: #FFCA01">Toate proiectele</span>
+<h2 style="margin: 0; font-size: clamp(30px, 4.167vw, 60px); line-height: 1.1; font-weight: 800; letter-spacing: -0.035em">Galeria lucrărilor</h2>
+</div>
+<span style="font-size: 16px; line-height: 1.375; font-weight: 600; color: #BDB9BE"><span id="count">9 proiecte</span></span>
+</div>
+<div data-name="Grila proiecte" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px">
+
+<article class="lift" data-name="Proiect / Set corporativ" style="background: #1C1B1D; border: 1px solid #2C2A2D; border-radius: 24px; overflow: hidden; display: flex; flex-direction: column">
+<button type="button" class="zoom" data-open="p1" aria-label="Vezi fotografiile: Set corporativ" style="display: block; width: 100%; height: 300px; padding: 0px 0px 0px 0px; border: 0; background: #0B0B0C; cursor: pointer; overflow: hidden"><img src="img/portofoliu/set-maib.jpg" alt="" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block"></button>
+<div style="padding: 24px clamp(16px, 1.667vw, 24px) 24px clamp(16px, 1.667vw, 24px); display: flex; flex-direction: column; gap: 12px"><span style="font-size: 12px; line-height: 1.333; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #FFCA01">Bănci · maib</span><h3 style="margin: 0; font-size: 21px; line-height: 1.286; font-weight: 800">Set corporativ pentru angajați</h3><div style="display: flex; flex-wrap: wrap; gap: 6px"><span style="font-size: 12px; line-height: 1.333; font-weight: 600; padding: 5px 10px 5px 10px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Seturi cadou</span><span style="font-size: 12px; line-height: 1.333; font-weight: 600; padding: 5px 10px 5px 10px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Embosare</span></div><a class="similar" href="#cerere" data-sim="p1" style="font-size: 15px; line-height: 1.333; font-weight: 700; color: #FFCA01; text-decoration: none">Vreau ceva similar →</a></div>
+</article>
+
+<article class="lift" data-name="Proiect / Agende cadou" style="background: #1C1B1D; border: 1px solid #2C2A2D; border-radius: 24px; overflow: hidden; display: flex; flex-direction: column">
+<button type="button" class="zoom" data-open="p2" aria-label="Vezi fotografiile: Agende cadou" style="display: block; width: 100%; height: 300px; padding: 0px 0px 0px 0px; border: 0; background: #0B0B0C; cursor: pointer; overflow: hidden"><img src="img/portofoliu/agende-cutie-lemn.jpg" alt="" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block"></button>
+<div style="padding: 24px clamp(16px, 1.667vw, 24px) 24px clamp(16px, 1.667vw, 24px); display: flex; flex-direction: column; gap: 12px"><span style="font-size: 12px; line-height: 1.333; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #FFCA01">Distribuție · Cadouri parteneri</span><h3 style="margin: 0; font-size: 21px; line-height: 1.286; font-weight: 800">Agende cadou în cutii de lemn</h3><div style="display: flex; flex-wrap: wrap; gap: 6px"><span style="font-size: 12px; line-height: 1.333; font-weight: 600; padding: 5px 10px 5px 10px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Agende</span><span style="font-size: 12px; line-height: 1.333; font-weight: 600; padding: 5px 10px 5px 10px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Embosare</span></div><a class="similar" href="#cerere" data-sim="p2" style="font-size: 15px; line-height: 1.333; font-weight: 700; color: #FFCA01; text-decoration: none">Vreau ceva similar →</a></div>
+</article>
+
+<article class="lift" data-name="Proiect / Sticle stema" style="background: #1C1B1D; border: 1px solid #2C2A2D; border-radius: 24px; overflow: hidden; display: flex; flex-direction: column">
+<button class="zoom" type="button" data-open="p3" aria-label="Vezi fotografiile: Sticle cu stema" style="display: block; width: 100%; height: 300px; padding: 0px 0px 0px 0px; border: 0; background: #0B0B0C; cursor: pointer; overflow: hidden"><img src="img/portofoliu/sticla-stema-rm.jpg" alt="" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block"></button>
+<div style="padding: 24px clamp(16px, 1.667vw, 24px) 24px clamp(16px, 1.667vw, 24px); display: flex; flex-direction: column; gap: 12px"><span style="font-size: 12px; line-height: 1.333; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #FFCA01">Instituții · Conferință</span><h3 style="margin: 0; font-size: 21px; line-height: 1.286; font-weight: 800">Sticle cu stema Republicii Moldova</h3><div style="display: flex; flex-wrap: wrap; gap: 6px"><span style="font-size: 12px; line-height: 1.333; font-weight: 600; padding: 5px 10px 5px 10px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Sticle și termosuri</span><span style="font-size: 12px; line-height: 1.333; font-weight: 600; padding: 5px 10px 5px 10px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Tipar UV</span></div><a class="similar" href="#cerere" data-sim="p3" style="font-size: 15px; line-height: 1.333; font-weight: 700; color: #FFCA01; text-decoration: none">Vreau ceva similar →</a></div>
+</article>
+
+<article class="lift" data-name="Proiect / Termos" style="background: #1C1B1D; border: 1px solid #2C2A2D; border-radius: 24px; overflow: hidden; display: flex; flex-direction: column">
+<button class="zoom" type="button" data-open="p4" aria-label="Vezi fotografiile: Termos cu logo" style="display: block; width: 100%; height: 300px; padding: 0px 0px 0px 0px; border: 0; background: #0B0B0C; cursor: pointer; overflow: hidden"><img src="img/portofoliu/termosuri.jpg" alt="" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block"></button>
+<div style="padding: 24px clamp(16px, 1.667vw, 24px) 24px clamp(16px, 1.667vw, 24px); display: flex; flex-direction: column; gap: 12px"><span style="font-size: 12px; line-height: 1.333; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #FFCA01">Servicii · Campanie promo</span><h3 style="margin: 0; font-size: 21px; line-height: 1.286; font-weight: 800">Termos cu logo</h3><div style="display: flex; flex-wrap: wrap; gap: 6px"><span style="font-size: 12px; line-height: 1.333; font-weight: 600; padding: 5px 10px 5px 10px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Sticle și termosuri</span><span style="font-size: 12px; line-height: 1.333; font-weight: 600; padding: 5px 10px 5px 10px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Tipar UV</span></div><a class="similar" href="#cerere" data-sim="p4" style="font-size: 15px; line-height: 1.333; font-weight: 700; color: #FFCA01; text-decoration: none">Vreau ceva similar →</a></div>
+</article>
+
+<article class="lift" data-name="Proiect / Cani cafenea" style="background: #1C1B1D; border: 1px solid #2C2A2D; border-radius: 24px; overflow: hidden; display: flex; flex-direction: column">
+<button class="zoom" type="button" data-open="p5" aria-label="Vezi fotografiile: Căni pentru cafenea" style="display: block; width: 100%; height: 300px; padding: 0px 0px 0px 0px; border: 0; background: #0B0B0C; cursor: pointer; overflow: hidden"><img src="img/portofoliu/cani-cafenea.jpg" alt="" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block"></button>
+<div style="padding: 24px clamp(16px, 1.667vw, 24px) 24px clamp(16px, 1.667vw, 24px); display: flex; flex-direction: column; gap: 12px"><span style="font-size: 12px; line-height: 1.333; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #FFCA01">HoReCa · Rețea de cafenele</span><h3 style="margin: 0; font-size: 21px; line-height: 1.286; font-weight: 800">Căni pentru cafenea</h3><div style="display: flex; flex-wrap: wrap; gap: 6px"><span style="font-size: 12px; line-height: 1.333; font-weight: 600; padding: 5px 10px 5px 10px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Căni</span><span style="font-size: 12px; line-height: 1.333; font-weight: 600; padding: 5px 10px 5px 10px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Decalcomanie</span></div><a class="similar" href="#cerere" data-sim="p5" style="font-size: 15px; line-height: 1.333; font-weight: 700; color: #FFCA01; text-decoration: none">Vreau ceva similar →</a></div>
+</article>
+
+<article class="lift" data-name="Proiect / Agenda logo color" style="background: #1C1B1D; border: 1px solid #2C2A2D; border-radius: 24px; overflow: hidden; display: flex; flex-direction: column">
+<button class="zoom" type="button" data-open="p6" aria-label="Vezi fotografiile: Agendă cu logo color" style="display: block; width: 100%; height: 300px; padding: 0px 0px 0px 0px; border: 0; background: #0B0B0C; cursor: pointer; overflow: hidden"><img src="img/portofoliu/agende-logo-color.jpg" alt="" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block"></button>
+<div style="padding: 24px clamp(16px, 1.667vw, 24px) 24px clamp(16px, 1.667vw, 24px); display: flex; flex-direction: column; gap: 12px"><span style="font-size: 12px; line-height: 1.333; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #FFCA01">Cultură / ONG · Eveniment</span><h3 style="margin: 0; font-size: 21px; line-height: 1.286; font-weight: 800">Agendă cu logo color</h3><div style="display: flex; flex-wrap: wrap; gap: 6px"><span style="font-size: 12px; line-height: 1.333; font-weight: 600; padding: 5px 10px 5px 10px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Agende</span><span style="font-size: 12px; line-height: 1.333; font-weight: 600; padding: 5px 10px 5px 10px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Tipar UV</span></div><a class="similar" href="#cerere" data-sim="p6" style="font-size: 15px; line-height: 1.333; font-weight: 700; color: #FFCA01; text-decoration: none">Vreau ceva similar →</a></div>
+</article>
+
+<article class="lift" data-name="Proiect / Agenda in" style="background: #1C1B1D; border: 1px solid #2C2A2D; border-radius: 24px; overflow: hidden; display: flex; flex-direction: column">
+<button class="zoom" type="button" data-open="p7" aria-label="Vezi fotografiile: Agendă cu copertă din in" style="display: block; width: 100%; height: 300px; padding: 0px 0px 0px 0px; border: 0; background: #0B0B0C; cursor: pointer; overflow: hidden"><img src="img/portofoliu/agenda-linella.jpg" alt="" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block"></button>
+<div style="padding: 24px clamp(16px, 1.667vw, 24px) 24px clamp(16px, 1.667vw, 24px); display: flex; flex-direction: column; gap: 12px"><span style="font-size: 12px; line-height: 1.333; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #FFCA01">IT · Onboarding</span><h3 style="margin: 0; font-size: 21px; line-height: 1.286; font-weight: 800">Agendă cu copertă din in</h3><div style="display: flex; flex-wrap: wrap; gap: 6px"><span style="font-size: 12px; line-height: 1.333; font-weight: 600; padding: 5px 10px 5px 10px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Agende</span><span style="font-size: 12px; line-height: 1.333; font-weight: 600; padding: 5px 10px 5px 10px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Embosare</span></div><a class="similar" href="#cerere" data-sim="p7" style="font-size: 15px; line-height: 1.333; font-weight: 700; color: #FFCA01; text-decoration: none">Vreau ceva similar →</a></div>
+</article>
+
+<article class="lift" data-name="Proiect / Pixuri" style="background: #1C1B1D; border: 1px solid #2C2A2D; border-radius: 24px; overflow: hidden; display: flex; flex-direction: column">
+<button class="zoom" type="button" data-open="p8" aria-label="Vezi fotografiile: Pixuri cu logo" style="display: block; width: 100%; height: 300px; padding: 0px 0px 0px 0px; border: 0; background: #0B0B0C; cursor: pointer; overflow: hidden"><img src="img/portofoliu/pixuri-cani.jpg" alt="" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block"></button>
+<div style="padding: 24px clamp(16px, 1.667vw, 24px) 24px clamp(16px, 1.667vw, 24px); display: flex; flex-direction: column; gap: 12px"><span style="font-size: 12px; line-height: 1.333; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #FFCA01">Evenimente · Conferință</span><h3 style="margin: 0; font-size: 21px; line-height: 1.286; font-weight: 800">Pixuri colorate cu logo</h3><div style="display: flex; flex-wrap: wrap; gap: 6px"><span style="font-size: 12px; line-height: 1.333; font-weight: 600; padding: 5px 10px 5px 10px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Campanii promo</span><span style="font-size: 12px; line-height: 1.333; font-weight: 600; padding: 5px 10px 5px 10px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Tampografie</span></div><a class="similar" href="#cerere" data-sim="p8" style="font-size: 15px; line-height: 1.333; font-weight: 700; color: #FFCA01; text-decoration: none">Vreau ceva similar →</a></div>
+</article>
+
+<article class="lift" data-name="Proiect / Pluta" style="background: #1C1B1D; border: 1px solid #2C2A2D; border-radius: 24px; overflow: hidden; display: flex; flex-direction: column">
+<button class="zoom" type="button" data-open="p9" aria-label="Vezi fotografiile: Suporturi din plută" style="display: block; width: 100%; height: 300px; padding: 0px 0px 0px 0px; border: 0; background: #0B0B0C; cursor: pointer; overflow: hidden"><img src="img/portofoliu/pluta-lemn.jpg" alt="" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block"></button>
+<div style="padding: 24px clamp(16px, 1.667vw, 24px) 24px clamp(16px, 1.667vw, 24px); display: flex; flex-direction: column; gap: 12px"><span style="font-size: 12px; line-height: 1.333; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #FFCA01">HoReCa · Restaurant</span><h3 style="margin: 0; font-size: 21px; line-height: 1.286; font-weight: 800">Suporturi din plută</h3><div style="display: flex; flex-wrap: wrap; gap: 6px"><span style="font-size: 12px; line-height: 1.333; font-weight: 600; padding: 5px 10px 5px 10px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Seturi cadou</span><span style="font-size: 12px; line-height: 1.333; font-weight: 600; padding: 5px 10px 5px 10px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Gravură laser</span></div><a class="similar" href="#cerere" data-sim="p9" style="font-size: 15px; line-height: 1.333; font-weight: 700; color: #FFCA01; text-decoration: none">Vreau ceva similar →</a></div>
+</article>
+
+</div>
+</section>
+
+<!-- 05 De la logo la produs -->
+<section aria-label="05 De la logo la produs" data-name="05 De la logo la produs" style="width: 100%; max-width: 1440px; box-sizing: border-box; padding: clamp(62px, 7.778vw, 112px) clamp(20px, 8.333vw, 120px) clamp(62px, 7.778vw, 112px) clamp(20px, 8.333vw, 120px); background: #FFFFFF; color: #111111; display: flex; flex-direction: column; align-items: center; gap: clamp(16px, 3.889vw, 56px)">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center">
+<span style="font-size: 18px; line-height: 1.333; font-weight: 700; color: #A23D97">Cum lucrăm</span>
+<h2 style="margin: 0; font-size: clamp(30px, 4.167vw, 60px); line-height: 1.1; font-weight: 800; letter-spacing: -0.035em">De la logo la produs</h2>
+<p style="margin: 0; width: 100%; max-width: 640px; font-size: 19px; line-height: 1.526; color: #4A464B">Vedeți și aprobați macheta înainte să intre ceva în producție.</p>
+</div>
+<div style="width: 100%; max-width: 1200px; display: flex; align-items: center; gap: 20px">
+<figure style="margin: 0; flex: 1 1 0; display: flex; flex-direction: column; gap: 16px">
+<div data-name="Pas 1 / Fisier logo" style="height: 300px; border-radius: 24px; background: #F7F5F7; display: flex; align-items: center; justify-content: center">
+<div style="width: 190px; height: 236px; border-radius: 14px; background: #FFFFFF; box-shadow: 0 20px 40px -24px rgba(17,17,17,0.45); display: flex; flex-direction: column; overflow: hidden">
+<div style="height: 30px; background: #111111; display: flex; align-items: center; justify-content: space-between; padding: 0px 12px 0px 12px"><span style="font-size: 11px; line-height: 1.273; font-weight: 700; color: #FFFFFF">logo-client.ai</span><span style="font-size: 10px; line-height: 1.4; font-weight: 800; color: #111111; background: #FFCA01; padding: 1px 6px 1px 6px; border-radius: 4px">AI</span></div>
+<div style="flex: 1 1 auto; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; background-image: linear-gradient(#EEE 1px, transparent 1px), linear-gradient(90deg, #EEE 1px, transparent 1px); background-size: 16px 16px">
+<svg width="70" height="70" viewBox="0 0 70 70" aria-hidden="true"><circle cx="35" cy="35" r="30" fill="none" stroke="#2F64B0" stroke-width="6"></circle><path d="M20 42 L35 22 L50 42 Z" fill="#2F64B0"></path></svg>
+<span style="font-size: 13px; line-height: 1.231; font-weight: 800; letter-spacing: 0.2em; color: #111111">COMPANIA TA</span>
+</div>
+<div style="padding: 8px 12px 8px 12px; border-top: 1px solid #EEE; font-size: 10px; line-height: 1.4; font-weight: 600; color: #5B575C">vector · Pantone 2945 C</div>
+</div>
+</div>
+<figcaption style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 13px; line-height: 1.385; font-weight: 800; color: #A23D97">01</span><span style="font-size: 20px; line-height: 1.3; font-weight: 800">Primim logo-ul</span><span style="font-size: 15px; line-height: 1.467; color: #5B575C">Fișier vector (AI, PDF, SVG) sau imagine de calitate.</span></figcaption>
+</figure>
+<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#C9C5CA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-bottom: 96px"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+<figure style="margin: 0; flex: 1 1 0; display: flex; flex-direction: column; gap: 16px">
+<div class="zoom" data-name="Pas 2 / Macheta" style="height: 300px; border-radius: 24px; overflow: hidden; display: grid; grid-template-rows: minmax(0, 1fr); grid-template-columns: minmax(0, 1fr)">
+<img src="img/agende/edica-2027.jpg" alt="Machetă: agende cu zona pentru logo marcată" style="grid-area: 1 / 1; width: 100%; height: 100%; object-fit: cover; display: block">
+<span style="grid-area: 1 / 1; align-self: start; justify-self: start; margin: 16px; padding: 6px 12px 6px 12px; border-radius: 999px; background: #FFCA01; color: #111111; font-size: 12px; line-height: 1.333; font-weight: 800">MACHETĂ · spre aprobare</span>
+</div>
+<figcaption style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 13px; line-height: 1.385; font-weight: 800; color: #A23D97">02</span><span style="font-size: 20px; line-height: 1.3; font-weight: 800">Pregătim macheta</span><span style="font-size: 15px; line-height: 1.467; color: #5B575C">Vedeți poziția, mărimea și culorile logo-ului pe produs.</span></figcaption>
+</figure>
+<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#C9C5CA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-bottom: 96px"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+<figure style="margin: 0; flex: 1 1 0; display: flex; flex-direction: column; gap: 16px">
+<div class="zoom" style="height: 300px; border-radius: 24px; overflow: hidden"><img src="img/portofoliu/detaliu-maib.jpg" alt="Produsul final: logo pe copertă de agendă" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
+<figcaption style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 13px; line-height: 1.385; font-weight: 800; color: #A23D97">03</span><span style="font-size: 20px; line-height: 1.3; font-weight: 800">Livrăm produsul final</span><span style="font-size: 15px; line-height: 1.467; color: #5B575C">Exact ca în machetă, ambalat și gata de oferit.</span></figcaption>
+</figure>
+</div>
+</section>
+
+<!-- 06 Detalii care conteaza -->
+<section aria-label="06 Detalii care contează" data-name="06 Detalii care contează" style="width: 100%; max-width: 1440px; box-sizing: border-box; padding: clamp(62px, 7.778vw, 112px) clamp(20px, 8.333vw, 120px) clamp(62px, 7.778vw, 112px) clamp(20px, 8.333vw, 120px); background: #111111; display: flex; flex-direction: column; gap: clamp(16px, 3.333vw, 48px)">
+<div style="display: flex; flex-direction: column; gap: 14px">
+<span style="font-size: 18px; line-height: 1.333; font-weight: 700; color: #FFCA01">Calitate de aproape</span>
+<h2 style="margin: 0; width: 100%; max-width: 900px; font-size: clamp(30px, 4.167vw, 60px); line-height: 1.1; font-weight: 800; letter-spacing: -0.035em">Detalii care contează</h2>
+</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px">
+<figure class="zoom" style="margin: 0; display: flex; flex-direction: column; gap: 14px"><div style="height: 300px; border-radius: 24px; overflow: hidden"><img src="img/portofoliu/detaliu-maib.jpg" alt="Logo pe copertă din piele ecologică" style="width: 100%; height: 100%; object-fit: cover; display: block"></div><figcaption style="font-size: 17px; line-height: 1.412; font-weight: 700">Logo pe piele ecologică</figcaption></figure>
+<figure class="zoom" style="margin: 0; display: flex; flex-direction: column; gap: 14px"><div style="height: 300px; border-radius: 24px; overflow: hidden"><img src="img/portofoliu/detaliu-relief.jpg" alt="Relief geometric pe copertă" style="width: 100%; height: 100%; object-fit: cover; display: block"></div><figcaption style="font-size: 17px; line-height: 1.412; font-weight: 700">Relief geometric pe copertă</figcaption></figure>
+<figure class="zoom" style="margin: 0; display: flex; flex-direction: column; gap: 14px"><div style="height: 300px; border-radius: 24px; overflow: hidden"><img src="img/portofoliu/detaliu-tree.jpg" alt="Model embosat pe copertă texturată" style="width: 100%; height: 100%; object-fit: cover; display: block"></div><figcaption style="font-size: 17px; line-height: 1.412; font-weight: 700">Model embosat pe copertă</figcaption></figure>
+<figure class="zoom" style="margin: 0; display: flex; flex-direction: column; gap: 14px"><div style="height: 300px; border-radius: 24px; overflow: hidden"><img src="img/portofoliu/detaliu-2024.jpg" alt="An embosat pe copertă roșie" style="width: 100%; height: 100%; object-fit: cover; display: block"></div><figcaption style="font-size: 17px; line-height: 1.412; font-weight: 700">Embosare fină pe textură</figcaption></figure>
+<figure class="zoom" style="margin: 0; display: flex; flex-direction: column; gap: 14px"><div style="height: 300px; border-radius: 24px; overflow: hidden"><img src="img/tehnologii/broderie.jpg" alt="Broderie cu fir auriu" style="width: 100%; height: 100%; object-fit: cover; display: block"></div><figcaption style="font-size: 17px; line-height: 1.412; font-weight: 700">Broderie de aproape</figcaption></figure>
+<figure class="zoom" style="margin: 0; display: flex; flex-direction: column; gap: 14px"><div style="height: 300px; border-radius: 24px; overflow: hidden"><img src="img/tehnologii/gravura-laser.jpg" alt="Gravură laser pe metal" style="width: 100%; height: 100%; object-fit: cover; display: block"></div><figcaption style="font-size: 17px; line-height: 1.412; font-weight: 700">Gravură laser de aproape</figcaption></figure>
+</div>
+</section>
+
+<!-- 07 Ambalaj si prezentare -->
+<section aria-label="07 Ambalaj și prezentare" data-name="07 Ambalaj și prezentare" style="width: 100%; max-width: 1440px; box-sizing: border-box; padding: clamp(62px, 7.778vw, 112px) clamp(20px, 8.333vw, 120px) clamp(62px, 7.778vw, 112px) clamp(20px, 8.333vw, 120px); background: #F3ECF3; color: #111111; display: flex; flex-direction: column; gap: clamp(16px, 3.333vw, 48px)">
+<div style="display: flex; justify-content: space-between; align-items: flex-end; gap: clamp(16px, 2.778vw, 40px)">
+<div style="display: flex; flex-direction: column; gap: 14px">
+<span style="font-size: 18px; line-height: 1.333; font-weight: 700; color: #A23D97">Ambalaj și prezentare</span>
+<h2 style="margin: 0; width: 100%; max-width: 760px; font-size: clamp(30px, 4.167vw, 60px); line-height: 1.1; font-weight: 800; letter-spacing: -0.035em">Gata de oferit, din prima clipă</h2>
+</div>
+<p style="margin: 0; width: 100%; max-width: 360px; font-size: 17px; line-height: 1.588; color: #4A464B">Cutii de lemn, hârtie de mătase și cutii cadou cu logo. Prezentarea face jumătate din impresie.</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: 240px 240px; gap: 24px">
+<div class="zoom" style="grid-column: span 2; grid-row: span 2; border-radius: 24px; overflow: hidden"><img src="img/agende/agende-cutie-detaliu.jpg" alt="Agende în cutie de lemn cu hârtie de mătase" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
+<div class="zoom" style="grid-column: span 2; border-radius: 24px; overflow: hidden"><img src="img/agende/agende-culori-detaliu.jpg" alt="Agende colorate în cutie de lemn" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
+<div class="zoom" style="border-radius: 24px; overflow: hidden"><img src="img/agende/edica-2027.jpg" alt="Agende prezentate cu zona pentru logo" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
+<div class="zoom" style="border-radius: 24px; overflow: hidden"><img src="img/agende/agenda-mana-detaliu.jpg" alt="Agendă scoasă din ambalaj" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
+</div>
+</section>
+
+<!-- 08 Ce spun clientii -->
+<section aria-label="08 Ce spun clienții" data-name="08 Ce spun clienții" style="width: 100%; max-width: 1440px; box-sizing: border-box; padding: clamp(62px, 7.778vw, 112px) clamp(20px, 8.333vw, 120px) clamp(62px, 7.778vw, 112px) clamp(20px, 8.333vw, 120px); background: #111111; display: flex; flex-direction: column; gap: clamp(16px, 3.333vw, 48px)">
+<div style="display: flex; flex-direction: column; gap: 14px">
+<span style="font-size: 18px; line-height: 1.333; font-weight: 700; color: #FFCA01">Recenzii</span>
+<h2 style="margin: 0; font-size: clamp(30px, 4.167vw, 60px); line-height: 1.1; font-weight: 800; letter-spacing: -0.035em">Ce spun clienții</h2>
+</div>
+<div style="display: grid; grid-template-columns: 280px repeat(3, minmax(0, 1fr)); gap: 24px">
+<div data-name="Rating Google" style="padding: 32px clamp(16px, 2.222vw, 32px) 32px clamp(16px, 2.222vw, 32px); border-radius: 24px; background: radial-gradient(90% 90% at 0% 100%, rgba(255,202,1,0.35) 0%, rgba(255,202,1,0) 100%), #1C1B1D; border: 1px solid #2C2A2D; display: flex; flex-direction: column; gap: 10px">
+<span style="font-size: 14px; line-height: 1.429; font-weight: 700; color: #BDB9BE">Google</span>
+<span style="font-size: clamp(28px, 3.889vw, 56px); line-height: 1.071; font-weight: 800; letter-spacing: -0.03em">4,9</span>
+<div aria-hidden="true" style="display: flex; gap: 4px; color: #FFCA01"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"></path></svg><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"></path></svg><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"></path></svg><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"></path></svg><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"></path></svg></div>
+<span style="font-size: 15px; line-height: 1.467; color: #BDB9BE">din 37 de recenzii</span>
+</div>
+<figure style="margin: 0; padding: 32px clamp(16px, 2.222vw, 32px) 32px clamp(16px, 2.222vw, 32px); border-radius: 24px; background: #1C1B1D; border: 1px solid #2C2A2D; display: flex; flex-direction: column; justify-content: space-between; gap: 24px"><blockquote style="margin: 0; font-size: 18px; line-height: 1.556; font-weight: 500">„Agendele au arătat impecabil, iar logo-ul embosat a impresionat toți partenerii. Comandăm din nou anul acesta.”</blockquote><figcaption style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 15px; line-height: 1.467; font-weight: 800">Elena R.</span><span style="font-size: 14px; line-height: 1.429; color: #BDB9BE">Director de marketing, companie de distribuție</span></figcaption></figure>
+<figure style="margin: 0; padding: 32px clamp(16px, 2.222vw, 32px) 32px clamp(16px, 2.222vw, 32px); border-radius: 24px; background: #1C1B1D; border: 1px solid #2C2A2D; display: flex; flex-direction: column; justify-content: space-between; gap: 24px"><blockquote style="margin: 0; font-size: 18px; line-height: 1.556; font-weight: 500">„Ne-au ajutat să alegem produsele potrivite și au livrat totul înainte de conferință. Comunicare rapidă și clară.”</blockquote><figcaption style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 15px; line-height: 1.467; font-weight: 800">Andrei C.</span><span style="font-size: 14px; line-height: 1.429; color: #BDB9BE">Organizator evenimente, instituție publică</span></figcaption></figure>
+<figure style="margin: 0; padding: 32px clamp(16px, 2.222vw, 32px) 32px clamp(16px, 2.222vw, 32px); border-radius: 24px; background: #1C1B1D; border: 1px solid #2C2A2D; display: flex; flex-direction: column; justify-content: space-between; gap: 24px"><blockquote style="margin: 0; font-size: 18px; line-height: 1.556; font-weight: 500">„Macheta a fost gata în aceeași zi, iar cănile au ieșit exact cum le-am gândit. Clienții noștri le cumpără și acasă.”</blockquote><figcaption style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 15px; line-height: 1.467; font-weight: 800">Mihaela S.</span><span style="font-size: 14px; line-height: 1.429; color: #BDB9BE">Manager, rețea de cafenele</span></figcaption></figure>
+</div>
+
+</section>
+
+<!-- 10 Cerere -->
+<section id="cerere" aria-label="10 Cerere" data-name="10 Cerere" style="width: 100%; max-width: 1440px; box-sizing: border-box; padding: clamp(62px, 7.778vw, 112px) clamp(20px, 8.333vw, 120px) clamp(62px, 7.778vw, 112px) clamp(20px, 8.333vw, 120px); background: radial-gradient(45% 50% at 0% 0%, rgba(162,61,151,0.6) 0%, rgba(162,61,151,0) 100%), radial-gradient(45% 50% at 100% 100%, rgba(255,202,1,0.4) 0%, rgba(255,202,1,0) 100%), #111111; display: flex; flex-direction: column; align-items: center; gap: clamp(16px, 2.778vw, 40px)">
+<div data-name="Banner termen" style="width: 100%; max-width: 1200px; box-sizing: border-box; padding: 20px clamp(16px, 1.944vw, 28px) 20px clamp(16px, 1.944vw, 28px); border-radius: 18px; background: #FFCA01; color: #111111; display: flex; align-items: center; justify-content: center; gap: 24px">
+<div style="display: flex; align-items: center; gap: 14px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M16 3v4M8 3v4M3 10h18"></path></svg><span style="font-size: 18px; line-height: 1.333; font-weight: 800">Pentru cadourile de Crăciun, comandați până la 1 decembrie.</span></div>
+</div>
+<div style="width: 100%; max-width: 1200px; display: grid; grid-template-columns: 760px minmax(0, 1fr); gap: clamp(16px, 2.222vw, 32px)">
+<form aria-label="Formular cerere ofertă" style="background: #1C1B1D; border: 1px solid #2C2A2D; border-radius: 24px; padding: 40px clamp(20px, 2.778vw, 40px) 40px clamp(20px, 2.778vw, 40px); display: flex; flex-direction: column; gap: 24px">
+<div data-name="Proiect de referinta" style="display: flex; align-items: center; gap: 12px; padding: 14px 18px 14px 18px; border-radius: 14px; background: rgba(255,202,1,0.1); border: 1px solid rgba(255,202,1,0.4)"><span style="font-size: 14px; line-height: 1.429; font-weight: 700; color: #FFCA01">Similar cu:</span><span style="font-size: 15px; line-height: 1.333; font-weight: 700"><span id="similar">apăsați „Vreau ceva similar” pe un proiect</span></span></div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 8px"><label for="pf-nume" style="font-size: 14px; line-height: 1.429; font-weight: 600; color: #BDB9BE">Nume</label><input id="pf-nume" name="nume" type="text" placeholder="Ion Popescu" style="height: 52px; box-sizing: border-box; padding: 0px 18px 0px 18px; border-radius: 14px; border: 1px solid #3A383B; background: #111111; color: #FFFFFF; font: 500 16px 'Manrope', system-ui, sans-serif"></div>
+<div style="display: flex; flex-direction: column; gap: 8px"><label for="pf-companie" style="font-size: 14px; line-height: 1.429; font-weight: 600; color: #BDB9BE">Companie</label><input id="pf-companie" name="companie" type="text" placeholder="Numele companiei" style="height: 52px; box-sizing: border-box; padding: 0px 18px 0px 18px; border-radius: 14px; border: 1px solid #3A383B; background: #111111; color: #FFFFFF; font: 500 16px 'Manrope', system-ui, sans-serif"></div>
+<div style="display: flex; flex-direction: column; gap: 8px"><label for="pf-telefon" style="font-size: 14px; line-height: 1.429; font-weight: 600; color: #BDB9BE">Telefon</label><input id="pf-telefon" name="telefon" type="tel" placeholder="+373" style="height: 52px; box-sizing: border-box; padding: 0px 18px 0px 18px; border-radius: 14px; border: 1px solid #3A383B; background: #111111; color: #FFFFFF; font: 500 16px 'Manrope', system-ui, sans-serif" required autocomplete="tel"></div>
+<div style="display: flex; flex-direction: column; gap: 8px"><label for="pf-cantitate" style="font-size: 14px; line-height: 1.429; font-weight: 600; color: #BDB9BE">Cantitate și termen</label><input id="pf-cantitate" name="cantitate" type="text" placeholder="ex. 200 seturi până la 15 decembrie" style="height: 52px; box-sizing: border-box; padding: 0px 18px 0px 18px; border-radius: 14px; border: 1px solid #3A383B; background: #111111; color: #FFFFFF; font: 500 16px 'Manrope', system-ui, sans-serif"></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px"><label for="pf-mesaj" style="font-size: 14px; line-height: 1.429; font-weight: 600; color: #BDB9BE">Mesaj</label><textarea id="pf-mesaj" name="mesaj" rows="3" placeholder="Ce produse, ce ocazie, ce buget" style="box-sizing: border-box; padding: 14px 18px 14px 18px; border-radius: 14px; border: 1px solid #3A383B; background: #111111; color: #FFFFFF; font: 500 16px/24px 'Manrope', system-ui, sans-serif; resize: vertical"></textarea></div>
+<button class="btn" type="submit" style="align-self: flex-start; height: 56px; padding: 0px clamp(16px, 2.222vw, 32px) 0px clamp(16px, 2.222vw, 32px); border: 0; border-radius: 999px; background: #FFCA01; color: #111111; cursor: pointer; font: 700 17px 'Manrope', system-ui, sans-serif">Trimite cererea</button>
+</form>
+<div style="display: flex; flex-direction: column; gap: 16px">
+<div style="background: #1C1B1D; border: 1px solid #2C2A2D; border-radius: 24px; padding: 28px clamp(16px, 2.222vw, 32px) 28px clamp(16px, 2.222vw, 32px); display: flex; flex-direction: column; gap: 6px"><span style="font-size: 14px; line-height: 1.429; font-weight: 600; color: #BDB9BE">Telefon</span><span style="font-size: 22px; line-height: 1.364; font-weight: 700; font-variant-numeric: tabular-nums">+373 67 101 809</span><span style="font-size: 22px; line-height: 1.364; font-weight: 700; font-variant-numeric: tabular-nums">+373 67 180 280</span></div>
+<div style="background: #1C1B1D; border: 1px solid #2C2A2D; border-radius: 24px; padding: 28px clamp(16px, 2.222vw, 32px) 28px clamp(16px, 2.222vw, 32px); display: flex; flex-direction: column; gap: 6px"><span style="font-size: 14px; line-height: 1.429; font-weight: 600; color: #BDB9BE">Email</span><span style="font-size: 20px; line-height: 1.4; font-weight: 700">sales@suvenir.md</span><span style="font-size: 20px; line-height: 1.4; font-weight: 700">info@suvenir.md</span></div>
+<div style="background: #1C1B1D; border: 1px solid #2C2A2D; border-radius: 24px; padding: 28px clamp(16px, 2.222vw, 32px) 28px clamp(16px, 2.222vw, 32px); display: flex; flex-direction: column; gap: 6px"><span style="font-size: 14px; line-height: 1.429; font-weight: 600; color: #BDB9BE">Adresă</span><span style="font-size: 18px; line-height: 1.444; font-weight: 700">str. N. Zelinski 7, of. 201, Chișinău</span></div>
+</div>
+</div>
+</section>
+
+<!-- 11 Footer -->
+<footer aria-label="11 Footer" data-name="11 Footer" style="width: 100%; max-width: 1440px; box-sizing: border-box; padding: 56px clamp(20px, 8.333vw, 120px) 40px clamp(20px, 8.333vw, 120px); background: #111111; border-top: 1px solid #242225; display: flex; flex-direction: column; gap: clamp(16px, 2.778vw, 40px)">
+<div style="display: flex; justify-content: space-between; align-items: center">
+<img src="img/logo/alvia-alb.svg" alt="ALVIA" style="height: 28px; width: auto; display: block">
+<nav aria-label="Meniu subsol" style="display: flex; gap: 28px; font-size: 15px; line-height: 1.333; font-weight: 600; color: #BDB9BE">
+<a class="navlink" href="index.html" style="text-decoration: none">Acasă</a>
+<a class="navlink" href="agende.html" style="text-decoration: none">Agende</a>
+<a class="navlink" href="tricouri.html" style="text-decoration: none">Tricouri</a>
+<a class="navlink" href="portofoliu.html" style="text-decoration: none">Portofoliu</a>
+<a class="navlink" href="tehnologii.html" style="text-decoration: none">Tehnologii</a>
+<a class="navlink" href="cataloage.html" style="text-decoration: none">Cataloage</a>
+<a class="navlink" href="contacte.html" style="text-decoration: none">Contacte</a>
+</nav>
+<div style="display: flex; gap: 12px">
+<a href="https://www.instagram.com/" aria-label="Instagram" style="display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 1px solid #2C2A2D; border-radius: 999px; color: #FFFFFF"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"></circle></svg></a>
+<a href="https://www.facebook.com/" aria-label="Facebook" style="display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 1px solid #2C2A2D; border-radius: 999px; color: #FFFFFF"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8z"></path></svg></a>
+<a href="https://www.tiktok.com/" aria-label="TikTok" style="display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 1px solid #2C2A2D; border-radius: 999px; color: #FFFFFF"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5"></path><path d="M14 3c.5 2.8 2.4 4.6 5 5"></path></svg></a>
+</div>
+</div>
+<div style="height: 1px; background: linear-gradient(90deg, #A23D97, #FFCA01)"></div>
+<div style="display: flex; justify-content: space-between; font-size: 14px; line-height: 1.429; color: #BDB9BE">
+<span>© 2026 Alvia Grup SRL</span>
+<span>www.suvenir.md</span>
+</div>
+</footer>
+
+
+
+</div>
+
+<div id="lb" hidden role="dialog" aria-modal="true" style="position: fixed; inset: 0; z-index: 50; background: rgba(11,11,12,0.88); display: flex; align-items: center; justify-content: center; padding: 40px clamp(20px, 2.778vw, 40px) 40px clamp(20px, 2.778vw, 40px)"><div style="max-width: 1200px; max-height: 88vh; overflow: auto; box-sizing: border-box; background: #1C1B1D; border: 1px solid #2C2A2D; border-radius: 28px; padding: 32px clamp(16px, 2.222vw, 32px) 32px clamp(16px, 2.222vw, 32px); display: flex; flex-direction: column; gap: 24px"><div style="display: flex; justify-content: space-between; align-items: center; gap: 24px"><span id="lb-title" style="font-size: clamp(20px, 1.667vw, 24px); line-height: 1.25; font-weight: 800"></span><button type="button" id="lb-close" aria-label="Închide" style="width: 44px; height: 44px; border-radius: 999px; border: 1px solid #3A383B; background: transparent; color: #FFFFFF; cursor: pointer; font: 700 18px Manrope, system-ui, sans-serif">✕</button></div><div id="lb-photos" style="display: flex; gap: 16px; align-items: center; justify-content: center; flex-wrap: wrap"></div><a id="lb-sim" class="btn" href="#cerere" style="align-self: flex-start; display: inline-flex; align-items: center; height: 50px; padding: 0px clamp(16px, 1.806vw, 26px) 0px clamp(16px, 1.806vw, 26px); border-radius: 999px; background: #FFCA01; color: #111111; text-decoration: none; font-size: 16px; font-weight: 700">Vreau ceva similar</a></div></div>
+<script>(function(){
+var P = {
+p1: { name: 'Set corporativ pentru angajați', occ: ['craciun'], ind: ['banci'], prod: ['seturi','agende','sticle','cani'], tech: ['embosare','uv'], photos: [['img/portofoliu/set-maib-mare.jpg','Setul complet'],['img/portofoliu/sticla-maib-mare.jpg','Sticlă cu logo'],['img/portofoliu/detaliu-maib.jpg','Logo pe copertă'],['img/portofoliu/detaliu-relief.jpg','Relief pe copertă']] },
+p2: { name: 'Agende cadou în cutii de lemn', occ: ['craciun'], ind: [], prod: ['agende','seturi'], tech: ['embosare'], photos: [['img/portofoliu/agende-cutie-lemn-mare.jpg','Agende în cutie de lemn'],['img/portofoliu/agende-culori-mare.jpg','Agende colorate'],['img/portofoliu/agenda-in-mana-mare.jpg','Agendă în uz']] },
+p3: { name: 'Sticle cu stema Republicii Moldova', occ: ['evenimente'], ind: ['institutii'], prod: ['sticle'], tech: ['uv'], photos: [['img/portofoliu/sticla-stema-rm-mare.jpg','Sticlă cu stema'],['img/portofoliu/sticle-clienti-mare.jpg','Sticle cu logo']] },
+p4: { name: 'Termos cu logo', occ: ['promo'], ind: [], prod: ['sticle'], tech: ['uv'], photos: [['img/portofoliu/termosuri-mare.jpg','Termosuri cu logo']] },
+p5: { name: 'Căni pentru cafenea', occ: ['promo'], ind: ['horeca'], prod: ['cani'], tech: ['decalcomanie'], photos: [['img/portofoliu/cani-cafenea-mare.jpg','Căni cu ilustrație']] },
+p6: { name: 'Agendă cu logo color', occ: ['craciun'], ind: [], prod: ['agende'], tech: ['uv'], photos: [['img/portofoliu/agende-logo-color-mare.jpg','Agende cu logo color']] },
+p7: { name: 'Agendă cu copertă din in', occ: ['onboarding'], ind: [], prod: ['agende'], tech: ['embosare'], photos: [['img/portofoliu/agenda-linella-mare.jpg','Agendă cu logo']] },
+p8: { name: 'Pixuri colorate cu logo', occ: ['evenimente','promo'], ind: [], prod: [], tech: ['tampografie'], photos: [['img/portofoliu/pixuri-cani-mare.jpg','Pixuri colorate']] },
+p9: { name: 'Suporturi din plută', occ: ['craciun'], ind: [], prod: ['seturi'], tech: ['laser'], photos: [['img/portofoliu/pluta-lemn-mare.jpg','Suporturi din plută']] }
+};
+var B=function(s){return s.replace(/^\/_blob\/([0-9a-f]{32})$/,function(_,id){return MAP[id]||s;});};
+var f={occ:'all',ind:'all',prod:'all',tech:'all'};
+function apply(){
+  document.querySelectorAll('.chip').forEach(function(c){c.classList.toggle('on',f[c.dataset.g]===c.dataset.o);});
+  var n={};
+  Object.keys(P).forEach(function(id){
+    var p=P[id];var ok=Object.keys(f).every(function(g){return f[g]==='all'||p[g].indexOf(f[g])!==-1;});
+    document.querySelectorAll('[data-p="'+id+'"]').forEach(function(el){el.hidden=!ok;});
+    if(ok)n[id]=1;
+  });
+  var c=Object.keys(n).length;
+  document.getElementById('count').textContent=c===1?'1 proiect':c+' proiecte';
+  document.getElementById('empty').hidden=c!==0;
+}
+document.querySelectorAll('.chip').forEach(function(c){c.addEventListener('click',function(){f[c.dataset.g]=c.dataset.o;apply();});});
+document.querySelectorAll('[data-reset]').forEach(function(b){b.addEventListener('click',function(){f={occ:'all',ind:'all',prod:'all',tech:'all'};apply();});});
+var sim=document.getElementById('similar');
+document.querySelectorAll('[data-sim]').forEach(function(a){a.addEventListener('click',function(){sim.textContent=P[a.dataset.sim].name;});});
+var lb=document.getElementById('lb'),cur=null;
+document.querySelectorAll('[data-open]').forEach(function(b){b.addEventListener('click',function(){
+  cur=b.dataset.open;var p=P[cur];document.getElementById('lb-title').textContent=p.name;
+  var box=document.getElementById('lb-photos');box.innerHTML='';
+  p.photos.forEach(function(x){var i=document.createElement('img');i.src=x[0];i.alt=x[1];i.style.cssText='height:min(62vh,560px);width:auto;max-width:100%;object-fit:contain;border-radius:18px;display:block;background:#111';box.appendChild(i);});
+  lb.hidden=false;
+});});
+function close(){lb.hidden=true;}
+document.getElementById('lb-close').addEventListener('click',close);
+lb.addEventListener('click',function(e){if(e.target===lb)close();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+document.getElementById('lb-sim').addEventListener('click',function(){if(cur)sim.textContent=P[cur].name;close();});
+})();
+</script>
+
+</body>
+
+<script src="js/forms.js"></script>
+<script src="js/zoom.js"></script>
+<script>(function(){var b=document.querySelector('.burger'),h=document.querySelector('.site-header');if(!b)return;
+b.addEventListener('click',function(){var o=h.classList.toggle('open');b.setAttribute('aria-expanded',o)});
+document.querySelectorAll('.main-nav a').forEach(function(a){a.addEventListener('click',function(){h.classList.remove('open');b.setAttribute('aria-expanded',false)})});})();
+(function(){var t=document.createElement('button');t.className='to-top';t.type='button';t.setAttribute('aria-label','Înapoi sus');
+t.innerHTML='<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>';
+document.body.appendChild(t);
+function f(){t.classList.toggle('show',window.scrollY>700)}window.addEventListener('scroll',f,{passive:true});f();
+t.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});})();
+</script>
+</html>

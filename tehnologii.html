@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ALVIA · Tehnologii</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0;background:#111111}
+a{color:inherit}
+.btn{transition:transform .18s ease, background-color .18s ease, color .18s ease}
+.btn:hover{transform:translateY(-2px)}
+.chip-link{transition:background-color .18s ease, color .18s ease, border-color .18s ease}
+.chip-link:hover{background:#FFCA01 !important;color:#111111 !important;border-color:#FFCA01 !important}
+.lift{transition:transform .25s ease, border-color .25s ease}
+.lift:hover{transform:translateY(-4px);border-color:#4A474B !important}
+.zoom img{transition:transform .5s ease}
+.zoom:hover img{transform:scale(1.05)}
+.navlink:hover{color:#FFFFFF !important}
+.more:hover{color:#FFFFFF !important}
+:focus-visible{outline:2px solid #FFCA01;outline-offset:3px}
+@media (prefers-reduced-motion: reduce){.btn,.lift,.zoom img,.chip-link{transition:none}}
+</style>
+<style>/* client logo slider */
+.logo-slider{width:100%;overflow:hidden;padding:6px 0;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent)}
+.logo-track{display:flex;width:max-content;animation:logo-scroll 110s linear infinite}
+.logo-dup{display:contents}
+.logo-chip{position:relative;flex:0 0 auto;margin-right:22px;height:96px;min-width:150px;padding:14px 24px;box-sizing:border-box;border-radius:18px;background:transparent;display:flex;align-items:center;justify-content:center;transition:background-color .3s}
+.logo-chip img{max-height:58px;max-width:170px;width:auto;height:auto;display:block;transition:opacity .3s}
+.logo-chip .lw{opacity:.55}
+.logo-chip .lc{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0}
+.logo-chip:hover{background:#FFFFFF}
+.logo-chip:hover .lw{opacity:0}
+.logo-chip:hover .lc{opacity:1}
+@keyframes logo-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media (max-width:640px){.logo-chip{height:72px;min-width:110px;padding:10px 16px;margin-right:10px;border-radius:14px}.logo-chip img{max-height:42px;max-width:120px}.logo-track{animation-duration:80s}}
+@media (prefers-reduced-motion: reduce){.logo-track{animation-duration:400s}}
+/* form status message */
+form{flex-wrap:wrap}
+.form-msg{flex-basis:100%;margin:4px 0 0;font-size:15px;line-height:1.4;font-weight:600}
+button[disabled]{opacity:.6;cursor:wait}
+/* header fits 7 menu items on laptops */
+.site-header > a{flex-shrink:0}
+.site-header > div{flex-shrink:0;flex-wrap:nowrap!important}
+@media (max-width:1360px){.site-header > div > span{display:none}}
+@media (max-width:1200px){.site-header .main-nav{gap:18px!important;font-size:14px!important}}
+/* back to top */
+.to-top{position:fixed;right:24px;bottom:24px;z-index:60;width:52px;height:52px;border:0;border-radius:999px;background:#FFCA01;color:#111111;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 10px 26px -8px rgba(0,0,0,.6);opacity:0;visibility:hidden;transform:translateY(12px);transition:opacity .25s,transform .25s,visibility .25s}
+.to-top.show{opacity:1;visibility:visible;transform:none}
+.to-top:hover{transform:translateY(-3px)}
+@media (max-width:640px){.to-top{right:16px;bottom:16px;width:46px;height:46px}}
+/* image viewer */
+[data-zoom]{cursor:zoom-in}
+.zbox{position:fixed;inset:0;z-index:100;background:rgba(10,10,11,.92);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s}
+.zbox.on{opacity:1}
+.zbox figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:12px;max-width:min(92vw,1300px)}
+.zbox img{max-width:100%;max-height:82vh;width:auto;height:auto;border-radius:14px;box-shadow:0 30px 80px -20px rgba(0,0,0,.8);background:#1C1B1D}
+.zbox figcaption{color:#D9D6DA;font:600 15px/1.4 'Manrope',system-ui,sans-serif;text-align:center}
+.zbox button{position:absolute;border:0;cursor:pointer;color:#111;background:#FFCA01;border-radius:999px;display:flex;align-items:center;justify-content:center;font:700 30px/1 system-ui,sans-serif}
+.zb-close{top:20px;right:20px;width:48px;height:48px}
+.zb-prev,.zb-next{top:50%;width:52px;height:52px;margin-top:-26px;padding-bottom:4px}
+.zb-prev{left:20px}.zb-next{right:20px}
+.zbox.single .zb-prev,.zbox.single .zb-next{display:none}
+@media (max-width:640px){.zb-prev,.zb-next{top:auto;bottom:20px;margin:0}.zb-prev{left:calc(50% - 64px)}.zb-next{right:calc(50% - 64px)}.zbox img{max-height:72vh}}
+/* gallery thumbs */
+[data-thumb]{cursor:pointer;opacity:.7;transition:opacity .2s,outline-color .2s;outline:2px solid transparent;outline-offset:2px}
+[data-thumb]:hover,[data-thumb].on{opacity:1;outline-color:#FFCA01}
+/* technology photos fill the box */
+.tech-label{position:absolute;left:18px;bottom:18px;padding:7px 14px;border-radius:999px;background:rgba(17,17,17,.78);color:#fff;font:700 14px/1.3 'Manrope',system-ui,sans-serif;backdrop-filter:blur(6px)}
+@media (max-width:1000px){.tech-media{aspect-ratio:4/3}}
+/* catalogs: cover without a box */
+.cat-media .cover{transition:transform .35s ease}
+.lift:hover .cat-media .cover{transform:translateY(-4px) rotate(-1deg)}
+/* technology details accordion */
+.tech-card{height:auto!important;grid-template-rows:340px auto;cursor:pointer}
+.tech-card .tech-more{grid-column:1/-1;display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s ease;cursor:default}
+.tech-card.open .tech-more{grid-template-rows:1fr}
+.tm-in{overflow:hidden;min-height:0}
+.tm-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:36px;padding:36px 40px 8px;border-top:1px solid #2C2A2D;margin-top:0}
+.tech-more h4{margin:0 0 14px;font:800 15px/1.3 'Manrope',system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#FFCA01}
+.tech-more ol,.tech-more ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px;font:500 16px/1.5 'Manrope',system-ui,sans-serif;color:#D9D6DA}
+.tm-steps{counter-reset:s}
+.tm-steps li{counter-increment:s;display:flex;gap:12px}
+.tm-steps li::before{content:counter(s);flex:0 0 26px;height:26px;border-radius:999px;background:#2A282B;color:#FFCA01;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;margin-top:-1px}
+.tm-pro li{display:flex;gap:10px;align-items:flex-start}
+.tm-pro svg{flex:0 0 16px;margin-top:4px}
+.tm-know li{padding-left:16px;position:relative}
+.tm-know li::before{content:"";position:absolute;left:0;top:10px;width:6px;height:6px;border-radius:999px;background:#A23D97}
+.tm-price{margin:16px 0 0;padding:12px 14px;border-radius:12px;background:#2A282B;font:500 15px/1.45 'Manrope',system-ui,sans-serif;color:#D9D6DA}
+.tm-price b{color:#FFFFFF}
+.tm-foot{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:24px 40px 32px}
+.tm-cta{display:inline-flex;align-items:center;height:48px;padding:0 24px;border-radius:999px;background:#FFCA01;color:#111;text-decoration:none;font:700 15px 'Manrope',system-ui,sans-serif}
+.tm-close{border:1px solid #3A383B;background:transparent;color:#D9D6DA;height:44px;padding:0 20px;border-radius:999px;font:700 14px 'Manrope',system-ui,sans-serif;cursor:pointer}
+.tm-close:hover{border-color:#FFCA01;color:#fff}
+.tm-hint{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;margin-top:6px;font:700 15px 'Manrope',system-ui,sans-serif;color:#FFCA01}
+.tm-hint svg{transition:transform .3s}
+.tech-card.open .tm-hint svg{transform:rotate(180deg)}
+.tech-card.open{border-color:#FFCA01!important}
+.tech-card.open:hover{transform:none}
+@media (max-width:1000px){
+  .tech-card{grid-template-rows:auto}
+  .tm-grid{grid-template-columns:1fr;gap:26px;padding:26px 20px 4px}
+  .tm-foot{flex-direction:column;align-items:stretch;padding:20px 20px 24px}
+  .tm-cta{justify-content:center}
+}
+</style>
+<style>img{max-width:100%}
+.burger{display:none}
+@media (max-width: 1000px){
+  [style*="display: flex"]{flex-wrap:wrap}
+  /* two-column feature layouts stack */
+  [style*="grid-template-columns: 2"],[style*="grid-template-columns: 5"],[style*="grid-template-columns: 6"],[style*="grid-template-columns: 7"],[style*="grid-template-columns: minmax(0, 1fr) 300px"]{grid-template-columns:minmax(0,1fr)!important}
+  [style*="repeat(3, minmax(0, 1fr))"],[style*="repeat(4, minmax(0, 1fr))"]{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  [style*="repeat(5, minmax(0, 1fr))"],[style*="repeat(6, minmax(0, 1fr))"]{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+}
+@media (max-width: 640px){
+  [style*="repeat(2, minmax(0, 1fr))"],[style*="repeat(3, minmax(0, 1fr))"]{grid-template-columns:minmax(0,1fr)!important}
+  [style*="repeat(5, minmax(0, 1fr))"],[style*="repeat(6, minmax(0, 1fr))"]{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  input[type="tel"],input[type="text"],input[type="email"]{width:100%!important;max-width:100%!important}
+  form .btn{width:100%}
+  .site-header .btn{padding:0 16px!important;height:40px!important;font-size:14px!important}
+}
+@media (max-width: 1000px){
+  /* cards with fixed height grow with their text */
+  [style*="; height: "]:has(> h2, > h3, > p, > div > h3, > div > p, > div > h2),[style^="height: "]:has(> h2, > h3, > p, > div > h3, > div > p, > div > h2){height:auto!important;min-height:0}
+  [data-name="Text"][style*="padding: 0"]{padding-top:24px!important;padding-bottom:28px!important}
+  /* image rows scroll sideways instead of stacking */
+  div[style*="display: flex"]:has(> .zoom + .zoom + .zoom){flex-wrap:nowrap!important;overflow-x:auto;justify-content:flex-start!important;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:4px}
+  div[style*="display: flex"]:has(> .zoom + .zoom + .zoom) > .zoom{scroll-snap-align:start;flex-shrink:0}
+  /* footer */
+  footer > div:first-child{flex-direction:column;align-items:flex-start!important;gap:24px}
+  footer nav{flex-wrap:wrap;gap:14px 22px!important}
+  /* header */
+  .site-header img{height:22px!important}
+  .site-header .btn{white-space:nowrap}
+}
+@media (max-width: 1000px){
+  [data-name="Zone logo"]{flex-wrap:nowrap!important;height:auto!important;padding:28px 12px!important;gap:12px!important;justify-content:center!important}
+  [data-name="Zone logo"] svg{width:38vw;max-width:220px;height:auto}
+}
+@media (max-width: 1000px){
+  [data-name="Intro / Mozaic"]{grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-template-rows:none!important;grid-auto-rows:auto}
+  [data-name="Intro / Mozaic"] > *{height:150px}
+  [data-name="Intro / Mozaic"] > :first-child{grid-row:auto!important;grid-column:span 2;height:230px}
+}
+@media (max-width: 640px){
+  [data-name="In cifre"]{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important}
+  [data-name="In cifre"] > div{padding:12px 10px!important}
+  [data-name="Galerie"] [style*="repeat(4, minmax(0, 1fr))"]{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:8px!important}
+  [data-name="Galerie"] [style*="repeat(4, minmax(0, 1fr))"] > div{height:72px!important}
+  [style*="repeat(4, minmax(0, 1fr))"]:has(> * > h3){grid-template-columns:minmax(0,1fr)!important}
+}
+@media (max-width: 1000px){
+  [data-name="Intro / Mozaic"] > :last-child{flex-wrap:nowrap!important;gap:8px!important;overflow:hidden}
+  [data-name="Intro / Mozaic"] > :last-child img{width:30px!important;height:118px!important}
+}
+
+@media (max-width: 1100px){
+  /* header */
+  .site-header{position:relative;padding:0 20px!important;height:68px!important;flex-wrap:nowrap!important}
+  .site-header > div{gap:10px!important;margin-left:auto}
+  .site-header > div > span{display:none}
+  .site-header .main-nav{display:none!important}
+  .burger{display:flex;flex-direction:column;justify-content:center;gap:5px;width:44px;height:44px;padding:0 11px;border:1px solid #3A383B;border-radius:999px;background:transparent;cursor:pointer;order:3;margin-left:10px}
+  .burger span{display:block;height:2px;background:#fff;border-radius:2px;transition:transform .2s,opacity .2s}
+  .site-header.open .burger span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .site-header.open .burger span:nth-child(2){opacity:0}
+  .site-header.open .burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .site-header.open .main-nav{display:flex!important;flex-direction:column;align-items:stretch!important;gap:0!important;position:absolute;top:100%;left:0;right:0;background:#111111;border-bottom:1px solid #242225;padding:8px 20px 16px;z-index:50}
+  .site-header.open .main-nav a{padding:14px 0;font-size:18px;border-bottom:1px solid #242225}
+}
+@media (max-width: 400px){ .site-header img{height:19px!important} }
+@media (max-width: 1000px){
+  [data-name="Media"]:has(> .cover){padding:28px 20px}
+  .cover{height:auto!important;max-width:100%}
+  .cover img{height:auto!important;width:auto!important;max-height:240px;max-width:100%}
+}
+</style>
+<style>html,body{margin:0;background:#111111;overflow-x:hidden}[hidden]{display:none!important}</style>
+</head>
+<body>
+<div data-name="ALVIA Tehnologii · 1440" style="margin: 0 auto; width: 100%; max-width: 1440px; font-family: 'Manrope', 'Satoshi', system-ui, sans-serif; color: #FFFFFF; background: #111111; -webkit-font-smoothing: antialiased">
+
+<!-- 00 Header -->
+<header class="site-header" aria-label="00 Header" data-name="00 Header" style="width: 100%; max-width: 1440px; box-sizing: border-box; height: 84px; padding: 0px clamp(20px, 8.333vw, 120px) 0px clamp(20px, 8.333vw, 120px); background: #111111; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #242225">
+<a href="index.html" aria-label="ALVIA, pagina principală" style="display: flex"><img src="img/logo/alvia-alb.svg" alt="ALVIA" style="height: 28px; width: auto; display: block"></a>
+<button class="burger" type="button" aria-label="Meniu" aria-expanded="false"><span></span><span></span><span></span></button>
+<nav aria-label="Meniu" class="main-nav" style="display: flex; align-items: center; gap: 30px; font-size: 15px; line-height: 1.333; font-weight: 600; color: #BDB9BE">
+<a class="navlink" href="index.html" style="text-decoration: none">Acasă</a>
+<a class="navlink" href="agende.html" style="text-decoration: none">Agende</a>
+<a class="navlink" href="tricouri.html" style="text-decoration: none">Tricouri</a>
+<a class="navlink" href="portofoliu.html" style="text-decoration: none">Portofoliu</a>
+<a href="tehnologii.html" aria-current="page" style="text-decoration: none; color: #FFFFFF; padding: 8px 0px 6px 0px; border-bottom: 2px solid #FFCA01">Tehnologii</a>
+<a class="navlink" href="cataloage.html" style="text-decoration: none">Cataloage</a>
+<a class="navlink" href="contacte.html" style="text-decoration: none">Contacte</a>
+</nav>
+<div style="display: flex; align-items: center; gap: 20px">
+<span style="font-size: 15px; line-height: 1.333; font-weight: 600; color: #FFFFFF; font-variant-numeric: tabular-nums">067 101 809</span>
+<a class="btn" href="#cerere" style="display: inline-flex; align-items: center; height: 44px; padding: 0px 22px 0px 22px; border-radius: 999px; background: #FFCA01; color: #111111; text-decoration: none; font-size: 15px; font-weight: 700">Cere o ofertă</a>
+</div>
+</header>
+
+<!-- 01 Intro -->
+<section aria-label="01 Intro" data-name="01 Intro" style="width: 100%; max-width: 1440px; box-sizing: border-box; padding: clamp(53px, 6.667vw, 96px) clamp(20px, 8.333vw, 120px) clamp(48px, 6.111vw, 88px) clamp(20px, 8.333vw, 120px); background: radial-gradient(40% 50% at 0% 50%, rgba(162,61,151,0.65) 0%, rgba(162,61,151,0) 100%), radial-gradient(36% 50% at 100% 50%, rgba(255,202,1,0.4) 0%, rgba(255,202,1,0) 100%), #111111; display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center">
+<nav aria-label="Breadcrumb" style="display: flex; gap: 10px; font-size: 14px; line-height: 1.429; font-weight: 600; color: #BDB9BE"><a class="more" href="index.html" style="text-decoration: none">Acasă</a><span aria-hidden="true">/</span><span style="color: #FFFFFF">Tehnologii</span></nav>
+<div aria-hidden="true" style="width: 72px; height: 72px; border-radius: 20px; border: 1px solid rgba(255,202,1,0.45); background: rgba(255,202,1,0.08); display: flex; align-items: center; justify-content: center; color: #FFCA01"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.6L18.5 9l-4.7 1.4L12 15l-1.8-4.6L5.5 9l4.7-1.4z"></path><path d="M18 15l.9 2.1L21 18l-2.1.9L18 21l-.9-2.1L15 18l2.1-.9z"></path></svg></div>
+<span style="font-size: 20px; line-height: 1.3; font-weight: 700; color: #FFCA01">Tehnologii de aplicare</span>
+<h1 style="margin: 0; width: 100%; max-width: 1000px; font-size: clamp(36px, 5vw, 72px); line-height: 1.083; font-weight: 800; letter-spacing: -0.04em; text-wrap: balance">11 moduri de a pune logo-ul pe orice material</h1>
+<p style="margin: 0; width: 100%; max-width: 680px; font-size: 20px; line-height: 1.5; font-weight: 500; color: #D9D6DA">Alegem tehnologia după material, tiraj și buget. Vedeți rezultatul pe machetă înainte de producție.</p>
+<div data-name="Intro / Jump links" style="width: 100%; max-width: 1000px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; padding-top: 18px">
+<a class="chip-link" href="#t-uv" style="display: inline-flex; align-items: center; height: 40px; padding: 0px 18px 0px 18px; border-radius: 999px; border: 1px solid #3A383B; background: rgba(17,17,17,0.6); text-decoration: none; font-size: 14px; font-weight: 700">Tipar UV</a>
+<a class="chip-link" href="#t-broderie" style="display: inline-flex; align-items: center; height: 40px; padding: 0px 18px 0px 18px; border-radius: 999px; border: 1px solid #3A383B; background: rgba(17,17,17,0.6); text-decoration: none; font-size: 14px; font-weight: 700">Broderie</a>
+<a class="chip-link" href="#t-decalcomanie" style="display: inline-flex; align-items: center; height: 40px; padding: 0px 18px 0px 18px; border-radius: 999px; border: 1px solid #3A383B; background: rgba(17,17,17,0.6); text-decoration: none; font-size: 14px; font-weight: 700">Decalcomanie</a>
+<a class="chip-link" href="#t-embosare" style="display: inline-flex; align-items: center; height: 40px; padding: 0px 18px 0px 18px; border-radius: 999px; border: 1px solid #3A383B; background: rgba(17,17,17,0.6); text-decoration: none; font-size: 14px; font-weight: 700">Embosare</a>
+<a class="chip-link" href="#t-laser" style="display: inline-flex; align-items: center; height: 40px; padding: 0px 18px 0px 18px; border-radius: 999px; border: 1px solid #3A383B; background: rgba(17,17,17,0.6); text-decoration: none; font-size: 14px; font-weight: 700">Gravură laser</a>
+<a class="chip-link" href="#t-serigrafie" style="display: inline-flex; align-items: center; height: 40px; padding: 0px 18px 0px 18px; border-radius: 999px; border: 1px solid #3A383B; background: rgba(17,17,17,0.6); text-decoration: none; font-size: 14px; font-weight: 700">Serigrafie</a>
+<a class="chip-link" href="#t-sublimare" style="display: inline-flex; align-items: center; height: 40px; padding: 0px 18px 0px 18px; border-radius: 999px; border: 1px solid #3A383B; background: rgba(17,17,17,0.6); text-decoration: none; font-size: 14px; font-weight: 700">Sublimare</a>
+<a class="chip-link" href="#t-tampografie" style="display: inline-flex; align-items: center; height: 40px; padding: 0px 18px 0px 18px; border-radius: 999px; border: 1px solid #3A383B; background: rgba(17,17,17,0.6); text-decoration: none; font-size: 14px; font-weight: 700">Tampografie</a>
+<a class="chip-link" href="#t-termotransfer" style="display: inline-flex; align-items: center; height: 40px; padding: 0px 18px 0px 18px; border-radius: 999px; border: 1px solid #3A383B; background: rgba(17,17,17,0.6); text-decoration: none; font-size: 14px; font-weight: 700">Termotransfer</a>
+<a class="chip-link" href="#t-dtf" style="display: inline-flex; align-items: center; height: 40px; padding: 0px 18px 0px 18px; border-radius: 999px; border: 1px solid #3A383B; background: rgba(17,17,17,0.6); text-decoration: none; font-size: 14px; font-weight: 700">DTF</a>
+<a class="chip-link" href="#t-uvdtf" style="display: inline-flex; align-items: center; height: 40px; padding: 0px 18px 0px 18px; border-radius: 999px; border: 1px solid #3A383B; background: rgba(17,17,17,0.6); text-decoration: none; font-size: 14px; font-weight: 700">UV DTF Stickers</a>
+</div>
+</section>
+
+<!-- 02 Tehnologii list -->
+<section aria-label="02 Lista tehnologii" data-name="02 Lista tehnologii" style="width: 100%; max-width: 1440px; box-sizing: border-box; padding: 40px clamp(20px, 8.333vw, 120px) clamp(66px, 8.333vw, 120px) clamp(20px, 8.333vw, 120px); background: #111111; display: flex; flex-direction: column; gap: 24px">
+
+<article id="t-uv" class="lift tech-card" aria-expanded="false" aria-controls="more-uv" tabindex="0" data-name="Tehnologie / Tipar UV" style="height: 340px; display: grid; grid-template-columns: 600px minmax(0, 1fr); background: #1C1B1D; border: 1px solid #2C2A2D; border-radius: 24px; overflow: hidden">
+<div class="zoom tech-media" data-name="Media" style="position: relative; overflow: hidden; background: #0B0B0C"><img src="img/tehnologii/tipar-uv.jpg" alt="Huse de telefon imprimate cu tipar UV" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block"><span class="tech-label">Tipar UV</span></div>
+<div data-name="Text" style="padding: 0px clamp(20px, 4.444vw, 64px) 0px clamp(20px, 4.444vw, 64px); display: flex; flex-direction: column; justify-content: center; gap: 14px">
+<span style="font-size: 14px; line-height: 1.429; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #FFCA01">Pe plastic, metal, lemn și sticlă</span>
+<h2 style="margin: 0; font-size: clamp(24px, 2.222vw, 32px); line-height: 1.188; font-weight: 800; letter-spacing: -0.02em">Imprimare full-color direct pe obiect</h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.588; color: #BDB9BE">Cerneala se întărește instant sub lumină UV, așa că logo-ul iese clar și cu culori vii, chiar și pe suprafețe dure.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; padding-top: 4px">
+<span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Power bank-uri</span>
+<span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Huse</span>
+<span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Pixuri</span>
+<span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Plachete</span>
+</div>
+<span class="tm-hint">Vezi detalii<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></div>
+<div class="tech-more" id="more-uv"><div class="tm-in"><div class="tm-grid"><div><h4>Cum funcționează</h4><ol class="tm-steps"><li>Designul se imprimă digital, direct pe obiect.</li><li>Lumina UV usucă cerneala instant.</li><li>Stratul de alb permite culori vii și pe obiecte colorate.</li></ol></div><div><h4>Avantaje</h4><ul class="tm-pro"><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFCA01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Full-color, oricâte culori, la calitate înaltă</span></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFCA01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Potrivit și pentru cantități mici</span></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFCA01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Lemn, plastic, piele, sticlă, plexiglas, carton</span></li></ul></div><div><h4>Bine de știut</h4><ul class="tm-know"><li>Pe logo-uri foarte mici evitați textele lungi</li><li>Pe unele materiale cerneala aderă mai slab — vă spunem dinainte</li></ul><p class="tm-price"><b>Prețul depinde de:</b> cantitate și mărimea graficii.</p></div></div><div class="tm-foot"><a class="btn tm-cta" href="contacte.html">Cere o machetă cu Tipar UV</a><button type="button" class="tm-close">Închide ↑</button></div></div></div></article>
+
+<article id="t-broderie" class="lift tech-card" aria-expanded="false" aria-controls="more-broderie" tabindex="0" data-name="Tehnologie / Broderie" style="height: 340px; display: grid; grid-template-columns: 600px minmax(0, 1fr); background: #1C1B1D; border: 1px solid #2C2A2D; border-radius: 24px; overflow: hidden">
+<div class="zoom tech-media" data-name="Media" style="position: relative; overflow: hidden; background: #0B0B0C"><img src="img/tehnologii/broderie.jpg" alt="Mașină de brodat coasă cu fir auriu" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block"><span class="tech-label">Broderie</span></div>
+<div data-name="Text" style="padding: 0px clamp(20px, 4.444vw, 64px) 0px clamp(20px, 4.444vw, 64px); display: flex; flex-direction: column; justify-content: center; gap: 14px">
+<span style="font-size: 14px; line-height: 1.429; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #FFCA01">Pe textile</span>
+<h2 style="margin: 0; font-size: clamp(24px, 2.222vw, 32px); line-height: 1.188; font-weight: 800; letter-spacing: -0.02em">Logo cusut, care rezistă ani de zile</h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.588; color: #BDB9BE">Firul colorat dă relief și un aspect premium. Nu se decolorează și nu se cojește la spălare.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; padding-top: 4px">
+<span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Tricouri polo</span>
+<span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Chipiuri</span>
+<span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Hanorace</span>
+<span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Prosoape</span>
+</div>
+<span class="tm-hint">Vezi detalii<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></div>
+<div class="tech-more" id="more-broderie"><div class="tm-in"><div class="tm-grid"><div><h4>Cum funcționează</h4><ol class="tm-steps"><li>Logo-ul este digitizat într-un fișier pentru mașina de brodat.</li><li>Produsul se fixează în ramă.</li><li>Mașina coase logo-ul cu fir colorat.</li></ol></div><div><h4>Avantaje</h4><ul class="tm-pro"><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFCA01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Rezistă la spălări multiple, nu se decolorează</span></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFCA01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Aspect premium, în relief</span></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFCA01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Șepci, tricouri polo, jachete, genți, polar</span></li></ul></div><div><h4>Bine de știut</h4><ul class="tm-know"><li>Folosiți culori și forme pline</li><li>Literele să aibă cel puțin 5 mm înălțime</li><li>Trimiteți logo-ul vectorial (CDR, AI, PDF, EPS)</li></ul><p class="tm-price"><b>Prețul depinde de:</b> cantitate, mărimea și complexitatea logo-ului, materialul.</p></div></div><div class="tm-foot"><a class="btn tm-cta" href="contacte.html">Cere o machetă cu Broderie</a><button type="button" class="tm-close">Închide ↑</button></div></div></div></article>
+
+<article id="t-decalcomanie" class="lift tech-card" aria-expanded="false" aria-controls="more-decalcomanie" tabindex="0" data-name="Tehnologie / Decalcomanie" style="height: 340px; display: grid; grid-template-columns: 600px minmax(0, 1fr); background: #1C1B1D; border: 1px solid #2C2A2D; border-radius: 24px; overflow: hidden">
+<div class="zoom tech-media" data-name="Media" style="position: relative; overflow: hidden; background: #0B0B0C"><img src="img/tehnologii/decalcomanie.jpg" alt="Decal aplicat pe un pahar de sticlă" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block"><span class="tech-label">Decalcomanie</span></div>
+<div data-name="Text" style="padding: 0px clamp(20px, 4.444vw, 64px) 0px clamp(20px, 4.444vw, 64px); display: flex; flex-direction: column; justify-content: center; gap: 14px">
+<span style="font-size: 14px; line-height: 1.429; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #FFCA01">Pe ceramică, porțelan și sticlă</span>
+<h2 style="margin: 0; font-size: clamp(24px, 2.222vw, 32px); line-height: 1.188; font-weight: 800; letter-spacing: -0.02em">Imagini detaliate pe suprafețe curbe</h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.588; color: #BDB9BE">Desenul se transferă pe obiect și se fixează prin coacere, ca să reziste la utilizare zilnică.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; padding-top: 4px">
+<span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Căni</span>
+<span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Pahare</span>
+<span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Farfurii</span>
+</div>
+<span class="tm-hint">Vezi detalii<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></div>
+<div class="tech-more" id="more-decalcomanie"><div class="tm-in"><div class="tm-grid"><div><h4>Cum funcționează</h4><ol class="tm-steps"><li>Logo-ul se imprimă pe o hârtie specială de transfer.</li><li>Se aplică pe cană, sticlă sau porțelan.</li><li>Obiectul se arde în cuptor, iar imaginea devine parte din suprafață.</li></ol></div><div><h4>Avantaje</h4><ul class="tm-pro"><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFCA01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Personalizare foarte rezistentă</span></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFCA01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Mai multe culori, pe orice parte a obiectului</span></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFCA01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Se poate aplica și în interior, și în exterior</span></li></ul></div><div><h4>Bine de știut</h4><ul class="tm-know"><li>Comandă minimă: câteva zeci de bucăți</li><li>Rezistență limitată la mașina de spălat vase</li><li>Evitați caracterele foarte mici</li></ul><p class="tm-price"><b>Prețul depinde de:</b> tipul produsului, cantitate, mărimea și numărul de culori.</p></div></div><div class="tm-foot"><a class="btn tm-cta" href="contacte.html">Cere o machetă cu Decalcomanie</a><button type="button" class="tm-close">Închide ↑</button></div></div></div></article>
+
+<article id="t-embosare" class="lift tech-card" aria-expanded="false" aria-controls="more-embosare" tabindex="0" data-name="Tehnologie / Embosare" style="height: 340px; display: grid; grid-template-columns: 600px minmax(0, 1fr); background: #1C1B1D; border: 1px solid #2C2A2D; border-radius: 24px; overflow: hidden">
+<div class="zoom tech-media" data-name="Media" style="position: relative; overflow: hidden; background: #0B0B0C"><img src="img/tehnologii/embosare.jpg" alt="Logo embosat pe piele" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block"><span class="tech-label">Embosare</span></div>
+<div data-name="Text" style="padding: 0px clamp(20px, 4.444vw, 64px) 0px clamp(20px, 4.444vw, 64px); display: flex; flex-direction: column; justify-content: center; gap: 14px">
+<span style="font-size: 14px; line-height: 1.429; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #FFCA01">Pe piele și piele ecologică</span>
+<h2 style="margin: 0; font-size: clamp(24px, 2.222vw, 32px); line-height: 1.188; font-weight: 800; letter-spacing: -0.02em">Logo în relief, elegant și discret</h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.588; color: #BDB9BE">Presa lasă o amprentă permanentă, fără cerneală. Alegerea clasică pentru agende și mape.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; padding-top: 4px">
+<span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Agende</span>
+<span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Mape</span>
+<span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Portofele</span>
+<span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Brelocuri</span>
+</div>
+<span class="tm-hint">Vezi detalii<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></div>
+<div class="tech-more" id="more-embosare"><div class="tm-in"><div class="tm-grid"><div><h4>Cum funcționează</h4><ol class="tm-steps"><li>Se face o matriță metalică după logo.</li><li>Matrița este presată în material.</li><li>Logo-ul rămâne în relief, fără cerneală.</li></ol></div><div><h4>Avantaje</h4><ul class="tm-pro"><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFCA01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Aspect elegant și discret</span></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFCA01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Se simte la atingere</span></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFCA01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Varianta clasică pentru agende și mape</span></li></ul></div><div><h4>Bine de știut</h4><ul class="tm-know"><li>Logo-urile simple ies cel mai bine</li><li>Detaliile foarte fine se pot pierde</li></ul><p class="tm-price"><b>Prețul depinde de:</b> mărimea logo-ului și cantitate; la tiraje mari prețul pe bucată scade.</p></div></div><div class="tm-foot"><a class="btn tm-cta" href="contacte.html">Cere o machetă cu Embosare</a><button type="button" class="tm-close">Închide ↑</button></div></div></div></article>
+
+<article id="t-laser" class="lift tech-card" aria-expanded="false" aria-controls="more-laser" tabindex="0" data-name="Tehnologie / Gravura laser" style="height: 340px; display: grid; grid-template-columns: 600px minmax(0, 1fr); background: #1C1B1D; border: 1px solid #2C2A2D; border-radius: 24px; overflow: hidden">
+<div class="zoom tech-media" data-name="Media" style="position: relative; overflow: hidden; background: #0B0B0C"><img src="img/tehnologii/gravura-laser.jpg" alt="Gravură laser pe o placă de metal" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block"><span class="tech-label">Gravură laser</span></div>
+<div data-name="Text" style="padding: 0px clamp(20px, 4.444vw, 64px) 0px clamp(20px, 4.444vw, 64px); display: flex; flex-direction: column; justify-content: center; gap: 14px">
+<span style="font-size: 14px; line-height: 1.429; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #FFCA01">Pe metal, lemn, sticlă și piele</span>
+<h2 style="margin: 0; font-size: clamp(24px, 2.222vw, 32px); line-height: 1.188; font-weight: 800; letter-spacing: -0.02em">Marcaj permanent, de mare precizie</h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.588; color: #BDB9BE">Laserul gravează logo-ul direct în material. Nu se șterge și nu se decolorează în timp.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; padding-top: 4px">
+<span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Termosuri</span>
+<span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Pixuri metalice</span>
+<span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Brichete</span>
+<span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Obiecte din lemn</span>
+</div>
+<span class="tm-hint">Vezi detalii<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></div>
+<div class="tech-more" id="more-laser"><div class="tm-in"><div class="tm-grid"><div><h4>Cum funcționează</h4><ol class="tm-steps"><li>Logo-ul se pregătește în format vectorial.</li><li>Laserul gravează direct în material.</li><li>Pe metal vopsit, apare culoarea metalului de dedesubt.</li></ol></div><div><h4>Avantaje</h4><ul class="tm-pro"><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFCA01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Marcaj permanent, nu se șterge</span></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFCA01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Foarte precis, chiar și pentru logo-uri mici</span></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFCA01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Metal, lemn, piele, sticlă; și obiecte cilindrice</span></li></ul></div><div><h4>Bine de știut</h4><ul class="tm-know"><li>Gravura este într-o singură nuanță</li><li>Fișier vectorial obligatoriu (CDR, AI, PDF, EPS)</li></ul><p class="tm-price"><b>Prețul depinde de:</b> cantitate, mărimea logo-ului și tipul obiectului.</p></div></div><div class="tm-foot"><a class="btn tm-cta" href="contacte.html">Cere o machetă cu Gravură laser</a><button type="button" class="tm-close">Închide ↑</button></div></div></div></article>
+
+<article id="t-serigrafie" class="lift tech-card" aria-expanded="false" aria-controls="more-serigrafie" tabindex="0" data-name="Tehnologie / Serigrafie" style="height: 340px; display: grid; grid-template-columns: 600px minmax(0, 1fr); background: #1C1B1D; border: 1px solid #2C2A2D; border-radius: 24px; overflow: hidden">
+<div class="zoom tech-media" data-name="Media" style="position: relative; overflow: hidden; background: #0B0B0C"><img src="img/tehnologii/serigrafie.jpg" alt="Carusel de serigrafie pentru tricouri" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block"><span class="tech-label">Serigrafie</span></div>
+<div data-name="Text" style="padding: 0px clamp(20px, 4.444vw, 64px) 0px clamp(20px, 4.444vw, 64px); display: flex; flex-direction: column; justify-content: center; gap: 14px">
+<span style="font-size: 14px; line-height: 1.429; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #FFCA01">Pe textile, hârtie și plastic</span>
+<h2 style="margin: 0; font-size: clamp(24px, 2.222vw, 32px); line-height: 1.188; font-weight: 800; letter-spacing: -0.02em">Culori intense pentru tiraje mari</h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.588; color: #BDB9BE">Fiecare culoare se aplică prin sită separată. Cea mai avantajoasă metodă la cantități mari.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; padding-top: 4px">
+<span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Tricouri</span>
+<span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Sacoșe</span>
+<span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Afișe</span>
+</div>
+<span class="tm-hint">Vezi detalii<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></div>
+<div class="tech-more" id="more-serigrafie"><div class="tm-in"><div class="tm-grid"><div><h4>Cum funcționează</h4><ol class="tm-steps"><li>Pentru fiecare culoare se pregătește o sită.</li><li>Cerneala se presează prin sită direct pe produs.</li><li>Produsul se usucă și se verifică.</li></ol></div><div><h4>Avantaje</h4><ul class="tm-pro"><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFCA01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Culori intense, chiar și pe textile închise</span></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFCA01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Rezistentă la frecare, zgâriere și soare</span></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFCA01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Cea mai avantajoasă la cantități mari</span></li></ul></div><div><h4>Bine de știut</h4><ul class="tm-know"><li>Maxim 5 culori, fără degradeuri</li><li>Mai puține culori = preț mai mic</li><li>Logo vectorial recomandat</li></ul><p class="tm-price"><b>Prețul depinde de:</b> tipul produsului, cantitate, mărimea și numărul de culori.</p></div></div><div class="tm-foot"><a class="btn tm-cta" href="contacte.html">Cere o machetă cu Serigrafie</a><button type="button" class="tm-close">Închide ↑</button></div></div></div></article>
+
+<article id="t-sublimare" class="lift tech-card" aria-expanded="false" aria-controls="more-sublimare" tabindex="0" data-name="Tehnologie / Sublimare" style="height: 340px; display: grid; grid-template-columns: 600px minmax(0, 1fr); background: #1C1B1D; border: 1px solid #2C2A2D; border-radius: 24px; overflow: hidden">
+<div class="zoom tech-media" data-name="Media" style="position: relative; overflow: hidden; background: #0B0B0C"><img src="img/tehnologii/sublimare.jpg" alt="Presă de sublimare pentru căni" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block"><span class="tech-label">Sublimare</span></div>
+<div data-name="Text" style="padding: 0px clamp(20px, 4.444vw, 64px) 0px clamp(20px, 4.444vw, 64px); display: flex; flex-direction: column; justify-content: center; gap: 14px">
+<span style="font-size: 14px; line-height: 1.429; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #FFCA01">Pe căni și textile din poliester</span>
+<h2 style="margin: 0; font-size: clamp(24px, 2.222vw, 32px); line-height: 1.188; font-weight: 800; letter-spacing: -0.02em">Fotografie pe toată suprafața</h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.588; color: #BDB9BE">La căldură, cerneala pătrunde în material, așa că imaginea nu se zgârie și nu se spală.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; padding-top: 4px">
+<span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Căni</span>
+<span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Tricouri sport</span>
+<span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Mousepad-uri</span>
+<span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Puzzle-uri</span>
+</div>
+<span class="tm-hint">Vezi detalii<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></div>
+<div class="tech-more" id="more-sublimare"><div class="tm-in"><div class="tm-grid"><div><h4>Cum funcționează</h4><ol class="tm-steps"><li>Designul se imprimă în oglindă pe hârtie de transfer.</li><li>Prin presare la 180°C, cerneala intră în material.</li><li>Imaginea devine parte din produs.</li></ol></div><div><h4>Avantaje</h4><ul class="tm-pro"><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFCA01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Imagini full-color, oricât de complexe</span></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFCA01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Nu se simte la atingere și nu se spală</span></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFCA01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Rapid pentru cantități mici</span></li></ul></div><div><h4>Bine de știut</h4><ul class="tm-know"><li>Funcționează doar pe suprafețe albe</li><li>Doar pe poliester sau obiecte tratate special (căni, plăci)</li><li>Imagini la 300 dpi</li></ul><p class="tm-price"><b>Prețul depinde de:</b> cantitate, numărul de culori și de poziții.</p></div></div><div class="tm-foot"><a class="btn tm-cta" href="contacte.html">Cere o machetă cu Sublimare</a><button type="button" class="tm-close">Închide ↑</button></div></div></div></article>
+
+<article id="t-tampografie" class="lift tech-card" aria-expanded="false" aria-controls="more-tampografie" tabindex="0" data-name="Tehnologie / Tampografie" style="height: 340px; display: grid; grid-template-columns: 600px minmax(0, 1fr); background: #1C1B1D; border: 1px solid #2C2A2D; border-radius: 24px; overflow: hidden">
+<div class="zoom tech-media" data-name="Media" style="position: relative; overflow: hidden; background: #0B0B0C"><img src="img/tehnologii/tampografie.jpg" alt="Mașină de tampografie" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block"><span class="tech-label">Tampografie</span></div>
+<div data-name="Text" style="padding: 0px clamp(20px, 4.444vw, 64px) 0px clamp(20px, 4.444vw, 64px); display: flex; flex-direction: column; justify-content: center; gap: 14px">
+<span style="font-size: 14px; line-height: 1.429; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #FFCA01">Pe obiecte mici și curbe</span>
+<h2 style="margin: 0; font-size: clamp(24px, 2.222vw, 32px); line-height: 1.188; font-weight: 800; letter-spacing: -0.02em">Precizie pe suprafețe greu accesibile</h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.588; color: #BDB9BE">Un tampon de silicon preia logo-ul și îl transferă pe forme rotunjite sau neregulate.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; padding-top: 4px">
+<span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Pixuri</span>
+<span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Brichete</span>
+<span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Stick-uri USB</span>
+<span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Antistres</span>
+</div>
+<span class="tm-hint">Vezi detalii<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></div>
+<div class="tech-more" id="more-tampografie"><div class="tm-in"><div class="tm-grid"><div><h4>Cum funcționează</h4><ol class="tm-steps"><li>Logo-ul se transferă pe un clișeu.</li><li>Un tampon din silicon preia cerneala.</li><li>Tamponul aplică logo-ul pe obiect, inclusiv pe forme curbe.</li></ol></div><div><h4>Avantaje</h4><ul class="tm-pro"><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFCA01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Ideală pentru logo-uri mici</span></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFCA01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Merge pe suprafețe curbe și neregulate</span></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFCA01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Se poate imprima auriu și argintiu</span></li></ul></div><div><h4>Bine de știut</h4><ul class="tm-know"><li>Maxim 4 culori</li><li>Pixuri, brichete, brelocuri, stick-uri USB</li></ul><p class="tm-price"><b>Prețul depinde de:</b> cantitate, numărul de culori și de poziții.</p></div></div><div class="tm-foot"><a class="btn tm-cta" href="contacte.html">Cere o machetă cu Tampografie</a><button type="button" class="tm-close">Închide ↑</button></div></div></div></article>
+
+<article id="t-termotransfer" class="lift tech-card" aria-expanded="false" aria-controls="more-termotransfer" tabindex="0" data-name="Tehnologie / Termotransfer" style="height: 340px; display: grid; grid-template-columns: 600px minmax(0, 1fr); background: #1C1B1D; border: 1px solid #2C2A2D; border-radius: 24px; overflow: hidden">
+<div class="zoom tech-media" data-name="Media" style="position: relative; overflow: hidden; background: #0B0B0C"><img src="img/tehnologii/termotransfer.jpg" alt="Folie de termotransfer dezlipită de pe un tricou" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block"><span class="tech-label">Termotransfer</span></div>
+<div data-name="Text" style="padding: 0px clamp(20px, 4.444vw, 64px) 0px clamp(20px, 4.444vw, 64px); display: flex; flex-direction: column; justify-content: center; gap: 14px">
+<span style="font-size: 14px; line-height: 1.429; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #FFCA01">Pe textile</span>
+<h2 style="margin: 0; font-size: clamp(24px, 2.222vw, 32px); line-height: 1.188; font-weight: 800; letter-spacing: -0.02em">Nume și numere pe echipamente</h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.588; color: #BDB9BE">Folia se aplică la cald și se fixează ferm pe țesătură. Ideal pentru personalizare individuală.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; padding-top: 4px">
+<span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Echipament sportiv</span>
+<span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Veste</span>
+<span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Genți</span>
+</div>
+<span class="tm-hint">Vezi detalii<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></div>
+<div class="tech-more" id="more-termotransfer"><div class="tm-in"><div class="tm-grid"><div><h4>Cum funcționează</h4><ol class="tm-steps"><li>Logo-ul se imprimă sau se taie din folie specială.</li><li>Se aplică pe textil cu presa la cald.</li><li>Rezultatul se fixează pe țesătură.</li></ol></div><div><h4>Avantaje</h4><ul class="tm-pro"><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFCA01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Potrivit pentru nume și numere individuale</span></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFCA01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Mai multe culori, orice grafică</span></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFCA01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Rapid pentru cantități mici și medii</span></li></ul></div><div><h4>Bine de știut</h4><ul class="tm-know"><li>Pe țesături grosiere (ex. iută) evitați literele mici</li><li>Logo vectorial recomandat</li></ul><p class="tm-price"><b>Prețul depinde de:</b> tipul imprimării, mărimea graficii și cantitate.</p></div></div><div class="tm-foot"><a class="btn tm-cta" href="contacte.html">Cere o machetă cu Termotransfer</a><button type="button" class="tm-close">Închide ↑</button></div></div></div></article>
+
+<article id="t-dtf" class="lift tech-card" aria-expanded="false" aria-controls="more-dtf" tabindex="0" data-name="Tehnologie / DTF" style="height: 340px; display: grid; grid-template-columns: 600px minmax(0, 1fr); background: #1C1B1D; border: 1px solid #2C2A2D; border-radius: 24px; overflow: hidden">
+<div class="zoom tech-media" data-name="Media" style="position: relative; overflow: hidden; background: #0B0B0C"><img src="img/tehnologii/dtf.jpg" alt="Imprimantă DTF cu film imprimat" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block"><span class="tech-label">DTF</span></div>
+<div data-name="Text" style="padding: 0px clamp(20px, 4.444vw, 64px) 0px clamp(20px, 4.444vw, 64px); display: flex; flex-direction: column; justify-content: center; gap: 14px">
+<span style="font-size: 14px; line-height: 1.429; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #FFCA01">Pe orice tip de țesătură</span>
+<h2 style="margin: 0; font-size: clamp(24px, 2.222vw, 32px); line-height: 1.188; font-weight: 800; letter-spacing: -0.02em">Full-color, fără limită de culori</h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.588; color: #BDB9BE">Designul se imprimă pe film și se transferă pe textil, cu detalii fine și culori vii.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; padding-top: 4px">
+<span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Tricouri</span>
+<span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Hanorace</span>
+<span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Sacoșe</span>
+<span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Șorțuri</span>
+</div>
+<span class="tm-hint">Vezi detalii<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></div>
+<div class="tech-more" id="more-dtf"><div class="tm-in"><div class="tm-grid"><div><h4>Cum funcționează</h4><ol class="tm-steps"><li>Designul se imprimă pe un film special.</li><li>Se acoperă cu adeziv și se fixează la cald.</li><li>Se transferă pe textil cu presa termică.</li></ol></div><div><h4>Avantaje</h4><ul class="tm-pro"><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFCA01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Culori vii, degradeuri, fără limită de culori</span></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFCA01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Merge pe aproape orice textil</span></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFCA01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Fără costuri de pregătire, ideal și pentru tiraje mici</span></li></ul></div><div><h4>Bine de știut</h4><ul class="tm-know"><li>Folosiți imagini de calitate mare</li><li>Spălați produsele pe dos, la temperatură moderată</li></ul><p class="tm-price"><b>Prețul depinde de:</b> mărimea graficii, cantitate și tipul materialului.</p></div></div><div class="tm-foot"><a class="btn tm-cta" href="contacte.html">Cere o machetă cu DTF</a><button type="button" class="tm-close">Închide ↑</button></div></div></div></article>
+
+<article id="t-uvdtf" class="lift tech-card" aria-expanded="false" aria-controls="more-uvdtf" tabindex="0" data-name="Tehnologie / UV DTF Stickers" style="height: 340px; display: grid; grid-template-columns: 600px minmax(0, 1fr); background: #1C1B1D; border: 1px solid #2C2A2D; border-radius: 24px; overflow: hidden">
+<div class="zoom tech-media" data-name="Media" style="position: relative; overflow: hidden; background: #0B0B0C"><img src="img/tehnologii/uv-dtf-stickers.jpg" alt="Autocolant UV DTF aplicat pe o cană" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block"><span class="tech-label">UV DTF Stickers</span></div>
+<div data-name="Text" style="padding: 0px clamp(20px, 4.444vw, 64px) 0px clamp(20px, 4.444vw, 64px); display: flex; flex-direction: column; justify-content: center; gap: 14px">
+<span style="font-size: 14px; line-height: 1.429; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #FFCA01">Nou · pe sticle, căni și suprafețe curbe</span>
+<h2 style="margin: 0; font-size: clamp(24px, 2.222vw, 32px); line-height: 1.188; font-weight: 800; letter-spacing: -0.02em">Full-color la prețul unei culori</h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.588; color: #BDB9BE">Designul se imprimă cu cerneluri UV pe o folie specială și se aplică pe obiect ca un autocolant. Ajunge și pe suprafețele curbe unde tampografia nu ajunge.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; padding-top: 4px">
+<span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Sticle</span>
+<span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Căni</span>
+<span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Termosuri</span>
+<span style="font-size: 13px; line-height: 1.385; font-weight: 600; padding: 6px 12px 6px 12px; border-radius: 999px; background: #2A282B; color: #D9D6DA">Gadgeturi</span>
+</div>
+<span class="tm-hint">Vezi detalii<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></div>
+<div class="tech-more" id="more-uvdtf"><div class="tm-in"><div class="tm-grid"><div><h4>Cum funcționează</h4><ol class="tm-steps"><li>Designul se imprimă cu cerneluri UV pe o folie specială.</li><li>Se aplică pe obiect ca un autocolant, fără căldură.</li><li>Folia de transfer se îndepărtează, logo-ul rămâne.</li></ol></div><div><h4>Avantaje</h4><ul class="tm-pro"><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFCA01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Full-color la prețul unei singure culori</span></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFCA01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Ajunge pe sticle, căni și alte suprafețe curbe</span></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFCA01" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><span>Fără clișee, site sau matrițe</span></li></ul></div><div><h4>Bine de știut</h4><ul class="tm-know"><li>Suprafața trebuie să fie curată și uscată</li><li>Folosiți imagini de calitate mare</li></ul><p class="tm-price"><b>Prețul depinde de:</b> cantitate, mărimea graficii și tipul produsului.</p></div></div><div class="tm-foot"><a class="btn tm-cta" href="contacte.html">Cere o machetă cu UV DTF Stickers</a><button type="button" class="tm-close">Închide ↑</button></div></div></div></article>
+
+</section>
+
+<!-- 03 CTA -->
+<section id="cerere" aria-label="03 Cerere machetă" data-name="03 Cerere machetă" style="width: 100%; max-width: 1440px; box-sizing: border-box; padding: 0px clamp(20px, 8.333vw, 120px) clamp(66px, 8.333vw, 120px) clamp(20px, 8.333vw, 120px); background: #111111">
+<div style="width: 100%; max-width: 1200px; box-sizing: border-box; padding: clamp(40px, 5vw, 72px) clamp(20px, 5.556vw, 80px) clamp(40px, 5vw, 72px) clamp(20px, 5.556vw, 80px); border-radius: 32px; background: radial-gradient(60% 120% at 0% 0%, rgba(162,61,151,0.75) 0%, rgba(162,61,151,0) 100%), radial-gradient(60% 120% at 100% 100%, rgba(255,202,1,0.55) 0%, rgba(255,202,1,0) 100%), #1C1B1D; display: flex; align-items: center; justify-content: space-between; gap: clamp(16px, 3.333vw, 48px)">
+<div style="display: flex; flex-direction: column; gap: 14px; width: 100%; max-width: 640px">
+<h2 style="margin: 0; font-size: clamp(24px, 3.333vw, 48px); line-height: 1.125; font-weight: 800; letter-spacing: -0.03em">Nu știți ce tehnologie să alegeți?</h2>
+<p style="margin: 0; font-size: 19px; line-height: 1.526; font-weight: 500; color: #D9D6DA">Trimiteți-ne logo-ul și produsul. Vă recomandăm metoda potrivită și vă arătăm macheta.</p>
+</div>
+<div style="display: flex; flex-direction: column; align-items: flex-end; gap: 14px">
+<a class="btn" href="index.html" style="display: inline-flex; align-items: center; height: 60px; padding: 0px clamp(16px, 2.361vw, 34px) 0px clamp(16px, 2.361vw, 34px); border-radius: 999px; background: #FFCA01; color: #111111; text-decoration: none; font-size: 18px; font-weight: 700">Cere o machetă</a>
+<span style="font-size: 16px; line-height: 1.375; font-weight: 600; color: #D9D6DA; font-variant-numeric: tabular-nums">sau sunați: +373 67 101 809</span>
+</div>
+</div>
+</section>
+
+<!-- 04 Footer -->
+<footer aria-label="04 Footer" data-name="04 Footer" style="width: 100%; max-width: 1440px; box-sizing: border-box; padding: 56px clamp(20px, 8.333vw, 120px) 40px clamp(20px, 8.333vw, 120px); background: #111111; border-top: 1px solid #242225; display: flex; flex-direction: column; gap: clamp(16px, 2.778vw, 40px)">
+<div style="display: flex; justify-content: space-between; align-items: center">
+<img src="img/logo/alvia-alb.svg" alt="ALVIA" style="height: 28px; width: auto; display: block">
+<nav aria-label="Meniu subsol" style="display: flex; gap: 28px; font-size: 15px; line-height: 1.333; font-weight: 600; color: #BDB9BE">
+<a class="navlink" href="index.html" style="text-decoration: none">Acasă</a>
+<a class="navlink" href="agende.html" style="text-decoration: none">Agende</a>
+<a class="navlink" href="tricouri.html" style="text-decoration: none">Tricouri</a>
+<a class="navlink" href="portofoliu.html" style="text-decoration: none">Portofoliu</a>
+<a class="navlink" href="tehnologii.html" style="text-decoration: none">Tehnologii</a>
+<a class="navlink" href="cataloage.html" style="text-decoration: none">Cataloage</a>
+<a class="navlink" href="contacte.html" style="text-decoration: none">Contacte</a>
+</nav>
+<div style="display: flex; gap: 12px">
+<a href="https://www.instagram.com/" aria-label="Instagram" style="display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 1px solid #2C2A2D; border-radius: 999px; color: #FFFFFF"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"></circle></svg></a>
+<a href="https://www.facebook.com/" aria-label="Facebook" style="display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 1px solid #2C2A2D; border-radius: 999px; color: #FFFFFF"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8z"></path></svg></a>
+<a href="https://www.tiktok.com/" aria-label="TikTok" style="display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 1px solid #2C2A2D; border-radius: 999px; color: #FFFFFF"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5"></path><path d="M14 3c.5 2.8 2.4 4.6 5 5"></path></svg></a>
+</div>
+</div>
+<div style="height: 1px; background: linear-gradient(90deg, #A23D97, #FFCA01)"></div>
+<div style="display: flex; justify-content: space-between; font-size: 14px; line-height: 1.429; color: #BDB9BE">
+<span>© 2026 Alvia Grup SRL</span>
+<span>www.suvenir.md</span>
+</div>
+</footer>
+
+</div>
+
+</body>
+<script>(function(){
+var cards=document.querySelectorAll('.tech-card');
+function set(c,open){c.classList.toggle('open',open);c.setAttribute('aria-expanded',open);}
+function toggle(c){var open=!c.classList.contains('open');
+  cards.forEach(function(x){if(x!==c)set(x,false);});
+  set(c,open);
+  if(open){setTimeout(function(){var r=c.getBoundingClientRect();if(r.top<70||r.top>window.innerHeight*0.35)window.scrollTo({top:window.scrollY+r.top-90,behavior:'smooth'});},320);}
+}
+cards.forEach(function(c){
+  c.addEventListener('click',function(e){
+    if(e.target.closest('.tm-cta'))return;
+    if(e.target.closest('.tm-close')){set(c,false);return;}
+    if(e.target.closest('.tech-more'))return;
+    toggle(c);});
+  c.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' ')&&e.target===c){e.preventDefault();toggle(c);}});
+});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')cards.forEach(function(x){set(x,false);});});
+// jump links open the card
+document.querySelectorAll('a[href^="#t-"]').forEach(function(a){a.addEventListener('click',function(){var c=document.querySelector(a.getAttribute('href'));if(c&&!c.classList.contains('open'))setTimeout(function(){toggle(c);},400);});});
+})();</script>
+<script>(function(){var b=document.querySelector('.burger'),h=document.querySelector('.site-header');if(!b)return;
+b.addEventListener('click',function(){var o=h.classList.toggle('open');b.setAttribute('aria-expanded',o)});
+document.querySelectorAll('.main-nav a').forEach(function(a){a.addEventListener('click',function(){h.classList.remove('open');b.setAttribute('aria-expanded',false)})});})();
+(function(){var t=document.createElement('button');t.className='to-top';t.type='button';t.setAttribute('aria-label','Înapoi sus');
+t.innerHTML='<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>';
+document.body.appendChild(t);
+function f(){t.classList.toggle('show',window.scrollY>700)}window.addEventListener('scroll',f,{passive:true});f();
+t.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});})();
+</script>
+</html>
